@@ -218,7 +218,7 @@ export const SEED_EVENTS: Omit<Event, "id" | "created_at">[] = [
 export const CONTACT_INFO = {
   address: "Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016",
   phone: "+63 917 123 4567",
-  email: "hello@oretachinocurry.com",
+  email: "oretachinocurryya@gmail.com",
   mapUrl: "https://www.google.com/maps/search/Mahi+Center+Lapu-Lapu+City+Cebu",
   fbPage: "https://www.facebook.com/OretachinoCurryPhilippines",
   coordinates: {

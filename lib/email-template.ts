@@ -17,7 +17,7 @@ const BRAND = {
   tagline: "Authentic Japanese Curry · Osaka to Cebu",
   address: "Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016",
   phone: "+63 917 123 4567",
-  email: "hello@oretachinocurry.com",
+  email: "oretachinocurryya@gmail.com",
   facebook: "https://www.facebook.com/OretachinoCurryPhilippines",
   color: {
     gold: "#d4a017",
