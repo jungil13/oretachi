@@ -282,7 +282,7 @@ export function ReservationForm() {
                               onClick={() => updateCartQuantity(item.id, -1)}
                               className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-muted"
                             >
-                              <Plus size={14} />
+                              <Minus size={14} />
                             </button>
                             <span className="text-sm font-semibold min-w-[20px] text-center">
                               {inCart.quantity}

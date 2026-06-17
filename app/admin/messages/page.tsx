@@ -1,11 +1,13 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea, Label } from "@/components/ui/input";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Send, CornerDownRight, CheckCircle2, AlertCircle, Trash2, Mail } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { contactReplyEmail } from "@/lib/email-template";
 import type { ContactMessage } from "@/types/database";
 
 type MessageWithReply = ContactMessage & {
@@ -19,6 +21,7 @@ export default function AdminMessagesPage() {
   const [replyText, setReplyText] = useState("");
   const [sendingReply, setSendingReply] = useState(false);
   const [notif, setNotif] = useState({ type: "", text: "" });
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const load = async () => {
     const supabase = createClient();
@@ -56,6 +59,7 @@ export default function AdminMessagesPage() {
       setReplyingTo(null);
       setReplyText("");
     }
+    setDeleteTarget(null);
     load();
   };
 
@@ -65,13 +69,21 @@ export default function AdminMessagesPage() {
     setNotif({ type: "", text: "" });
 
     try {
+      const emailData = contactReplyEmail({
+        name: replyingTo.name,
+        originalSubject: replyingTo.subject,
+        originalMessage: replyingTo.message,
+        reply: replyText,
+      });
+
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           to: replyingTo.email,
-          subject: `Re: ${replyingTo.subject}`,
-          text: `Hi ${replyingTo.name},\n\n${replyText}\n\n---\nOriginal message:\n${replyingTo.message}\n\nWarm regards,\nOretachi no Curry-ya Team`,
+          subject: emailData.subject,
+          text: emailData.text,
+          html: emailData.html,
         }),
       });
 
@@ -170,7 +182,7 @@ export default function AdminMessagesPage() {
                     <Mail size={14} />
                     Reply
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => remove(item.id)}>
+                  <Button size="sm" variant="ghost" onClick={() => setDeleteTarget(item.id)}>
                     <Trash2 size={14} className="text-destructive" />
                   </Button>
                 </div>
@@ -230,6 +242,14 @@ export default function AdminMessagesPage() {
           )}
         </div>
       </div>
+
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        title="Delete Message"
+        description="This will permanently delete this contact message and any reply history."
+        onConfirm={() => deleteTarget && remove(deleteTarget)}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

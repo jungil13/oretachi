@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { formatDate } from "@/lib/utils";
 import { Calendar, Users, Clock, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
+import { reservationStatusEmail } from "@/lib/email-template";
 import type { Reservation } from "@/types/database";
 
 export default function AdminReservationsPage() {
   const [items, setItems] = useState<Reservation[]>([]);
   const [notif, setNotif] = useState({ type: "", text: "" });
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const load = async () => {
     const supabase = createClient();
@@ -58,23 +61,26 @@ export default function AdminReservationsPage() {
       return;
     }
 
-    // Send email notification to user
+    // Send branded email notification to user
     try {
-      let preorderList = "";
       const preorder = (item as any).preorder;
-      if (preorder && Array.isArray(preorder) && preorder.length > 0) {
-        preorderList = "\n\nPre-ordered items:\n" + preorder
-          .map((i: any) => `- ${i.name} x${i.quantity} (${i.price * i.quantity} PHP)`)
-          .join("\n");
-      }
+      const emailData = reservationStatusEmail({
+        name: item.name,
+        date: item.date,
+        time: item.time,
+        guests: item.guests,
+        status,
+        preorder: preorder && Array.isArray(preorder) ? preorder : undefined,
+      });
 
       await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           to: item.email,
-          subject: `Your Reservation Status: ${status.toUpperCase()} - Oretachi no Curry-ya`,
-          text: `Dear ${item.name},\n\nThe status of your table reservation for ${item.guests} guests on ${item.date} at ${item.time} has been updated to: ${status.toUpperCase()}.${preorderList}\n\nWarm regards,\nOretachi no Curry-ya Team`,
+          subject: emailData.subject,
+          text: emailData.text,
+          html: emailData.html,
         }),
       });
       setNotif({ type: "success", text: `Status updated to ${status} and client notified.` });
@@ -89,6 +95,7 @@ export default function AdminReservationsPage() {
   const remove = async (id: string) => {
     const supabase = createClient();
     await supabase.from("reservations").delete().eq("id", id);
+    setDeleteTarget(null);
     load();
   };
 
@@ -164,7 +171,7 @@ export default function AdminReservationsPage() {
                     </select>
                   </td>
                   <td className="px-4 py-3">
-                    <Button size="sm" variant="ghost" onClick={() => remove(item.id)}>
+                    <Button size="sm" variant="ghost" onClick={() => setDeleteTarget(item.id)}>
                       <Trash2 size={14} className="text-destructive" />
                     </Button>
                   </td>
@@ -177,6 +184,14 @@ export default function AdminReservationsPage() {
           <p className="p-8 text-center text-muted-foreground">No reservations yet.</p>
         )}
       </div>
+
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        title="Delete Reservation"
+        description="This will permanently delete this reservation record. The customer will not be notified."
+        onConfirm={() => deleteTarget && remove(deleteTarget)}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

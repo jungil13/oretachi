@@ -1,4 +1,4 @@
-﻿import type { Event, GalleryItem, MenuItem, Review } from "@/types/database";
+import type { Event, GalleryItem, MenuItem, Review } from "@/types/database";
 
 export const MENU_CATEGORIES = [
   "Signature Curry",
@@ -250,14 +250,14 @@ export const FAQ_ITEMS = [
       "Yes! Our Vegetable Katsu Curry and several rice bowl options can be made vegan upon request. Please inform our staff of any dietary requirements.",
   },
   {
-    question: "Is there parking available?",
+    question: "Do you offer catering or private dining?",
     answer:
-      "Yes, Mahi Center offers complimentary parking for restaurant guests. We can accommodate up to 20 vehicles.",
+      "Yes! We offer private dining for special occasions and catering services for events. Contact us at least 48 hours in advance to discuss your requirements.",
   },
   {
-    question: "How does the Curry Club loyalty program work?",
+    question: "What payment methods do you accept?",
     answer:
-      "Earn points with every visit. Unlock exclusive dishes, birthday treats, and priority reservations. Sign up at the counter or through our newsletter.",
+      "We accept cash, all major credit and debit cards, and GCash/Maya. We also accept corporate accounts for regular customers.",
   },
 ];
 
@@ -266,12 +266,14 @@ export const CHEFS = [
     name: "Chef Hiroshi Yamamoto",
     role: "Head Chef & Founder",
     bio: "Trained in Osaka for over 15 years, Chef Hiroshi brings authentic Japanese curry traditions to the Philippines with passion and precision.",
-    image: "https://images.unsplash.com/photo-1577219491135-ce046730f544?w=800&q=80",
+    image: "/images/chef-hiroshi.jpg",
+    quote: "Every bowl of curry tells a story — ours begins in Osaka.",
   },
   {
     name: "Chef Ana Reyes",
     role: "Sous Chef",
     bio: "A Cebu native with a love for fusion cuisine, Chef Ana crafts seasonal specials that blend local ingredients with classic Japanese techniques.",
-    image: "https://images.unsplash.com/photo-1583394294544-3137920fe0fb?w=800&q=80",
+    image: "/images/chef-ana.jpg",
+    quote: "The best recipes are born where cultures meet.",
   },
 ];

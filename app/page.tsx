@@ -1,7 +1,7 @@
 import { getFeaturedMenuItems, getReviews } from "@/lib/queries";
 import { HeroSection } from "@/components/sections/hero";
 import { FeaturedCarousel } from "@/components/sections/featured-carousel";
-import { LoyaltySection, ChefShowcase } from "@/components/sections/loyalty-chefs";
+import { StatsSection, ChefShowcase } from "@/components/sections/loyalty-chefs";
 import { FAQSection } from "@/components/sections/faq";
 import { NewsletterSection } from "@/components/sections/newsletter";
 import { ReviewCard } from "@/components/reviews/review-components";
@@ -21,7 +21,7 @@ export default async function HomePage() {
     <>
       <HeroSection />
       <FeaturedCarousel items={featured} />
-      <LoyaltySection />
+      <StatsSection />
       <ChefShowcase />
 
       <section className="py-16 md:py-24">

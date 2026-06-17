@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { GALLERY_CATEGORIES } from "@/lib/data/seed";
 import { ImageUpload } from "@/components/ui/image-upload";
 import type { GalleryItem } from "@/types/database";
@@ -11,6 +12,7 @@ import type { GalleryItem } from "@/types/database";
 export default function AdminGalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [form, setForm] = useState({ image_url: "", category: "Food", title: "" });
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const load = async () => {
     const supabase = createClient();
@@ -50,6 +52,7 @@ export default function AdminGalleryPage() {
   const remove = async (id: string) => {
     const supabase = createClient();
     await supabase.from("gallery").delete().eq("id", id);
+    setDeleteTarget(null);
     load();
   };
 
@@ -113,7 +116,7 @@ export default function AdminGalleryPage() {
                 <p className="font-medium text-sm">{item.title}</p>
                 <p className="text-xs text-muted-foreground">{item.category}</p>
               </div>
-              <Button size="sm" variant="ghost" className="text-destructive hover:bg-destructive/10" onClick={() => remove(item.id)}>
+              <Button size="sm" variant="ghost" className="text-destructive hover:bg-destructive/10" onClick={() => setDeleteTarget(item.id)}>
                 Delete
               </Button>
             </div>
@@ -123,6 +126,14 @@ export default function AdminGalleryPage() {
           <p className="col-span-full text-center text-sm text-muted-foreground py-8">No gallery items added yet.</p>
         )}
       </div>
+
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        title="Delete Gallery Item"
+        description="This will permanently delete this gallery image."
+        onConfirm={() => deleteTarget && remove(deleteTarget)}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Mail, Trash2, Send, CheckCircle2, AlertCircle, Users } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { newsletterBroadcastEmail } from "@/lib/email-template";
 
 interface Subscriber {
   id: string;
@@ -19,6 +21,7 @@ export default function AdminNewsletterPage() {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [notif, setNotif] = useState({ type: "", text: "" });
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const load = async () => {
     const supabase = createClient();
@@ -53,6 +56,7 @@ export default function AdminNewsletterPage() {
   const remove = async (id: string) => {
     const supabase = createClient();
     await supabase.from("newsletter_subscribers").delete().eq("id", id);
+    setDeleteTarget(null);
     load();
   };
 
@@ -68,6 +72,7 @@ export default function AdminNewsletterPage() {
     setNotif({ type: "", text: "" });
 
     try {
+      const emailData = newsletterBroadcastEmail({ subject, message });
       let successCount = 0;
       for (const sub of subscribers) {
         const res = await fetch("/api/send-email", {
@@ -75,8 +80,9 @@ export default function AdminNewsletterPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             to: sub.email,
-            subject: subject,
-            text: message,
+            subject: emailData.subject,
+            text: emailData.text,
+            html: emailData.html,
           }),
         });
         if (res.ok) {
@@ -160,7 +166,7 @@ export default function AdminNewsletterPage() {
                   <p className="font-medium truncate">{sub.email}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{formatDate(sub.created_at)}</p>
                 </div>
-                <Button size="sm" variant="ghost" onClick={() => remove(sub.id)}>
+                <Button size="sm" variant="ghost" onClick={() => setDeleteTarget(sub.id)}>
                   <Trash2 size={14} className="text-destructive" />
                 </Button>
               </div>
@@ -171,6 +177,15 @@ export default function AdminNewsletterPage() {
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        title="Remove Subscriber"
+        description="This will permanently remove this subscriber from the newsletter list."
+        confirmLabel="Remove"
+        onConfirm={() => deleteTarget && remove(deleteTarget)}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }
