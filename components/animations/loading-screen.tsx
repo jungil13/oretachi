@@ -35,7 +35,7 @@ export function LoadingScreen() {
             transition={{ duration: 0.6 }}
             className="mb-6"
           >
-            <Logo variant="hero" showTagline />
+            <Logo variant="hero" />
           </motion.div>
 
           <motion.p
