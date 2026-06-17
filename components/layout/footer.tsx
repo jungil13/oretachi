@@ -24,7 +24,7 @@ export function Footer() {
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16">
                 <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
                     <div className="sm:col-span-2 lg:col-span-1">
-                        <Logo variant="inverted" showTagline />
+                        <Logo variant="inverted" />
                         <p className="mt-4 max-w-xs text-sm text-pure-white/60 leading-relaxed">
                             Loved in Osaka, coming to Cebu. Authentic Japanese curry crafted
                             with traditional recipes and premium ingredients.
