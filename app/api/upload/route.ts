@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function POST(request: Request) {
   try {
@@ -8,33 +12,31 @@ export async function POST(request: Request) {
     const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+      return NextResponse.json(
+        { error: "No file provided" },
+        { status: 400 }
+      );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const fileName = `${Date.now()}-${file.name}`;
 
-    // Create target directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), "public", "images", "uploads");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    const { error } = await supabase.storage
+      .from("uploads")
+      .upload(fileName, file);
 
-    // Generate unique file name
-    const ext = path.extname(file.name) || ".jpg";
-    const baseName = path.basename(file.name, ext).replace(/[^a-zA-Z0-9]/g, "_");
-    const fileName = `${baseName}_${Date.now()}${ext}`;
-    const filePath = path.join(uploadDir, fileName);
+    if (error) throw error;
 
-    // Save file locally
-    fs.writeFileSync(filePath, buffer);
+    const { data } = supabase.storage
+      .from("uploads")
+      .getPublicUrl(fileName);
 
-    const publicUrl = `/images/uploads/${fileName}`;
-    return NextResponse.json({ url: publicUrl });
+    return NextResponse.json({
+      url: data.publicUrl,
+    });
   } catch (error: any) {
-    console.error("[Upload API] Upload error:", error);
+    console.error(error);
     return NextResponse.json(
-      { error: error.message || "Failed to upload file" },
+      { error: error.message },
       { status: 500 }
     );
   }
