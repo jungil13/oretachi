@@ -45,9 +45,9 @@ export function Navbar() {
       <nav
         className={cn(
           "mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl px-4 py-2.5 transition-all duration-300 sm:px-5 sm:py-3",
-          scrolled
-            ? "glass-light shadow-lg shadow-deep-black/5 dark:glass"
-            : "glass-light dark:glass"
+         scrolled
+  ? "glass-light dark:bg-zinc-900/80 dark:border-zinc-800 shadow-lg shadow-deep-black/5 backdrop-blur-xl"
+  : "glass-light dark:bg-zinc-900/70 dark:border-zinc-800 backdrop-blur-xl"
         )}
       >
         <Link href="/" className="shrink-0" aria-label="Oretachi no Curry-ya home">

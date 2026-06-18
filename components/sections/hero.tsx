@@ -9,8 +9,8 @@ import { Logo } from "@/components/layout/logo";
 import { CurrySteam } from "@/components/animations/curry-steam";
 import { CONTACT_INFO } from "@/lib/data/seed";
 
-// Countdown target date: July 15, 2026
-const TARGET_DATE = "2026-07-15T10:00:00Z";
+// Countdown target date: July 7, 2026 at 10:00 AM UTC
+const TARGET_DATE = "2026-07-07T10:00:00Z";
 
 export function HeroSection() {
   const { scrollY } = useScroll();
@@ -50,7 +50,7 @@ export function HeroSection() {
         >
           <source
             type="video/mp4"
-            src="/videos/video.mp4"
+            src="/videos/oretachi.mp4"
           />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-deep-black/75 via-deep-black/55 to-deep-black/90" />
