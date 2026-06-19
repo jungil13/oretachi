@@ -20,11 +20,18 @@ export const metadata: Metadata = {
 };
 
 const TIMELINE = [
-  { year: "1998", title: "Osaka Origins", description: "Founded in Namba district, Osaka by Chef Hiroshi Yamamoto with a dream to share authentic curry." },
-  { year: "2005", title: "First Expansion", description: "Opened our second location in Dotonbori, becoming a local favorite among Osaka residents." },
-  { year: "2015", title: "Award Recognition", description: "Received the Osaka Curry Excellence Award for our signature 12-spice blend." },
-  { year: "2024", title: "Cebu Announcement", description: "Announced our first international location in Cebu City, Philippines." },
-  { year: "2026", title: "Grand Opening Cebu", description: "Bringing the taste of Osaka to the heart of Cebu City." },
+  {
+    title: "Contract Signing",
+    description:
+      "Mr. Gabino Abejo Jr. and Mr. Naoya Sagimura during the contract signing last March 3, 2025 in Osaka-Shi, Japan",
+    image: "/contract.jpg",
+  },
+  {
+    title: "Oretachi No",
+    description:
+      "From left to right, Ms. Elizabeth Frances Abejo (Executive Vice President), Gabino Abejo Jr. (President), Mr. Naoya Sagimura (Owner, Oretachi No. Curry Ya. Mr. Kimitoshi Tadatsu (President, Cross Boundaries. Japan) and Mr. Haruki Tadatsu",
+    image: "/oretachino.jpg",
+  },
 ];
 
 const STATS = [
@@ -36,53 +43,72 @@ const STATS = [
 export default function AboutPage() {
   return (
     <div className="page-shell">
-      <div className="page-container">
+      <div className="page-container max-w-6xl">
+        {/* Header */}
         <PageHeader
           eyebrow="Our Story"
           title="About Us"
-          description="Born in the bustling streets of Osaka, Oretachi no Curry-ya has been serving authentic Japanese curry for over two decades. Our name means “Our Curry House” — a promise of warmth, tradition, and unforgettable flavors."
+          description="Abejo Foods Opc is a newly created company with a goal to establish different brands in
+food, dining, and cafés offering the Filipino market new dining experience thru quality
+food, excellent service, value for money and instaworthy interior. We boast of dedicated
+people to run the organization and manage the brands we believe."
         />
 
-        <div className="mb-16 grid gap-4 sm:grid-cols-3 sm:gap-6 md:mb-20">
-          {STATS.map((stat, i) => (
-            <FadeUp key={stat.label} delay={i * 0.1}>
-              <div className="rounded-2xl border border-border bg-card p-6 text-center sm:p-8">
-                <p className="text-3xl font-bold text-curry-yellow sm:text-4xl">{stat.value}</p>
-                <p className="mt-2 text-sm text-muted-foreground sm:text-base">{stat.label}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-
-        <FadeUp className="mb-10 flex items-center justify-center gap-2 md:mb-12">
-          <Award size={22} className="text-soft-gold" />
-          <h2 className="text-center font-display text-2xl font-bold sm:text-3xl">Our Journey</h2>
-        </FadeUp>
-
-        <div className="relative mx-auto max-w-3xl">
-          <div className="absolute top-0 bottom-0 left-4 w-px bg-border md:left-1/2" />
-          {TIMELINE.map((item, i) => (
-            <FadeUp key={item.year} delay={i * 0.1}>
-              <div
-                className={`relative mb-8 flex items-start gap-4 sm:mb-12 sm:gap-8 ${
-                  i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
-              >
-                <div className="hidden flex-1 md:block" />
-                <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-curry-yellow text-xs font-bold text-deep-black sm:h-12 sm:w-12 sm:text-sm">
-                  {item.year.slice(2)}
-                </div>
-                <div className="flex-1 rounded-2xl border border-border bg-card p-5 sm:p-6">
-                  <p className="text-sm font-medium text-soft-gold">{item.year}</p>
-                  <h3 className="mt-1 text-base font-bold sm:text-lg">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
+        {/* Stats */}
+        <section className="mb-20">
+          <div className="grid gap-6 md:grid-cols-3">
+            {STATS.map((stat, i) => (
+              <FadeUp key={stat.label} delay={i * 0.1}>
+                <div className="group rounded-3xl border border-border bg-card p-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <p className="text-4xl font-bold text-curry-yellow">
+                    {stat.value}
+                  </p>
+                  <p className="mt-3 text-muted-foreground">
+                    {stat.label}
                   </p>
                 </div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
+              </FadeUp>
+            ))}
+          </div>
+        </section>
+        {/* REPLACED SECTION: Image + Text Layout */}
+        <section className="space-y-16 mb-24">
+          {TIMELINE.map((item, i) => {
+            const isReversed = i % 2 !== 0;
+
+            return (
+              <FadeUp key={item.title}>
+                <div
+                  className={`flex flex-col gap-8 md:items-center md:gap-12 ${isReversed ? "md:flex-row-reverse" : "md:flex-row"
+                    }`}
+                >
+                  {/* Image */}
+                  <div className="md:w-1/2">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="h-72 w-full rounded-3xl object-cover shadow-md transition duration-300 hover:scale-[1.02]"
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div className="md:w-1/2">
+                    <div className="rounded-3xl border border-border bg-card p-8 shadow-sm transition hover:shadow-lg">
+
+                      <h3 className="mt-2 text-2xl font-bold">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-4 leading-relaxed text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </FadeUp>
+            );
+          })}
+        </section>
       </div>
     </div>
   );

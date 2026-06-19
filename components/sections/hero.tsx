@@ -9,8 +9,8 @@ import { Logo } from "@/components/layout/logo";
 import { CurrySteam } from "@/components/animations/curry-steam";
 import { CONTACT_INFO } from "@/lib/data/seed";
 
-// Countdown target date: July 7, 2026 at 10:00 AM UTC
-const TARGET_DATE = "2026-07-07T10:00:00Z";
+// Countdown target date: July 8, 2026 at 10:00 AM UTC
+const TARGET_DATE = "2026-07-08T10:00:00Z";
 
 export function HeroSection() {
   const { scrollY } = useScroll();
@@ -45,7 +45,6 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          poster="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1920&q=80"
           className="h-full w-full object-cover"
         >
           <source
@@ -79,8 +78,8 @@ export function HeroSection() {
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-curry-yellow/30 bg-curry-yellow/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-curry-yellow"
         >
           <MapPin size={12} />
-          Mahi Center Location — Coming Soon!
-        </motion.div>
+          2F Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016
+          </motion.div>
 
         {/* Countdown Timer Display */}
         {isClient && (

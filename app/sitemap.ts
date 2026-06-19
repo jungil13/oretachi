@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/menu",        priority: 0.95, freq: "weekly"  },
     { path: "/reservations",priority: 0.9,  freq: "monthly" },
     { path: "/about",       priority: 0.85, freq: "monthly" },
+    { path: "/team",        priority: 0.85, freq: "weekly"  },
     { path: "/events",      priority: 0.85, freq: "weekly"  },
     { path: "/reviews",     priority: 0.8,  freq: "weekly"  },
     { path: "/gallery",     priority: 0.75, freq: "monthly" },

@@ -1,6 +1,7 @@
 import {
   Home,
   Info,
+  Users,
   UtensilsCrossed,
   CalendarDays,
   Images,
@@ -20,6 +21,7 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/about", label: "About", icon: Info },
+
   { href: "/menu", label: "Menu", icon: UtensilsCrossed },
   { href: "/reservations", label: "Reservations", icon: CalendarDays },
   { href: "/gallery", label: "Gallery", icon: Images },

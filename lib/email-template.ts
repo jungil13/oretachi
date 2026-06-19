@@ -16,7 +16,7 @@ const BRAND = {
   name: "Oretachi no Curry-ya",
   tagline: "Authentic Japanese Curry · Osaka to Cebu",
   address: "Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016",
-  phone: "+63 917 123 4567",
+  phone: "0325079288",
   email: "oretachinocurryya@gmail.com",
   facebook: "https://www.facebook.com/OretachinoCurryPhilippines",
   color: {

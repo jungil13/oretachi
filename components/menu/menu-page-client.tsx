@@ -50,8 +50,11 @@ export function MenuPageClient({ items }: { items: MenuItem[] }) {
         <FadeUp className="mb-10 text-center md:mb-12">
           <p className="text-sm font-medium tracking-widest text-soft-gold uppercase">Discover</p>
           <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl md:text-5xl">Our Menu</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-3xl font-semibold text-muted-foreground">
             From signature Osaka curry to crispy katsu, explore our handcrafted dishes.
+          </p>
+          <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
+            "A good meal and a good drink have something in common: they make your day a little brighter. We hope our drinks gives you a spark of energy and our food brings you comfort. whatever today holds, may you feel ready for it."
           </p>
         </FadeUp>
 

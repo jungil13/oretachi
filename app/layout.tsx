@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteShell } from "@/components/layout/site-shell";
 import "./globals.css";
 
+
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],

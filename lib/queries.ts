@@ -6,7 +6,7 @@ import {
   SEED_MENU_ITEMS,
   SEED_REVIEWS,
 } from "@/lib/data/seed";
-import type { Event, GalleryItem, MenuItem, Review } from "@/types/database";
+import type { Event, GalleryItem, MenuItem, Review, TeamMember } from "@/types/database";
 
 function withIds<T extends object>(items: T[]): (T & { id: string; created_at: string })[] {
   return items.map((item, i) => ({
@@ -71,4 +71,16 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
 
   if (error || !data?.length) return withIds(SEED_GALLERY);
   return data as GalleryItem[];
+}
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("team_members")
+    .select("*");
+
+  if (error || !data) return [];
+  return data as TeamMember[];
 }

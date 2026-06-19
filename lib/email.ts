@@ -31,8 +31,8 @@ export async function sendEmail({ to, subject, text, html }: SendEmailPayload) {
         from: `"Oretachi no Curry-ya" <${emailFrom}>`,
         to,
         subject,
-        text,
-        html: html || text.replace(/\n/g, "<br>"),
+        text: `${text}\n\nWebsite: https://www.oretachinocurryyacebu.com/`,
+        html: html ? `${html}<p>Website: <a href="https://www.oretachinocurryyacebu.com/">https://www.oretachinocurryyacebu.com/</a></p>` : `${text.replace(/\n/g, "<br>")}<br/><p>Website: <a href="https://www.oretachinocurryyacebu.com/">https://www.oretachinocurryyacebu.com/</a></p>`,
       });
 
       console.log(`[Email] Sent real email to ${to} subject "${subject}"`);

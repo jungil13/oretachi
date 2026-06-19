@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarDays, Star, Mail, UtensilsCrossed } from "lucide-react";
+import StatisticsChart from "@/components/admin/StatisticsChart";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -13,6 +14,13 @@ export default function AdminDashboard() {
     menuItems: 0,
   });
 
+  // Prepare data for chart
+  const chartData = [
+    { label: "Reservations", value: stats.reservations },
+    { label: "Reviews", value: stats.reviews },
+    { label: "Messages", value: stats.messages },
+    { label: "Menu Items", value: stats.menuItems },
+  ];
   useEffect(() => {
     const supabase = createClient();
     Promise.all([
@@ -56,6 +64,10 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         ))}
+      </div>
+      {/* Statistics Chart */}
+      <div className="mt-8 w-full">
+        <StatisticsChart data={chartData} />
       </div>
     </div>
   );
