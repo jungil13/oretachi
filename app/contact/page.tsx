@@ -29,7 +29,7 @@ export default function ContactPage() {
         <div className="mb-10 grid gap-4 sm:grid-cols-3">
           {[
             { icon: MapPin, label: "Address", value: CONTACT_INFO.address },
-            { icon: Phone, label: "Phone", value: CONTACT_INFO.phone, href: `tel:${CONTACT_INFO.phone.replace(/\s/g, "")}` },
+            { icon: Phone, label: "Telephone", value: CONTACT_INFO.phone, href: `tel:${CONTACT_INFO.phone.replace(/\s/g, "")}` },
             { icon: Mail, label: "Email", value: CONTACT_INFO.email, href: `mailto:${CONTACT_INFO.email}` },
           ].map(({ icon: Icon, label, value, href }) => (
             <FadeUp key={label}>
