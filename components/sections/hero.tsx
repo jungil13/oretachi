@@ -72,14 +72,19 @@ export function HeroSection() {
 
         {/* Coming Soon Announcement Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-curry-yellow/30 bg-curry-yellow/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-curry-yellow"
-        >
-          <MapPin size={12} />
-          2F Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines
-          </motion.div>
+  initial={{ opacity: 0, y: 15 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2, duration: 0.5 }}
+  className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-curry-yellow/30 bg-curry-yellow/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-curry-yellow sm:w-auto"
+>
+  <MapPin
+    size={14}
+    className="shrink-0 self-start sm:self-center"
+  />
+  <span className="leading-relaxed break-words">
+    2F Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines
+  </span>
+</motion.div>
 
         {/* Countdown Timer Display */}
         {isClient && (
