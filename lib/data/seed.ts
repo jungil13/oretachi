@@ -1,15 +1,11 @@
 import type { Event, GalleryItem, MenuItem, Review } from "@/types/database";
 
 export const MENU_CATEGORIES = [
-  "Signature Curry",
-  "Katsu Curry",
-  "Beef Curry",
-  "Chicken Curry",
-  "Seafood Curry",
-  "Rice Bowls",
-  "Appetizers",
-  "Desserts",
-  "Drinks",
+  "CURRY RICE",
+  "RAMEN",
+  "KIDS MENU",
+  "TOPPINGS",
+  "DRINKS",
 ] as const;
 
 export const GALLERY_CATEGORIES = ["Food", "Restaurant Interior", "Customers", "Events"] as const;

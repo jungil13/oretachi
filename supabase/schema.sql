@@ -103,3 +103,16 @@ CREATE POLICY "Admin all reviews" ON reviews FOR ALL USING (auth.role() = 'authe
 CREATE POLICY "Admin all events" ON events FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all contact" ON contact_messages FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all newsletter" ON newsletter_subscribers FOR ALL USING (auth.role() = 'authenticated');
+
+-- Team Members
+CREATE TABLE IF NOT EXISTS team_members (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL,
+  image_url TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read team_members" ON team_members FOR SELECT USING (true);
+CREATE POLICY "Admin all team_members" ON team_members FOR ALL USING (auth.role() = 'authenticated');

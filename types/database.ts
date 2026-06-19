@@ -72,3 +72,11 @@ export interface CartItem {
   menuItem: MenuItem;
   quantity: number;
 }
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image_url: string;
+  created_at: string;
+}

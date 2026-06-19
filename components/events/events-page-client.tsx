@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { CalendarDays, PartyPopper } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CalendarDays, PartyPopper, X } from "lucide-react";
 import type { Event } from "@/types/database";
 import { formatDate } from "@/lib/utils";
 import { FadeUp } from "@/components/animations/motion";
@@ -67,6 +67,7 @@ function Countdown({ targetDate }: { targetDate: string }) {
 }
 
 export function EventsPageClient({ events }: { events: Event[] }) {
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const featured = events[0];
   const gridEvents = featured ? events.slice(1) : events;
 
@@ -80,14 +81,14 @@ export function EventsPageClient({ events }: { events: Event[] }) {
         />
 
         {featured && (
-          <FadeUp className="mb-12 md:mb-16">
-            <div className="relative overflow-hidden rounded-3xl border border-border">
+          <FadeUp className="mb-12 md:mb-16 cursor-pointer" onClick={() => setSelectedEvent(featured)}>
+            <div className="relative overflow-hidden rounded-3xl border border-border transition-shadow hover:shadow-xl hover:shadow-curry-yellow/10 group">
               <div className="relative aspect-[16/10] md:aspect-[21/9]">
                 <Image
                   src={featured.image_url}
                   alt={featured.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="100vw"
                   priority
                 />
@@ -100,9 +101,7 @@ export function EventsPageClient({ events }: { events: Event[] }) {
                 <h2 className="mt-2 text-2xl font-bold text-pure-white sm:text-3xl md:text-4xl">
                   {featured.title}
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-pure-white/75 sm:text-base">
-                  {featured.description}
-                </p>
+                <div className="mt-2 text-sm leading-relaxed text-pure-white/75 sm:text-base line-clamp-2" dangerouslySetInnerHTML={{ __html: featured.description }} />
                 <div className="mt-4 flex items-center gap-2 text-sm text-pure-white/60">
                   <CalendarDays size={16} className="text-curry-yellow" />
                   {formatDate(featured.event_date)}
@@ -120,7 +119,8 @@ export function EventsPageClient({ events }: { events: Event[] }) {
             <FadeUp key={event.id} delay={i * 0.1}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className="group h-full overflow-hidden rounded-2xl border border-border bg-card"
+                onClick={() => setSelectedEvent(event)}
+                className="group h-full overflow-hidden rounded-2xl border border-border bg-card cursor-pointer transition-shadow hover:shadow-xl hover:shadow-curry-yellow/10"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -137,15 +137,61 @@ export function EventsPageClient({ events }: { events: Event[] }) {
                     {formatDate(event.event_date)}
                   </p>
                   <h3 className="mt-1 text-lg font-bold">{event.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {event.description}
-                  </p>
+                  <div className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-3" dangerouslySetInnerHTML={{ __html: event.description }} />
                 </div>
               </motion.div>
             </FadeUp>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedEvent(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-card border border-border shadow-2xl max-h-[90vh] flex flex-col"
+            >
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="absolute right-4 top-4 z-10 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+              >
+                <X size={20} />
+              </button>
+              
+              <div className="relative h-64 w-full shrink-0 sm:h-80">
+                <Image
+                  src={selectedEvent.image_url}
+                  alt={selectedEvent.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
+              </div>
+              
+              <div className="flex-1 overflow-auto p-6 sm:p-8">
+                <p className="flex items-center gap-2 text-sm font-medium text-soft-gold">
+                  <CalendarDays size={16} />
+                  {formatDate(selectedEvent.event_date)}
+                </p>
+                <h2 className="mt-2 text-2xl font-bold sm:text-3xl">{selectedEvent.title}</h2>
+                <div className="prose prose-sm prose-invert mt-6 max-w-none text-muted-foreground">
+                  <div dangerouslySetInnerHTML={{ __html: selectedEvent.description }} />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

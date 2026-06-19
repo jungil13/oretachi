@@ -26,7 +26,7 @@ export function ReservationForm() {
     time: "",
     special_request: "",
   });
-  
+
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<Record<string, { name: string; price: number; quantity: number }>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
@@ -116,8 +116,62 @@ export function ReservationForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               to: form.email,
+
               subject: "Table Reservation Request Received - Oretachi no Curry-ya",
-              text: `Dear ${form.name},\n\nThank you for requesting a table at Oretachi no Curry-ya!\n\nWe have received your reservation request for ${form.guests} guests on ${form.date} at ${form.time}.\n\nPre-ordered items:\n${cartItems.map((c) => `- ${c.name} x${c.quantity} (${c.price * c.quantity} PHP)`).join("\n")}\nTotal: ${cartTotal} PHP\n\nStatus: PENDING (We will review and confirm your booking soon via email)\n\nWarm regards,\nOretachi no Curry-ya Team`,
+
+              text: `
+            Dear ${form.name},
+            
+            Thank you for requesting a table at Oretachi no Curry-ya!
+            
+            Reservation Details:
+            Name: ${form.name}
+            Guests: ${form.guests}
+            Date: ${form.date}
+            Time: ${form.time}
+            
+            Pre-ordered Items:
+            ${cartItems
+                  .map(
+                    (c) =>
+                      `- ${c.name} x${c.quantity} (₱${c.price * c.quantity})`
+                  )
+                  .join("\n")}
+            
+            Total: ₱${cartTotal}
+            
+            Status: PENDING
+            
+            We will review and confirm your reservation shortly.
+            
+            Warm regards,
+            Oretachi no Curry-ya Team
+            `,
+
+              ownerText: `
+            🔔 NEW RESERVATION RECEIVED
+            
+            Customer Name: ${form.name}
+            Customer Email: ${form.email}
+            Phone Number: ${form.phone}
+            
+            Guests: ${form.guests}
+            Date: ${form.date}
+            Time: ${form.time}
+            
+            Special Request:
+            ${form.special_request || "None"}
+            
+            Pre-Ordered Items:
+            ${cartItems
+                  .map(
+                    (c) =>
+                      `- ${c.name} x${c.quantity} = ₱${c.price * c.quantity}`
+                  )
+                  .join("\n")}
+            
+            Total Preorder: ₱${cartTotal}
+            `,
             }),
           });
         } catch (err) {

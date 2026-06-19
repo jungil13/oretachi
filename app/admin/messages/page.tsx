@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea, Label } from "@/components/ui/input";
@@ -9,6 +9,10 @@ import { Send, CornerDownRight, CheckCircle2, AlertCircle, Trash2, Mail } from "
 import { formatDate } from "@/lib/utils";
 import { contactReplyEmail } from "@/lib/email-template";
 import type { ContactMessage } from "@/types/database";
+import { DataTableControls } from "@/components/admin/data-table-controls";
+
+const ITEMS_PER_PAGE = 10;
+const REPLY_CATEGORIES = ["All", "Replied", "Not Replied"];
 
 type MessageWithReply = ContactMessage & {
   reply?: string | null;
@@ -23,6 +27,10 @@ export default function AdminMessagesPage() {
   const [notif, setNotif] = useState({ type: "", text: "" });
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [page, setPage] = useState(1);
+
   const load = async () => {
     const supabase = createClient();
     const { data } = await supabase
@@ -34,22 +42,12 @@ export default function AdminMessagesPage() {
 
   useEffect(() => {
     load();
-
     const supabase = createClient();
     const channel = supabase
       .channel("contact_messages_realtime")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "contact_messages" },
-        () => {
-          load();
-        }
-      )
+      .on("postgres_changes", { event: "*", schema: "public", table: "contact_messages" }, () => load())
       .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    return () => { supabase.removeChannel(channel); };
   }, []);
 
   const remove = async (id: string) => {
@@ -117,12 +115,39 @@ export default function AdminMessagesPage() {
     }
   };
 
+  const filteredItems = useMemo(() => {
+    let res = items;
+    if (category === "Replied") {
+      res = res.filter(i => i.replied_at != null);
+    } else if (category === "Not Replied") {
+      res = res.filter(i => i.replied_at == null);
+    }
+    
+    if (search) {
+      const q = search.toLowerCase();
+      res = res.filter(i => 
+        i.name.toLowerCase().includes(q) || 
+        i.email.toLowerCase().includes(q) || 
+        i.subject.toLowerCase().includes(q) ||
+        i.message.toLowerCase().includes(q)
+      );
+    }
+    return res;
+  }, [items, search, category]);
+
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
+  const paginatedItems = filteredItems.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [totalPages, page]);
+
   return (
     <div className="space-y-6">
       <div className="border-b border-border pb-4">
         <h1 className="text-2xl font-bold">Contact Messages</h1>
         <p className="text-sm text-muted-foreground">
-          View and reply to customer inquiries (realtime updates)
+          View and reply to customer inquiries
         </p>
       </div>
 
@@ -137,9 +162,23 @@ export default function AdminMessagesPage() {
         </div>
       )}
 
+      <div>
+        <DataTableControls
+          search={search}
+          setSearch={setSearch}
+          category={category}
+          setCategory={setCategory}
+          categories={["Replied", "Not Replied"]}
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+          placeholder="Search messages, names or emails..."
+        />
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
-          {items.map((item) => (
+          {paginatedItems.map((item) => (
             <div
               key={item.id}
               className={`rounded-2xl border bg-card p-5 transition-colors ${
@@ -189,8 +228,8 @@ export default function AdminMessagesPage() {
               </div>
             </div>
           ))}
-          {items.length === 0 && (
-            <p className="py-12 text-center text-muted-foreground">No messages yet.</p>
+          {paginatedItems.length === 0 && (
+            <p className="py-12 text-center text-muted-foreground">No messages found.</p>
           )}
         </div>
 

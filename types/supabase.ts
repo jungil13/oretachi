@@ -216,6 +216,29 @@ export interface Database {
           created_at?: string;
         }>
       >;
+      team_members: TableDef<
+        {
+          id: string;
+          name: string;
+          role: string;
+          image_url: string;
+          created_at: string;
+        },
+        {
+          id?: string;
+          name: string;
+          role: string;
+          image_url: string;
+          created_at?: string;
+        },
+        Partial<{
+          id?: string;
+          name: string;
+          role: string;
+          image_url: string;
+          created_at?: string;
+        }>
+      >;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

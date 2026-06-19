@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -8,11 +8,19 @@ import { formatDate } from "@/lib/utils";
 import { Calendar, Users, Clock, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
 import { reservationStatusEmail } from "@/lib/email-template";
 import type { Reservation } from "@/types/database";
+import { DataTableControls } from "@/components/admin/data-table-controls";
+
+const ITEMS_PER_PAGE = 10;
+const STATUS_CATEGORIES = ["pending", "confirmed", "cancelled", "completed"];
 
 export default function AdminReservationsPage() {
   const [items, setItems] = useState<Reservation[]>([]);
   const [notif, setNotif] = useState({ type: "", text: "" });
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [page, setPage] = useState(1);
 
   const load = async () => {
     const supabase = createClient();
@@ -25,23 +33,12 @@ export default function AdminReservationsPage() {
 
   useEffect(() => {
     load();
-
-    // Subscribe to realtime updates
     const supabase = createClient();
     const channel = supabase
       .channel("reservations_realtime")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "reservations" },
-        () => {
-          load();
-        }
-      )
+      .on("postgres_changes", { event: "*", schema: "public", table: "reservations" }, () => load())
       .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    return () => { supabase.removeChannel(channel); };
   }, []);
 
   const updateStatus = async (id: string, status: string) => {
@@ -51,17 +48,12 @@ export default function AdminReservationsPage() {
     setNotif({ type: "", text: "" });
     const supabase = createClient();
     
-    const { error: dbError } = await supabase
-      .from("reservations")
-      .update({ status })
-      .eq("id", id);
-
+    const { error: dbError } = await supabase.from("reservations").update({ status }).eq("id", id);
     if (dbError) {
       setNotif({ type: "error", text: `Failed to update status: ${dbError.message}` });
       return;
     }
 
-    // Send branded email notification to user
     try {
       const preorder = (item as any).preorder;
       const emailData = reservationStatusEmail({
@@ -88,7 +80,6 @@ export default function AdminReservationsPage() {
       console.error("Email notification failed:", emailErr);
       setNotif({ type: "success", text: `Status updated to ${status} (email notification failed).` });
     }
-    
     load();
   };
 
@@ -98,6 +89,29 @@ export default function AdminReservationsPage() {
     setDeleteTarget(null);
     load();
   };
+
+  const filteredItems = useMemo(() => {
+    let res = items;
+    if (category !== "All") {
+      res = res.filter(i => i.status === category);
+    }
+    if (search) {
+      const q = search.toLowerCase();
+      res = res.filter(i => 
+        i.name.toLowerCase().includes(q) || 
+        i.email.toLowerCase().includes(q) || 
+        i.phone.includes(q)
+      );
+    }
+    return res;
+  }, [items, search, category]);
+
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
+  const paginatedItems = filteredItems.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [totalPages, page]);
 
   return (
     <div>
@@ -110,7 +124,21 @@ export default function AdminReservationsPage() {
         </div>
       )}
 
-      <div className="mt-6 overflow-x-auto rounded-2xl border border-border bg-card">
+      <div className="mt-2">
+        <DataTableControls
+          search={search}
+          setSearch={setSearch}
+          category={category}
+          setCategory={setCategory}
+          categories={STATUS_CATEGORIES}
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+          placeholder="Search name, email, or phone..."
+        />
+      </div>
+
+      <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-card">
         <table className="w-full text-sm">
           <thead className="border-b border-border bg-muted/50">
             <tr>
@@ -120,7 +148,7 @@ export default function AdminReservationsPage() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => {
+            {paginatedItems.map((item) => {
               const preorder = (item as any).preorder;
               return (
                 <tr key={item.id} className="border-b border-border hover:bg-muted/10">
@@ -165,7 +193,7 @@ export default function AdminReservationsPage() {
                       onChange={(e) => updateStatus(item.id, e.target.value)}
                       className="rounded-lg border border-border bg-card px-2 py-1 text-xs"
                     >
-                      {["pending", "confirmed", "cancelled", "completed"].map((s) => (
+                      {STATUS_CATEGORIES.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
@@ -180,8 +208,8 @@ export default function AdminReservationsPage() {
             })}
           </tbody>
         </table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-muted-foreground">No reservations yet.</p>
+        {paginatedItems.length === 0 && (
+          <p className="p-8 text-center text-muted-foreground">No reservations found.</p>
         )}
       </div>
 
