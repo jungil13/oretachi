@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import Image from "next/image";
 import { ImageUpload } from "@/components/ui/image-upload";
 import type { TeamMember } from "@/types/database";
 import type { Database } from "@/types/supabase";
@@ -126,8 +127,8 @@ export default function AdminTeamPage() {
           {paginatedItems.map((item) => (
             <div key={item.id} className="flex items-center justify-between rounded-xl border border-border bg-card p-4">
               <div className="flex items-center gap-4">
-                <div className="h-12 w-12 overflow-hidden rounded-full border border-border bg-muted">
-                  <img src={item.image_url} alt={item.name} className="h-full w-full object-cover" />
+                <div className="relative h-12 w-12 overflow-hidden rounded-full border border-border bg-muted">
+                  <Image src={item.image_url || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt={item.name} fill quality={100} className="object-cover" />
                 </div>
                 <div>
                   <p className="font-medium">{item.name}</p>

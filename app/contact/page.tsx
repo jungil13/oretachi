@@ -6,8 +6,14 @@ import { CONTACT_INFO } from "@/lib/data/seed";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Oretachi no Curry-ya. We'd love to hear from you.",
+  title: "Contact Us – Japanese Curry Restaurant Cebu",
+  description:
+    "Contact Oretachino Curry Ya Cebu for reservations, inquiries, and catering. Find us in Cebu City for the best Japanese curry experience.",
+  keywords: ["Contact Japanese Restaurant Cebu", "Oretachino Curry Ya contact", "Best Curry Restaurant Cebu contact"],
+  openGraph: {
+    title: "Contact Us – Oretachino Curry Ya | Japanese Curry Restaurant Cebu",
+    description: "Reach out to Oretachino Curry Ya Cebu for bookings, events, and more.",
+  },
 };
 
 export default function ContactPage() {

@@ -4,8 +4,19 @@ import { FadeUp } from "@/components/animations/motion";
 import { PageHeader } from "@/components/layout/page-header";
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description: "Discover the story of Oretachi no Curry-ya — from Osaka roots to Cebu expansion.",
+  title: "About Us – Authentic Osaka Japanese Curry Restaurant in Cebu",
+  description:
+    "Learn the story of Oretachino Curry Ya, born in Osaka's famous Namba district and now bringing authentic Japanese curry to Cebu City, Philippines.",
+  keywords: [
+    "Japanese Restaurant Cebu",
+    "Osaka Curry Cebu",
+    "Authentic Japanese Curry Cebu",
+    "Oretachino Curry Ya Cebu story",
+  ],
+  openGraph: {
+    title: "About Us – Authentic Osaka Japanese Curry | Oretachino Curry Ya Cebu",
+    description: "From Osaka's Namba district to Cebu City – discover our story.",
+  },
 };
 
 const TIMELINE = [

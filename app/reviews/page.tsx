@@ -5,8 +5,18 @@ import { FadeUp, StaggerContainer, StaggerItem } from "@/components/animations/m
 import { PageHeader } from "@/components/layout/page-header";
 
 export const metadata: Metadata = {
-  title: "Reviews",
-  description: "Read customer reviews and share your experience at Oretachi no Curry-ya.",
+  title: "Customer Reviews – Best Curry Restaurant in Cebu",
+  description:
+    "Read honest customer reviews of Oretachino Curry Ya Cebu. Discover why guests say we serve the best Japanese curry and Katsu Curry in Cebu City.",
+  keywords: [
+    "Best Curry Restaurant Cebu reviews",
+    "Japanese Restaurant Cebu reviews",
+    "Oretachino Curry Ya reviews",
+  ],
+  openGraph: {
+    title: "Customer Reviews – Best Curry Restaurant in Cebu | Oretachino Curry Ya",
+    description: "Real reviews from guests who loved our Osaka-style Japanese curry in Cebu.",
+  },
 };
 
 export default async function ReviewsPage() {

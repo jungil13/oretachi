@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getFeaturedMenuItems, getReviews } from "@/lib/queries";
 import { HeroSection } from "@/components/sections/hero";
 import { FeaturedCarousel } from "@/components/sections/featured-carousel";
@@ -10,6 +11,29 @@ import { FAQ_ITEMS } from "@/lib/data/seed";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Best Japanese Curry in Cebu | Oretachino Curry Ya",
+  description:
+    "Enjoy authentic Osaka-style Japanese curry at Oretachino Curry Ya Cebu. Home of the famous Katsu Curry, Pork Cutlet Curry, and Ramen. Best Japanese curry restaurant in Cebu City.",
+  keywords: [
+    "Best Japanese Curry Cebu",
+    "Japanese Curry Cebu",
+    "Oretachino Curry Ya Cebu",
+    "Osaka Curry Cebu",
+    "Katsu Curry Cebu",
+    "Best Curry in Cebu",
+  ],
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  },
+  openGraph: {
+    title: "Best Japanese Curry in Cebu | Oretachino Curry Ya",
+    description:
+      "Authentic Osaka-style Japanese curry. Famous Katsu Curry, Pork Cutlet Curry and Ramen – best curry restaurant in Cebu.",
+  },
+};
+
 
 export default async function HomePage() {
   const [featured, reviews] = await Promise.all([

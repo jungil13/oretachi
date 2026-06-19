@@ -5,8 +5,19 @@ import { FadeUp } from "@/components/animations/motion";
 import { PageHeader } from "@/components/layout/page-header";
 
 export const metadata: Metadata = {
-  title: "Reservations",
-  description: "Book a table at Oretachi no Curry-ya in Cebu City.",
+  title: "Book a Table – Japanese Curry Restaurant Cebu",
+  description:
+    "Reserve a table at Oretachino Curry Ya, the best Japanese curry restaurant in Cebu City. Easy online booking. Enjoy authentic Osaka-style curry with family and friends.",
+  keywords: [
+    "Japanese Restaurant Cebu reservation",
+    "Book a table Cebu Japanese restaurant",
+    "Oretachino Curry Ya Cebu booking",
+    "Best Curry Restaurant Cebu",
+  ],
+  openGraph: {
+    title: "Book a Table – Best Japanese Curry Restaurant in Cebu | Oretachino Curry Ya",
+    description: "Reserve your spot at Oretachino Curry Ya Cebu for an authentic Osaka curry experience.",
+  },
 };
 
 export default function ReservationsPage() {

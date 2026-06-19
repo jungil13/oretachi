@@ -147,11 +147,12 @@ export function ChefShowcase() {
                 <div className="group overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:border-soft-gold/40 hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full">
                   <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                     <Image
-                      src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                      src={member.image_url || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"}
                       alt={member.name}
                       fill
+                      quality={100}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 640px) 280px, 320px"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-deep-black/80 via-deep-black/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
                     
