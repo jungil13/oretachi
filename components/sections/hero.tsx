@@ -78,7 +78,7 @@ export function HeroSection() {
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-curry-yellow/30 bg-curry-yellow/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-curry-yellow"
         >
           <MapPin size={12} />
-          2F Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016
+          2F Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines
           </motion.div>
 
         {/* Countdown Timer Display */}
