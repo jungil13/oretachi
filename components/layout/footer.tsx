@@ -3,18 +3,23 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { FOOTER_LINKS } from "@/lib/navigation";
 import { CONTACT_INFO } from "@/lib/data/seed";
-import { InstagramIcon, FacebookIcon } from "@/components/ui/social-icons";
+import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 
 const SOCIAL_LINKS = [
     {
-        href: "https://instagram.com/oretachinocurry",
-        label: "Instagram",
-        icon: InstagramIcon,
+      icon: FaInstagram,
+      label: "Instagram",
+      href: "https://www.instagram.com/oretachinocurryphilippines",
     },
     {
-        href: CONTACT_INFO.fbPage || "https://www.facebook.com/OretachinoCurryPhilippines",
-        label: "Facebook",
-        icon: FacebookIcon,
+      icon: FaFacebook,
+      label: "Facebook",
+      href: "https://www.facebook.com/OretachinoCurryPhilippines",
+    },
+    {
+      icon: FaTiktok,
+      label: "TikTok",
+      href: "https://www.tiktok.com/@oretachino.curryya",
     },
 ];
 

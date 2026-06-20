@@ -7,7 +7,8 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Share2, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -104,30 +105,40 @@ export function ContactForm() {
         </CardContent>
       </Card>
 
-      <div className="space-y-4">
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="mb-4 font-semibold">Follow Us</h3>
-            <div className="space-y-3">
-              {[
-                { icon: Share2, label: "Instagram", href: "https://instagram.com" },
-                { icon: Share2, label: "Facebook", href: "https://facebook.com" },
-                { icon: MapPin, label: "Google Maps", href: "https://maps.google.com" },
-              ].map(({ icon: Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-muted"
-                >
-                  <Icon size={20} className="text-curry-yellow" />
-                  <span className="text-sm font-medium">{label}</span>
-                </a>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="space-y-3">
+        {[
+          {
+            icon: FaInstagram,
+            label: "Instagram",
+            href: "https://www.instagram.com/oretachinocurryphilippines",
+          },
+          {
+            icon: FaFacebook,
+            label: "Facebook",
+            href: "https://www.facebook.com/OretachinoCurryPhilippines",
+          },
+          {
+            icon: MapPin,
+            label: "Google Maps",
+            href: "https://maps.app.goo.gl/BNpAkkJfa9JgoYuB7",
+          },
+          {
+            icon: FaTiktok,
+            label: "TikTok",
+            href: "https://www.tiktok.com/@oretachino.curryya",
+          },
+        ].map(({ icon: Icon, label, href }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-muted"
+          >
+            <Icon className="h-5 w-5 text-curry-yellow" />
+            <span className="text-sm font-medium">{label}</span>
+          </a>
+        ))}
       </div>
     </div>
   );
