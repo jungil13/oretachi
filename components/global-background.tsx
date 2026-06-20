@@ -1,61 +1,98 @@
-"use client";
+import "./background.css";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
+/**
+ * GlobalBackground – lightweight CSS-driven orbs.
+ *
+ * Performance notes vs. the previous implementation:
+ *  - Removed framer-motion entirely (no JS animation loop)
+ *  - Only 6 orbs instead of 12
+ *  - Animations use `transform` only → browser composites on GPU, zero layout/paint cost
+ *  - blur-[40px] instead of blur-[80px] → much cheaper filter pass
+ *  - `will-change: transform` on each orb → browser pre-promotes to its own layer
+ *  - Static positions (no random Math.random on each render)
+ */
 export function GlobalBackground() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  // Generate random bubbles/lights
-  const bubbles = Array.from({ length: 12 }).map((_, i) => ({
-    id: i,
-    size: Math.random() * 200 + 100, // 100px to 300px
-    x: Math.random() * 100, // 0 to 100vw
-    y: Math.random() * 100, // 0 to 100vh
-    duration: Math.random() * 30 + 20, // 20s to 50s
-    delay: Math.random() * 5,
-  }));
-
   return (
-    <div className="fixed inset-0 pointer-events-none -z-50 overflow-hidden bg-[#050505]">
-      {/* Animated gold lights */}
-      {bubbles.map((bubble) => (
-        <motion.div
-          key={bubble.id}
-          className="absolute rounded-full bg-[#e6c18f]/5 blur-[80px]"
-          style={{
-            width: bubble.size,
-            height: bubble.size,
-            left: `${bubble.x}vw`,
-            top: `${bubble.y}vh`,
-          }}
-          animate={{
-            y: ["0vh", "-15vh", "15vh", "0vh"],
-            x: ["0vw", "10vw", "-10vw", "0vw"],
-            scale: [1, 1.2, 0.8, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: bubble.duration,
-            repeat: Infinity,
-            ease: "linear",
-            delay: bubble.delay,
-          }}
-        />
-      ))}
-      
-      {/* Subtle noise texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] mix-blend-screen pointer-events-none" 
-        style={{ 
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' 
-        }} 
+    <div
+      className="fixed inset-0 -z-50 overflow-hidden bg-[#050505] pointer-events-none"
+      aria-hidden="true"
+    >
+      {/* Orb 1 – top-left */}
+      <div
+        className="bg-orb orb-1 absolute"
+        style={{
+          width: 320,
+          height: 320,
+          top: "5%",
+          left: "8%",
+          background: "radial-gradient(circle, rgba(230,193,143,0.12) 0%, transparent 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+
+      {/* Orb 2 – top-right */}
+      <div
+        className="bg-orb orb-2 absolute"
+        style={{
+          width: 280,
+          height: 280,
+          top: "10%",
+          right: "10%",
+          background: "radial-gradient(circle, rgba(230,193,143,0.09) 0%, transparent 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+
+      {/* Orb 3 – center */}
+      <div
+        className="bg-orb orb-3 absolute"
+        style={{
+          width: 400,
+          height: 400,
+          top: "40%",
+          left: "45%",
+          background: "radial-gradient(circle, rgba(180,140,90,0.07) 0%, transparent 70%)",
+          filter: "blur(50px)",
+        }}
+      />
+
+      {/* Orb 4 – bottom-left */}
+      <div
+        className="bg-orb orb-4 absolute"
+        style={{
+          width: 260,
+          height: 260,
+          bottom: "12%",
+          left: "15%",
+          background: "radial-gradient(circle, rgba(230,193,143,0.10) 0%, transparent 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+
+      {/* Orb 5 – bottom-right */}
+      <div
+        className="bg-orb orb-5 absolute"
+        style={{
+          width: 300,
+          height: 300,
+          bottom: "8%",
+          right: "12%",
+          background: "radial-gradient(circle, rgba(210,170,100,0.08) 0%, transparent 70%)",
+          filter: "blur(45px)",
+        }}
+      />
+
+      {/* Orb 6 – mid-left (accent) */}
+      <div
+        className="bg-orb orb-6 absolute"
+        style={{
+          width: 200,
+          height: 200,
+          top: "55%",
+          left: "5%",
+          background: "radial-gradient(circle, rgba(230,193,143,0.08) 0%, transparent 70%)",
+          filter: "blur(35px)",
+        }}
       />
     </div>
   );
