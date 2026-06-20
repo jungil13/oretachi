@@ -50,9 +50,7 @@ export function FAQSection({
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
-                    {item.answer}
-                  </p>
+                  <div className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: item.answer }} />
                 </motion.div>
               )}
             </AnimatePresence>

@@ -215,8 +215,10 @@ export const CONTACT_INFO = {
   address: "Mahi Center, Main Rd, MEPZ 1, Lapu-Lapu City, Cebu, Philippines 6016",
   phone: "0325079288",
   email: "oretachinocurryya@gmail.com",
-  mapUrl: "https://www.google.com/maps/search/Mahi+Center+Lapu-Lapu+City+Cebu",
+  mapUrl: "https://maps.app.goo.gl/EJmuoDwpE3KesJJD9",
   fbPage: "https://www.facebook.com/OretachinoCurryPhilippines",
+  instagram: "https://www.instagram.com/oretachinocurryphilippines/",
+  tiktok: "https://www.tiktok.com/@oretachino.curryya",
   coordinates: {
     lat: 10.3173,
     lng: 123.9789,
@@ -231,29 +233,76 @@ export const BUSINESS_HOURS = [
 
 export const FAQ_ITEMS = [
   {
-    question: "Do you accept walk-ins or reservations only?",
+    question: "What does “Oretachi no Curry Ya” mean",
     answer:
-      "We welcome both! Reservations are recommended for groups of 4 or more and during peak hours, but walk-ins are always welcome subject to availability.",
+      "It means “Our Curry Shop” or “Our Curry House”.",
   },
   {
-    question: "Can I adjust the spice level of my curry?",
+    question: "What is Oretachi no Curry Ya?",
     answer:
-      "Absolutely. All our curries can be customized from mild (level 0) to extra spicy (level 3). Just let your server know when ordering.",
+      "Oretachi no Curry Ya is a Japanese Curry restaurant originating from Namba, Osaka, Japan specializing in rich Japanese curry, served with crispy katsu, premium toppings, and curry ramen inspired by Osaka flavors.",
   },
   {
-    question: "Do you offer vegetarian or vegan options?",
+    question: "What does “Oretachi” mean?",
     answer:
-      "Yes! Our Vegetable Katsu Curry and several rice bowl options can be made vegan upon request. Please inform our staff of any dietary requirements.",
+      "“Oretachi” means “we” or “us” in Japanese, reflecting the restaurant’s casual, friendly, and approachable personality.",
   },
   {
-    question: "Do you offer catering or private dining?",
+    question: "What makes Japanese curry different from Indian curry?",
     answer:
-      "Yes! We offer private dining for special occasions and catering services for events. Contact us at least 48 hours in advance to discuss your requirements.",
+      "Japanese curry is thicker, slightly sweet and milder compared to most Indian curries. It is typically served with rice and toppings.",
   },
   {
-    question: "What payment methods do you accept?",
+    question: "What are your best-selling dishes?",
+    answer: `Our customers favorites include:<br>
+    <ul>
+      <li>-Pork Katsu Curry</li>
+      <li>-Chicken Katsu Curry</li>
+      <li>-Curry Ramen</li>
+      <li>-Soft-Boiled egg Curry</li>
+      <li>-Beef Tendon Curry</li>
+    </ul>`
+  },
+  {
+    question: "Is your curry spicy?",
     answer:
-      "We accept cash, all major credit and debit cards, and GCash/Maya. We also accept corporate accounts for regular customers.",
+      "Our standard curry is thick, sweet and rich in flavor. If you enjoy spicy, you may request a higher spice level.",
+  },
+  {
+    question: "What is Curry Ramen?",
+    answer:
+      "Curry ramen combines Japanese ramen noodles with our signature curry sauce, creating a rich and comforting bowl that is popular in Osaka.",
+  },
+  {
+    question: "Can I customize my curry?",
+    answer: `Yes! You can add toppings such as:
+    <ul>
+      <li>-Soft Boiled Egg</li>
+      <li>-Cheese</li>
+      <li>-Extra vegetables</li>
+      <li>-Green Onions</li>
+      <li>-Additional curry sauce</li>
+    </ul>`,
+  },
+  {
+    question: "Which katsu should I try first?",
+    answer:
+      "If it is your first visit, we recommend the Pork Katsu Curry. The crispy panko coating and juicy pork pair perfectly with Japanese curry.",
+  },
+   {
+    question: "Do you have vegetarian options?",
+    answer:
+      "Yes. We offer selected vegetable-based curry options. Please ask our staff for current vegetarian-friendly selections.",
+  },
+   {
+    question: "Is Japanese curry good for kids?",
+    answer:
+      "Absolutely. Japanese curry is generally mild, savory, and family-friendly, making it popular comfort food for children in Japan.",
+  },
+   {
+    question: "Why is Japanese curry considered comfort food in Japan?",
+    answer:
+      "Japanese curry is one of Japan’s most beloved home-style meals. Many Japanese people grew up eating curry at home, making it a nostalgic and comforting dish enjoyed by all ages.",
   },
 ];
 

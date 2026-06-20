@@ -37,3 +37,17 @@ export function FacebookIcon({ className, size = 18 }: IconProps) {
     </svg>
   );
 }
+export function TiktokIcon({ className, size = 18 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={cn(className)}
+      aria-hidden
+    >
+      <path d="M12 2c5.522 0 10 4.478 10 10h-4c0-3.309-2.691-6-6-6V2zM2 12c0 5.522 4.478 10 10 10v-4c-3.309 0-6-2.691-6-6H2z" />
+    </svg>
+  );
+}
