@@ -22,6 +22,22 @@ export function ContactForm() {
     setStatus("loading");
 
     if (!isSupabaseConfigured()) {
+      // Local dev fallback – still attempt to send the email
+      try {
+        await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            to: form.email,
+            subject: `Thanks for contacting us, ${form.name}!`,
+            text: `Hi ${form.name},\n\nThank you for reaching out. We received your message and will get back to you soon.\n\n---\nYour message:\n${form.message}`,
+            ownerSubject: `📩 New Contact Message: ${form.subject}`,
+            ownerText: `You have a new contact message from ${form.name} (${form.email}).\n\nSubject: ${form.subject}\n\nMessage:\n${form.message}`,
+          }),
+        });
+      } catch (err) {
+        console.error("Email send failed (dev fallback):", err);
+      }
       setTimeout(() => {
         setStatus("success");
         setForm({ name: "", email: "", subject: "", message: "" });
@@ -31,6 +47,24 @@ export function ContactForm() {
 
     const supabase = createClient();
     await supabase.from("contact_messages").insert(form);
+
+    // Notify the owner and send a confirmation to the sender
+    try {
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: form.email,
+          subject: `Thanks for contacting us, ${form.name}!`,
+          text: `Hi ${form.name},\n\nThank you for reaching out to Oretachi no Curry-ya. We received your message and will get back to you as soon as possible.\n\n---\nYour message:\n${form.message}\n\nBest regards,\nOretachi no Curry-ya`,
+          ownerSubject: `📩 New Contact Message: ${form.subject}`,
+          ownerText: `You have a new contact message on your website.\n\nFrom: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject}\n\nMessage:\n${form.message}`,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to send contact email:", err);
+    }
+
     setStatus("success");
     setForm({ name: "", email: "", subject: "", message: "" });
   };
