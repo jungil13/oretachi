@@ -44,49 +44,58 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <FeaturedCarousel items={featured} />
-      <StatsSection />
-      <ChefShowcase />
+      
+      <div className="bg-black text-white">
+        <FeaturedCarousel items={featured} />
+        <StatsSection />
+        <ChefShowcase />
 
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <FadeUp className="mb-12 text-center">
-            <p className="text-sm font-medium tracking-widest text-soft-gold uppercase">
-              Testimonials
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
-              What Our Guests Say
-            </h2>
-          </FadeUp>
-          <StaggerContainer className="grid gap-6 md:grid-cols-3">
-            {reviews.slice(0, 3).map((review) => (
-              <StaggerItem key={review.id}>
-                <ReviewCard review={review} />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-          <div className="mt-8 text-center">
-            <Link href="/reviews">
-              <Button variant="outline">
-                All Reviews <ArrowRight size={16} />
-              </Button>
-            </Link>
+        <section className="py-16 md:py-24 relative overflow-hidden">
+          <div className="mx-auto max-w-7xl px-4 md:px-6 relative z-10">
+            <FadeUp className="mb-12 text-center flex flex-col items-center">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+                <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+                  Testimonials
+                </p>
+                <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+              </div>
+              <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
+                What Our Guests Say
+              </h2>
+            </FadeUp>
+            <StaggerContainer className="grid gap-6 md:grid-cols-3">
+              {reviews.slice(0, 3).map((review) => (
+                <StaggerItem key={review.id}>
+                  <ReviewCard review={review} />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+            <div className="mt-12 text-center">
+              <Link href="/reviews">
+                <button className="group relative overflow-hidden border border-[#e6c18f] bg-transparent px-8 py-3 transition-all hover:bg-[#e6c18f]">
+                  <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#e6c18f] transition-colors group-hover:text-black uppercase">
+                    All Reviews <ArrowRight size={16} />
+                  </span>
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-16 md:py-24 japanese-pattern">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <FadeUp className="mb-12 text-center">
-            <h2 className="font-display text-3xl font-bold md:text-4xl">FAQ</h2>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <FAQSection items={FAQ_ITEMS} />
-          </FadeUp>
-        </div>
-      </section>
+        <section className="py-16 md:py-24 relative">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 relative z-10">
+            <FadeUp className="mb-12 text-center">
+              <h2 className="font-display text-3xl font-bold md:text-4xl text-white">FAQ</h2>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <FAQSection items={FAQ_ITEMS} />
+            </FadeUp>
+          </div>
+        </section>
 
-      <NewsletterSection />
+        <NewsletterSection />
+      </div>
     </>
   );
 }

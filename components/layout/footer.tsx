@@ -37,7 +37,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-curry-yellow uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
                             Explore
                         </h4>
                         <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-pure-white/60 sm:grid-cols-1">
@@ -55,28 +55,28 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-curry-yellow uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
                             Contact
                         </h4>
                         <ul className="space-y-3 text-sm text-pure-white/60">
                             <li className="flex items-start gap-2.5">
-                                <MapPin size={16} className="mt-0.5 shrink-0 text-curry-yellow" />
+                                <MapPin size={16} className="mt-0.5 shrink-0 text-[#e6c18f]" />
                                 <span>{CONTACT_INFO.address}</span>
                             </li>
                             <li className="flex items-center gap-2.5">
-                                <Phone size={16} className="shrink-0 text-curry-yellow" />
+                                <Phone size={16} className="shrink-0 text-[#e6c18f]" />
                                 <a
                                     href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
-                                    className="transition-colors hover:text-curry-yellow"
+                                    className="transition-colors hover:text-[#e6c18f]"
                                 >
                                     {CONTACT_INFO.phone}
                                 </a>
                             </li>
                             <li className="flex items-center gap-2.5">
-                                <Mail size={16} className="shrink-0 text-curry-yellow" />
+                                <Mail size={16} className="shrink-0 text-[#e6c18f]" />
                                 <a
                                     href={`mailto:${CONTACT_INFO.email}`}
-                                    className="transition-colors hover:text-curry-yellow"
+                                    className="transition-colors hover:text-[#e6c18f]"
                                 >
                                     {CONTACT_INFO.email}
                                 </a>
@@ -85,7 +85,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-curry-yellow uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
                             Follow Us
                         </h4>
                         <p className="mb-4 text-sm text-pure-white/60">

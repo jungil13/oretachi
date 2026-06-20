@@ -160,24 +160,28 @@ export const SEED_REVIEWS: Omit<Review, "id" | "created_at">[] = [
     rating: 5,
     review: "The katsu curry is incredible — crispy, juicy, and the sauce is perfectly balanced. Best Japanese curry in Cebu!",
     image_url: null,
+    is_approved: true,
   },
   {
     name: "Kenji Tanaka",
     rating: 5,
     review: "Reminds me of home in Osaka. Authentic flavors and generous portions. The staff is warm and welcoming.",
     image_url: null,
+    is_approved: true,
   },
   {
     name: "Sarah Lim",
     rating: 4,
     review: "Loved the seafood medley curry and the cozy atmosphere. Can't wait for the Mahi Center location to open!",
     image_url: null,
+    is_approved: true,
   },
   {
     name: "James Cruz",
     rating: 5,
     review: "Reserved for a birthday dinner and they made it special. The beef hayashi curry is a must-try.",
     image_url: null,
+    is_approved: true,
   },
 ];
 

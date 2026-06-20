@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteShell } from "@/components/layout/site-shell";
+import { GlobalBackground } from "@/components/global-background";
 import "./globals.css";
 
 
@@ -82,6 +83,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased bg-background text-foreground">
+        <GlobalBackground />
         <ThemeProvider>
           <SiteShell>{children}</SiteShell>
         </ThemeProvider>

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { MenuItem } from "@/types/database";
 import { formatPrice } from "@/lib/utils";
 import { FadeUp } from "@/components/animations/motion";
+import { ArrowRight } from "lucide-react";
 
 export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
   const [current, setCurrent] = useState(0);
@@ -21,18 +22,22 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
   if (!items.length) return null;
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="page-container">
-        <FadeUp className="mb-12 text-center">
-          <p className="text-sm font-medium tracking-widest text-soft-gold uppercase">
-            Chef&apos;s Selection
-          </p>
-          <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
+    <section className="py-16 md:py-24 relative overflow-hidden">
+      <div className="page-container relative z-10">
+        <FadeUp className="mb-12 text-center flex flex-col items-center">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+            <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+              Chef&apos;s Selection
+            </p>
+            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+          </div>
+          <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
             Featured Dishes
           </h2>
         </FadeUp>
 
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl">
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(230,193,143,0.05)]">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -49,42 +54,43 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 80vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-black/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8">
-                <h3 className="text-2xl font-bold text-pure-white md:text-3xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+                <h3 className="text-2xl font-bold text-white md:text-4xl font-display mb-3">
                   {items[current].name}
                 </h3>
-                <p className="mt-2 max-w-md text-pure-white/70">
+                <p className="max-w-md text-white/70 font-light tracking-wide mb-4">
                   {items[current].description}
                 </p>
-                <p className="mt-3 text-xl font-bold text-curry-yellow">
+                <p className="text-xl font-bold text-[#e6c18f] tracking-wider">
                   {formatPrice(items[current].price)}
                 </p>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          <div className="absolute bottom-4 right-4 flex gap-2">
+          <div className="absolute bottom-6 right-6 flex gap-3">
             {items.map((item, i) => (
               <button
                 key={item.id}
                 onClick={() => setCurrent(i)}
                 aria-label={`View ${item.name}`}
                 aria-current={i === current ? "true" : undefined}
-                className={`h-2 rounded-full transition-all ${
-                  i === current ? "w-8 bg-curry-yellow" : "w-2 bg-pure-white/40"
+                className={`h-1 transition-all rounded-full ${
+                  i === current ? "w-8 bg-[#e6c18f]" : "w-3 bg-white/30 hover:bg-white/50"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <Link
-            href="/menu"
-            className="text-sm font-medium text-soft-gold transition-colors hover:text-curry-yellow"
-          >
-            View Full Menu →
+        <div className="mt-12 text-center">
+          <Link href="/menu">
+            <button className="group relative overflow-hidden border border-[#e6c18f] bg-transparent px-8 py-3 transition-all hover:bg-[#e6c18f]">
+              <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#e6c18f] transition-colors group-hover:text-black uppercase">
+                View Full Menu <ArrowRight size={16} />
+              </span>
+            </button>
           </Link>
         </div>
       </div>

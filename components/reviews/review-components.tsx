@@ -35,8 +35,8 @@ function StarRating({
             size={interactive ? 24 : 16}
             className={
               i < rating
-                ? "fill-curry-yellow text-curry-yellow"
-                : "text-muted-foreground/30"
+                ? "fill-[#e6c18f] text-[#e6c18f]"
+                : "text-white/20"
             }
           />
         </button>
@@ -47,11 +47,11 @@ function StarRating({
 
 export function ReviewCard({ review }: { review: Review }) {
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-[#0a0a0a] border-white/10 text-white shadow-none transition-colors hover:border-[#e6c18f]/40 hover:bg-white/5">
       <CardContent className="p-6">
         <div className="flex items-center gap-3">
           {review.image_url ? (
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-white/10">
               <Image
                 src={review.image_url}
                 alt={review.name}
@@ -61,16 +61,16 @@ export function ReviewCard({ review }: { review: Review }) {
               />
             </div>
           ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-curry-yellow/20 text-lg font-bold text-soft-gold">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e6c18f]/10 text-lg font-bold text-[#e6c18f] border border-white/10">
               {review.name[0]}
             </div>
           )}
           <div>
-            <p className="font-semibold">{review.name}</p>
+            <p className="font-semibold text-white tracking-wide">{review.name}</p>
             <StarRating rating={review.rating} />
           </div>
         </div>
-        <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
+        <p className="mt-5 text-sm text-white/70 leading-relaxed font-light">
           &ldquo;{review.review}&rdquo;
         </p>
       </CardContent>
@@ -88,8 +88,25 @@ export function ReviewForm() {
     e.preventDefault();
     setStatus("loading");
 
+    const emailPayload = {
+      to: "customer@example.com", // Dummy email, the API requires it, but will send to OWNER_EMAIL anyway if configured
+      subject: "Thank you for your review",
+      text: "Thank you for your review! It is pending approval.",
+      ownerSubject: "⭐ New Review Pending Approval",
+      ownerText: `A new review was submitted by ${name} (${rating} stars).\n\nReview:\n${review}\n\nPlease check the admin dashboard to approve it.`,
+    };
+
     if (!isSupabaseConfigured()) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        try {
+          await fetch("/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(emailPayload),
+          });
+        } catch (e) {
+          console.error(e);
+        }
         setStatus("success");
         setName("");
         setReview("");
@@ -99,7 +116,18 @@ export function ReviewForm() {
     }
 
     const supabase = createClient();
-    await supabase.from("reviews").insert({ name, rating, review });
+    await supabase.from("reviews").insert({ name, rating, review, is_approved: false });
+    
+    try {
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emailPayload),
+      });
+    } catch (e) {
+      console.error("Failed to send review email", e);
+    }
+
     setStatus("success");
     setName("");
     setReview("");
@@ -107,51 +135,56 @@ export function ReviewForm() {
   };
 
   return (
-    <Card>
+    <Card className="bg-[#0a0a0a] border-white/10 text-white">
       <CardContent className="p-6">
-        <h3 className="mb-6 text-xl font-semibold">Share Your Experience</h3>
+        <h3 className="mb-6 text-xl font-display font-semibold text-white">Share Your Experience</h3>
         {status === "success" ? (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className="py-8 text-center"
           >
-            <div className="stamp-effect mx-auto mb-4 inline-block text-lg">
+            <div className="stamp-effect mx-auto mb-4 inline-block text-lg border-[#e6c18f] text-[#e6c18f]">
               ありがとう
             </div>
-            <p className="text-muted-foreground">Thank you for your review!</p>
+            <p className="text-[#e6c18f] font-medium tracking-wide">Thank you for your review!</p>
+            <p className="text-white/60 text-sm mt-2 font-light">Your review is pending approval and will appear shortly.</p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="review-name">Your Name</Label>
+              <Label htmlFor="review-name" className="text-white/70">Your Name</Label>
               <Input
                 id="review-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="mt-1.5"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#e6c18f] rounded-none"
               />
             </div>
             <div>
-              <Label>Rating</Label>
+              <Label className="text-white/70">Rating</Label>
               <div className="mt-1.5">
                 <StarRating rating={rating} onRate={setRating} interactive />
               </div>
             </div>
             <div>
-              <Label htmlFor="review-text">Your Review</Label>
+              <Label htmlFor="review-text" className="text-white/70">Your Review</Label>
               <Textarea
                 id="review-text"
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 required
-                className="mt-1.5"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#e6c18f] rounded-none min-h-[100px]"
               />
             </div>
-            <Button type="submit" disabled={status === "loading"} className="w-full">
+            <button 
+              type="submit" 
+              disabled={status === "loading"} 
+              className="w-full h-12 mt-4 bg-[#e6c18f] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+            >
               {status === "loading" ? "Submitting..." : "Submit Review"}
-            </Button>
+            </button>
           </form>
         )}
       </CardContent>

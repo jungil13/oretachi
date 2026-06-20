@@ -35,6 +35,28 @@ export async function getFeaturedMenuItems(): Promise<MenuItem[]> {
 }
 
 export async function getReviews(): Promise<Review[]> {
+  // When Supabase is not configured (e.g., local dev), fall back to seeded data.
+  if (!isSupabaseConfigured()) {
+    return withIds(SEED_REVIEWS).filter(r => r.is_approved !== false);
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  // If the request fails, return seeded reviews (only approved ones)
+  if (error || !data?.length) {
+    return withIds(SEED_REVIEWS).filter(r => r.is_approved !== false);
+  }
+
+  // Supabase may not know about the is_approved column in its typings, so cast and filter manually.
+  const approved = (data as Review[]).filter((r) => r.is_approved);
+  return approved;
+}
+
+export async function getAllReviews(): Promise<Review[]> {
   if (!isSupabaseConfigured()) return withIds(SEED_REVIEWS);
 
   const supabase = await createClient();

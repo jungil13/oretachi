@@ -13,7 +13,7 @@ export function FAQSection({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {items.map((item, i) => {
         const isOpen = openIndex === i;
         const panelId = `faq-panel-${i}`;
@@ -21,23 +21,28 @@ export function FAQSection({
         return (
           <div
             key={item.question}
-            className="overflow-hidden rounded-2xl border border-border bg-card"
+            className="overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-[#e6c18f]/40"
           >
             <button
               id={`faq-trigger-${i}`}
               onClick={() => setOpenIndex(isOpen ? null : i)}
               aria-expanded={isOpen}
               aria-controls={panelId}
-              className="flex w-full items-center justify-between gap-4 p-5 text-left font-medium transition-colors hover:bg-muted/50"
+              className="flex w-full items-center justify-between gap-4 p-6 text-left font-display text-lg tracking-wide text-white transition-colors hover:bg-white/5"
             >
               <span>{item.question}</span>
-              <ChevronDown
-                size={18}
-                className={cn(
-                  "shrink-0 transition-transform duration-300",
-                  isOpen && "rotate-180"
-                )}
-              />
+              <div className={cn(
+                "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 transition-colors",
+                isOpen ? "bg-[#e6c18f] border-[#e6c18f]" : "bg-transparent group-hover:border-[#e6c18f]/50"
+              )}>
+                <ChevronDown
+                  size={16}
+                  className={cn(
+                    "transition-transform duration-300",
+                    isOpen ? "rotate-180 text-black" : "text-[#e6c18f]"
+                  )}
+                />
+              </div>
             </button>
             <AnimatePresence initial={false}>
               {isOpen && (
@@ -50,7 +55,7 @@ export function FAQSection({
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: item.answer }} />
+                  <div className="px-6 pb-6 text-base leading-relaxed text-white/70 font-light tracking-wide" dangerouslySetInnerHTML={{ __html: item.answer }} />
                 </motion.div>
               )}
             </AnimatePresence>

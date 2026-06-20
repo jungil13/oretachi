@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FadeUp } from "@/components/animations/motion";
 import { Mail } from "lucide-react";
@@ -66,36 +65,40 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="japanese-pattern py-16 md:py-24">
+    <section className="py-16 md:py-24 border-t border-white/5 relative z-10 bg-black">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
         <FadeUp>
-          <Mail className="mx-auto mb-4 text-curry-yellow" size={32} />
-          <h2 className="font-display text-3xl font-bold md:text-4xl">
+          <Mail className="mx-auto mb-6 text-[#e6c18f]" size={40} strokeWidth={1} />
+          <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
             Join Our Curry Club
           </h2>
-          <p className="mt-3 text-muted-foreground">
+          <p className="mt-4 text-white/60 font-light tracking-wide">
             Subscribe for exclusive offers, new menu alerts, and loyalty rewards.
           </p>
         </FadeUp>
         <FadeUp delay={0.2}>
-          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1"
+              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-[#e6c18f] h-14 px-6 rounded-none transition-colors hover:border-white/20"
             />
-            <Button type="submit" disabled={status === "loading"}>
+            <button 
+              type="submit" 
+              disabled={status === "loading"}
+              className="h-14 px-8 bg-[#e6c18f] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+            >
               {status === "loading" ? "Subscribing..." : "Subscribe"}
-            </Button>
+            </button>
           </form>
           {status === "success" && (
-            <p className="mt-3 text-sm text-green-600">Welcome to the Curry Club!</p>
+            <p className="mt-4 text-sm font-medium tracking-wide text-[#e6c18f]">Welcome to the Curry Club!</p>
           )}
           {status === "error" && (
-            <p className="mt-3 text-sm text-red-500">Something went wrong. Please try again.</p>
+            <p className="mt-4 text-sm font-medium tracking-wide text-red-400">Something went wrong. Please try again.</p>
           )}
         </FadeUp>
       </div>

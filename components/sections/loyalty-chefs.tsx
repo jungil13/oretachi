@@ -27,30 +27,34 @@ const ROLE_ORDER: Record<string, number> = {
 
 export function StatsSection() {
   return (
-    <section className="bg-deep-black py-16 text-pure-white md:py-24">
+    <section className="bg-black py-16 md:py-24 border-t border-white/5 relative z-10">
       <div className="page-container">
-        <FadeUp className="text-center">
-          <p className="text-sm font-medium tracking-widest text-curry-yellow uppercase">
-            Our Promise
-          </p>
-          <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
+        <FadeUp className="text-center flex flex-col items-center">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+            <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+              Our Promise
+            </p>
+            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+          </div>
+          <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
             Why Choose Us
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-pure-white/60">
+          <p className="mx-auto mt-4 max-w-2xl text-white/60 font-light tracking-wide">
             We bring the soul of Osaka curry culture to Cebu — authentic flavors,
             premium ingredients, and heartfelt hospitality in every bowl.
           </p>
         </FadeUp>
 
-        <StaggerContainer className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerContainer className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((stat) => (
             <StaggerItem key={stat.label}>
-              <div className="group glass rounded-2xl p-6 text-center transition-all duration-300 hover:border-curry-yellow/30 hover:shadow-[0_0_30px_rgba(255,193,7,0.08)]">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-curry-yellow/10 transition-colors group-hover:bg-curry-yellow/20">
-                  <stat.icon className="text-curry-yellow" size={26} />
+              <div className="group border border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl p-8 text-center transition-all duration-300 hover:border-[#e6c18f]/40 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(230,193,143,0.08)]">
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#e6c18f]/10 transition-colors group-hover:bg-[#e6c18f]/20">
+                  <stat.icon className="text-[#e6c18f]" size={28} />
                 </div>
-                <p className="text-3xl font-bold text-curry-yellow">{stat.value}</p>
-                <p className="mt-1 text-sm text-pure-white/60">{stat.label}</p>
+                <p className="font-display text-4xl font-medium text-white mb-2">{stat.value}</p>
+                <p className="text-xs font-semibold tracking-wider text-[#e6c18f] uppercase">{stat.label}</p>
               </div>
             </StaggerItem>
           ))}
@@ -104,31 +108,35 @@ export function ChefShowcase() {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 overflow-hidden">
+    <section className="py-16 md:py-24 overflow-hidden relative z-10 bg-black">
       <div className="page-container relative">
-        <FadeUp className="mb-12 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <p className="text-sm font-medium tracking-widest text-soft-gold uppercase">
-              Our Team
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
+        <FadeUp className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="flex flex-col items-center md:items-start">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+              <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+                Our Team
+              </p>
+              <div className="h-[1px] w-8 bg-[#e6c18f]/50 md:hidden"></div>
+            </div>
+            <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
               Meet Our Team
             </h2>
-            <p className="mt-3 max-w-xl text-muted-foreground">
+            <p className="mt-4 max-w-xl text-white/60 font-light tracking-wide text-center md:text-left">
               Passionate culinary artisans and staff dedicated to crafting the perfect Japanese curry experience for you.
             </p>
           </div>
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <button 
               onClick={() => scroll('left')}
-              className="p-3 rounded-full border border-border bg-card hover:bg-muted transition-colors text-foreground"
+              className="flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-transparent hover:border-[#e6c18f] hover:bg-[#e6c18f]/10 transition-all text-white/70 hover:text-[#e6c18f]"
               aria-label="Scroll Left"
             >
               <ChevronLeft size={20} />
             </button>
             <button 
               onClick={() => scroll('right')}
-              className="p-3 rounded-full border border-border bg-card hover:bg-muted transition-colors text-foreground"
+              className="flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-transparent hover:border-[#e6c18f] hover:bg-[#e6c18f]/10 transition-all text-white/70 hover:text-[#e6c18f]"
               aria-label="Scroll Right"
             >
               <ChevronRight size={20} />
@@ -144,23 +152,23 @@ export function ChefShowcase() {
           >
             {team.map((member, i) => (
               <FadeUp key={member.id} delay={i * 0.05} className="snap-start shrink-0 w-[280px] sm:w-[320px]">
-                <div className="group overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:border-soft-gold/40 hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+                <div className="group overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] transition-all duration-300 hover:border-[#e6c18f]/40 hover:shadow-[0_0_30px_rgba(230,193,143,0.1)] flex flex-col h-full">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-black">
                     <Image
                       src={member.image_url || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"}
                       alt={member.name}
                       fill
                       quality={100}
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
                       sizes="(max-width: 640px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-deep-black/80 via-deep-black/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
                     
-                    <div className="absolute bottom-0 left-0 w-full p-6 text-pure-white translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
-                      <p className="text-xs font-bold tracking-widest text-curry-yellow uppercase mb-2">
+                    <div className="absolute bottom-0 left-0 w-full p-6 text-white translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+                      <p className="text-[10px] font-bold tracking-[0.2em] text-[#e6c18f] uppercase mb-2">
                         {member.role}
                       </p>
-                      <h3 className="text-xl font-bold leading-tight drop-shadow-md">
+                      <h3 className="font-display text-2xl font-medium leading-tight drop-shadow-md">
                         {member.name}
                       </h3>
                     </div>
@@ -169,7 +177,7 @@ export function ChefShowcase() {
               </FadeUp>
             ))}
             {team.length === 0 && (
-              <p className="w-full text-center text-muted-foreground py-12">Loading team members...</p>
+              <p className="w-full text-center text-white/50 py-12 font-light tracking-wide">Loading team members...</p>
             )}
           </div>
         </div>

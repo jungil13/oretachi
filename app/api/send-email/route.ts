@@ -11,6 +11,7 @@ export async function POST(request: Request) {
       text,
       html,
       ownerText,
+      ownerSubject,
     } = body;
 
     await sendEmail({
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     if (process.env.OWNER_EMAIL) {
       await sendEmail({
         to: process.env.OWNER_EMAIL,
-        subject: "🔔 New Reservation Received",
+        subject: ownerSubject || "🔔 New Notification",
         text: ownerText || text,
       });
     }

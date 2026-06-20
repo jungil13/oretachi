@@ -39,6 +39,7 @@ export interface Review {
   rating: number;
   review: string;
   image_url: string | null;
+  is_approved?: boolean;
   created_at: string;
 }
 
