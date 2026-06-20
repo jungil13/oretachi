@@ -7,19 +7,19 @@ import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 
 const SOCIAL_LINKS = [
     {
-      icon: FaInstagram,
-      label: "Instagram",
-      href: "https://www.instagram.com/oretachinocurryphilippines",
+        icon: FaInstagram,
+        label: "Instagram",
+        href: "https://www.instagram.com/oretachinocurryphilippines",
     },
     {
-      icon: FaFacebook,
-      label: "Facebook",
-      href: "https://www.facebook.com/OretachinoCurryPhilippines",
+        icon: FaFacebook,
+        label: "Facebook",
+        href: "https://www.facebook.com/OretachinoCurryPhilippines",
     },
     {
-      icon: FaTiktok,
-      label: "TikTok",
-      href: "https://www.tiktok.com/@oretachino.curryya",
+        icon: FaTiktok,
+        label: "TikTok",
+        href: "https://www.tiktok.com/@oretachino.curryya",
     },
 ];
 
@@ -37,7 +37,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FACC15] uppercase">
                             Explore
                         </h4>
                         <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-pure-white/60 sm:grid-cols-1">
@@ -55,28 +55,28 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FACC15] uppercase">
                             Contact
                         </h4>
                         <ul className="space-y-3 text-sm text-pure-white/60">
                             <li className="flex items-start gap-2.5">
-                                <MapPin size={16} className="mt-0.5 shrink-0 text-[#e6c18f]" />
+                                <MapPin size={16} className="mt-0.5 shrink-0 text-[#FACC15]" />
                                 <span>{CONTACT_INFO.address}</span>
                             </li>
                             <li className="flex items-center gap-2.5">
-                                <Phone size={16} className="shrink-0 text-[#e6c18f]" />
+                                <Phone size={16} className="shrink-0 text-[#FACC15]" />
                                 <a
                                     href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
-                                    className="transition-colors hover:text-[#e6c18f]"
+                                    className="transition-colors hover:text-[#FACC15]"
                                 >
                                     {CONTACT_INFO.phone}
                                 </a>
                             </li>
                             <li className="flex items-center gap-2.5">
-                                <Mail size={16} className="shrink-0 text-[#e6c18f]" />
+                                <Mail size={16} className="shrink-0 text-[#FACC15]" />
                                 <a
                                     href={`mailto:${CONTACT_INFO.email}`}
-                                    className="transition-colors hover:text-[#e6c18f]"
+                                    className="transition-colors hover:text-[#FACC15]"
                                 >
                                     {CONTACT_INFO.email}
                                 </a>
@@ -85,7 +85,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#e6c18f] uppercase">
+                        <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FACC15] uppercase">
                             Follow Us
                         </h4>
                         <p className="mb-4 text-sm text-pure-white/60">

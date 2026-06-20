@@ -24,7 +24,7 @@ export function HeroSection() {
       const now = new Date();
       const target = new Date(TARGET_DATE);
       const difference = target.getTime() - now.getTime();
-      
+
       const grandOpeningEnd = target.getTime() + 24 * 60 * 60 * 1000;
 
       if (difference > 0) {
@@ -97,16 +97,16 @@ export function HeroSection() {
       <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 border border-white/20 rotate-45 hover:border-curry-yellow transition-colors cursor-pointer z-20">
         <ChevronLeft className="-rotate-45 text-white/50 hover:text-white transition-colors" size={24} />
       </div>
-      
+
       <div className="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 border border-white/20 rotate-45 hover:border-curry-yellow transition-colors cursor-pointer z-20">
         <ChevronRight className="-rotate-45 text-white/50 hover:text-white transition-colors" size={24} />
       </div>
 
       <div className="absolute right-10 bottom-32 hidden xl:flex flex-col items-center gap-2 z-20">
         <div className="w-[1px] h-24 bg-white/20 mb-4"></div>
-        <Link href="/reservations" className="group flex flex-col items-center p-4 border border-[#e6c18f] bg-[#e6c18f]/10 backdrop-blur-sm hover:bg-[#e6c18f] transition-all">
-          <CalendarDays size={24} className="text-[#e6c18f] group-hover:text-black mb-2" />
-          <span className="text-[10px] font-bold tracking-widest text-[#e6c18f] group-hover:text-black uppercase text-center w-16">Book a Table</span>
+        <Link href="/reservations" className="group flex flex-col items-center p-4 border border-[#FACC15] bg-[#FACC15]/10 backdrop-blur-sm hover:bg-[#FACC15] transition-all">
+          <CalendarDays size={24} className="text-[#FACC15] group-hover:text-black mb-2" />
+          <span className="text-[10px] font-bold tracking-widest text-[#FACC15] group-hover:text-black uppercase text-center w-16">Book a Table</span>
         </Link>
       </div>
 
@@ -128,7 +128,7 @@ export function HeroSection() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#e6c18f]/30 bg-[#e6c18f]/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#e6c18f]"
+                    className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FACC15]/30 bg-[#FACC15]/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#FACC15]"
                   >
                     <MapPin size={14} className="shrink-0" />
                     <span>Coming Soon to Cebu</span>
@@ -150,12 +150,12 @@ export function HeroSection() {
                         key={unit.label}
                         whileHover={{ y: -4 }}
                         transition={{ duration: 0.2 }}
-                        className="group relative flex h-20 w-20 flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:border-[#e6c18f]/40 hover:shadow-[0_0_30px_rgba(230,193,143,0.15)] sm:h-24 sm:w-24"
+                        className="group relative flex h-20 w-20 flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:border-[#FACC15]/40 hover:shadow-[0_0_30px_rgba(250,204,21,0.15)] sm:h-24 sm:w-24"
                       >
                         <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#e6c18f]/10 via-transparent to-[#e6c18f]/5" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#FACC15]/10 via-transparent to-[#FACC15]/5" />
                         </div>
-                        <span className="relative z-10 text-2xl font-black tracking-tight text-white transition-colors duration-300 group-hover:text-[#e6c18f] sm:text-3xl">
+                        <span className="relative z-10 text-2xl font-black tracking-tight text-white transition-colors duration-300 group-hover:text-[#FACC15] sm:text-3xl">
                           {String(unit.value).padStart(2, "0")}
                         </span>
                         <span className="relative z-10 mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors duration-300 group-hover:text-white/80">
@@ -174,7 +174,7 @@ export function HeroSection() {
                   transition={{ duration: 0.5 }}
                   className="mb-8"
                 >
-                  <span className="inline-block rounded-full border border-[#e6c18f] bg-[#e6c18f]/20 px-6 py-2 text-sm sm:text-base font-bold tracking-[0.3em] text-[#e6c18f] uppercase animate-pulse shadow-[0_0_20px_rgba(230,193,143,0.3)]">
+                  <span className="inline-block rounded-full border border-[#FACC15] bg-[#FACC15]/20 px-6 py-2 text-sm sm:text-base font-bold tracking-[0.3em] text-[#FACC15] uppercase animate-pulse shadow-[0_0_20px_rgba(250,204,21,0.3)]">
                     Grand Opening Today
                   </span>
                 </motion.div>
@@ -182,11 +182,11 @@ export function HeroSection() {
 
               {status === "default" && (
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
-                  <span className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+                  <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
+                  <span className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#FACC15] uppercase">
                     Delightful Experience
                   </span>
-                  <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+                  <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
                 </div>
               )}
             </>
@@ -205,8 +205,8 @@ export function HeroSection() {
 
           {/* CTA Button */}
           <Link href="/menu">
-            <button className="group relative overflow-hidden border border-[#e6c18f] bg-transparent px-8 py-4 transition-all hover:bg-[#e6c18f]">
-              <span className="relative z-10 text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#e6c18f] transition-colors group-hover:text-black uppercase">
+            <button className="group relative overflow-hidden border border-[#FACC15] bg-transparent px-8 py-4 transition-all hover:bg-[#FACC15]">
+              <span className="relative z-10 text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#FACC15] transition-colors group-hover:text-black uppercase">
                 View Our Menu
               </span>
             </button>

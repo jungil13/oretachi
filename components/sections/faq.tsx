@@ -21,7 +21,7 @@ export function FAQSection({
         return (
           <div
             key={item.question}
-            className="overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-[#e6c18f]/40"
+            className="overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-[#FACC15]/40"
           >
             <button
               id={`faq-trigger-${i}`}
@@ -33,13 +33,13 @@ export function FAQSection({
               <span>{item.question}</span>
               <div className={cn(
                 "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 transition-colors",
-                isOpen ? "bg-[#e6c18f] border-[#e6c18f]" : "bg-transparent group-hover:border-[#e6c18f]/50"
+                isOpen ? "bg-[#FACC15] border-[#FACC15]" : "bg-transparent group-hover:border-[#FACC15]/50"
               )}>
                 <ChevronDown
                   size={16}
                   className={cn(
                     "transition-transform duration-300",
-                    isOpen ? "rotate-180 text-black" : "text-[#e6c18f]"
+                    isOpen ? "rotate-180 text-black" : "text-[#FACC15]"
                   )}
                 />
               </div>

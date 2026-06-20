@@ -26,18 +26,18 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
       <div className="page-container relative z-10">
         <FadeUp className="mb-12 text-center flex flex-col items-center">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
-            <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+            <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
+            <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#FACC15] uppercase">
               Chef&apos;s Selection
             </p>
-            <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+            <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
           </div>
           <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
             Featured Dishes
           </h2>
         </FadeUp>
 
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(230,193,143,0.05)]">
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(250,204,21,0.05)]">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -62,7 +62,7 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
                 <p className="max-w-md text-white/70 font-light tracking-wide mb-4">
                   {items[current].description}
                 </p>
-                <p className="text-xl font-bold text-[#e6c18f] tracking-wider">
+                <p className="text-xl font-bold text-[#FACC15] tracking-wider">
                   {formatPrice(items[current].price)}
                 </p>
               </div>
@@ -76,9 +76,8 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
                 onClick={() => setCurrent(i)}
                 aria-label={`View ${item.name}`}
                 aria-current={i === current ? "true" : undefined}
-                className={`h-1 transition-all rounded-full ${
-                  i === current ? "w-8 bg-[#e6c18f]" : "w-3 bg-white/30 hover:bg-white/50"
-                }`}
+                className={`h-1 transition-all rounded-full ${i === current ? "w-8 bg-[#FACC15]" : "w-3 bg-white/30 hover:bg-white/50"
+                  }`}
               />
             ))}
           </div>
@@ -86,8 +85,8 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
 
         <div className="mt-12 text-center">
           <Link href="/menu">
-            <button className="group relative overflow-hidden border border-[#e6c18f] bg-transparent px-8 py-3 transition-all hover:bg-[#e6c18f]">
-              <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#e6c18f] transition-colors group-hover:text-black uppercase">
+            <button className="group relative overflow-hidden border border-[#FACC15] bg-transparent px-8 py-3 transition-all hover:bg-[#FACC15]">
+              <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#FACC15] transition-colors group-hover:text-black uppercase">
                 View Full Menu <ArrowRight size={16} />
               </span>
             </button>

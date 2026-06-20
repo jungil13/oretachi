@@ -103,17 +103,17 @@ export function Navbar() {
 
         {/* Desktop Actions */}
         <div className="hidden flex-1 items-center justify-end gap-6 lg:flex">
-          <Link href="/reservations" className="group relative overflow-hidden bg-[#e6c18f] px-6 py-2.5 text-xs font-bold tracking-[0.2em] text-black transition-all hover:bg-white">
+          <Link href="/reservations" className="group relative overflow-hidden bg-curry-yellow px-6 py-2.5 text-xs font-bold tracking-[0.2em] text-black transition-all hover:bg-white">
             FIND A TABLE
           </Link>
           <button aria-label="Menu" onClick={() => setOpen(true)} className="text-white hover:text-curry-yellow transition-colors">
-             <Menu size={28} />
+            <Menu size={28} />
           </button>
         </div>
 
         {/* Mobile Actions */}
         <div className="flex items-center gap-4 lg:hidden">
-           <Link href="/reservations" className="bg-[#e6c18f] px-4 py-2 text-[10px] font-bold tracking-widest text-black transition-all hover:bg-white">
+          <Link href="/reservations" className="bg-curry-yellow px-4 py-2 text-[10px] font-bold tracking-widest text-black transition-all hover:bg-white">
             FIND A TABLE
           </Link>
           <button

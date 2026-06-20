@@ -44,7 +44,7 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      
+
       <div className="bg-black text-white">
         <FeaturedCarousel items={featured} />
         <StatsSection />
@@ -54,11 +54,11 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 md:px-6 relative z-10">
             <FadeUp className="mb-12 text-center flex flex-col items-center">
               <div className="flex items-center gap-4 mb-4">
-                <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
-                <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#e6c18f] uppercase">
+                <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
+                <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#FACC15] uppercase">
                   Testimonials
                 </p>
-                <div className="h-[1px] w-8 bg-[#e6c18f]/50"></div>
+                <div className="h-[1px] w-8 bg-[#FACC15]/50"></div>
               </div>
               <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
                 What Our Guests Say
@@ -73,8 +73,8 @@ export default async function HomePage() {
             </StaggerContainer>
             <div className="mt-12 text-center">
               <Link href="/reviews">
-                <button className="group relative overflow-hidden border border-[#e6c18f] bg-transparent px-8 py-3 transition-all hover:bg-[#e6c18f]">
-                  <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#e6c18f] transition-colors group-hover:text-black uppercase">
+                <button className="group relative overflow-hidden border border-[#FACC15] bg-transparent px-8 py-3 transition-all hover:bg-[#FACC15]">
+                  <span className="relative z-10 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#FACC15] transition-colors group-hover:text-black uppercase">
                     All Reviews <ArrowRight size={16} />
                   </span>
                 </button>

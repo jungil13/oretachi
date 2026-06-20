@@ -35,7 +35,7 @@ function StarRating({
             size={interactive ? 24 : 16}
             className={
               i < rating
-                ? "fill-[#e6c18f] text-[#e6c18f]"
+                ? "fill-[#FACC15] text-[#FACC15]"
                 : "text-white/20"
             }
           />
@@ -47,7 +47,7 @@ function StarRating({
 
 export function ReviewCard({ review }: { review: Review }) {
   return (
-    <Card className="h-full bg-[#0a0a0a] border-white/10 text-white shadow-none transition-colors hover:border-[#e6c18f]/40 hover:bg-white/5">
+    <Card className="h-full bg-[#0a0a0a] border-white/10 text-white shadow-none transition-colors hover:border-[#FACC15]/40 hover:bg-white/5">
       <CardContent className="p-6">
         <div className="flex items-center gap-3">
           {review.image_url ? (
@@ -61,7 +61,7 @@ export function ReviewCard({ review }: { review: Review }) {
               />
             </div>
           ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e6c18f]/10 text-lg font-bold text-[#e6c18f] border border-white/10">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FACC15]/10 text-lg font-bold text-[#FACC15] border border-white/10">
               {review.name[0]}
             </div>
           )}
@@ -117,7 +117,7 @@ export function ReviewForm() {
 
     const supabase = createClient();
     await supabase.from("reviews").insert({ name, rating, review, is_approved: false } as any);
-    
+
     try {
       await fetch("/api/send-email", {
         method: "POST",
@@ -144,10 +144,10 @@ export function ReviewForm() {
             animate={{ scale: 1, opacity: 1 }}
             className="py-8 text-center"
           >
-            <div className="stamp-effect mx-auto mb-4 inline-block text-lg border-[#e6c18f] text-[#e6c18f]">
+            <div className="stamp-effect mx-auto mb-4 inline-block text-lg border-[#FACC15] text-[#FACC15]">
               ありがとう
             </div>
-            <p className="text-[#e6c18f] font-medium tracking-wide">Thank you for your review!</p>
+            <p className="text-[#FACC15] font-medium tracking-wide">Thank you for your review!</p>
             <p className="text-white/60 text-sm mt-2 font-light">Your review is pending approval and will appear shortly.</p>
           </motion.div>
         ) : (
@@ -159,7 +159,7 @@ export function ReviewForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#e6c18f] rounded-none"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none"
               />
             </div>
             <div>
@@ -175,13 +175,13 @@ export function ReviewForm() {
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 required
-                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#e6c18f] rounded-none min-h-[100px]"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none min-h-[100px]"
               />
             </div>
-            <button 
-              type="submit" 
-              disabled={status === "loading"} 
-              className="w-full h-12 mt-4 bg-[#e6c18f] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="w-full h-12 mt-4 bg-[#FACC15] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
             >
               {status === "loading" ? "Submitting..." : "Submit Review"}
             </button>

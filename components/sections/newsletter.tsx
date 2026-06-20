@@ -68,7 +68,7 @@ export function NewsletterSection() {
     <section className="py-16 md:py-24 border-t border-white/5 relative z-10 bg-black">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
         <FadeUp>
-          <Mail className="mx-auto mb-6 text-[#e6c18f]" size={40} strokeWidth={1} />
+          <Mail className="mx-auto mb-6 text-[#FACC15]" size={40} strokeWidth={1} />
           <h2 className="font-display text-3xl font-bold md:text-4xl text-white">
             Join Our Curry Club
           </h2>
@@ -84,18 +84,18 @@ export function NewsletterSection() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-[#e6c18f] h-14 px-6 rounded-none transition-colors hover:border-white/20"
+              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-[#FACC15] h-14 px-6 rounded-none transition-colors hover:border-white/20"
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={status === "loading"}
-              className="h-14 px-8 bg-[#e6c18f] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+              className="h-14 px-8 bg-[#FACC15] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
             >
               {status === "loading" ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
           {status === "success" && (
-            <p className="mt-4 text-sm font-medium tracking-wide text-[#e6c18f]">Welcome to the Curry Club!</p>
+            <p className="mt-4 text-sm font-medium tracking-wide text-[#FACC15]">Welcome to the Curry Club!</p>
           )}
           {status === "error" && (
             <p className="mt-4 text-sm font-medium tracking-wide text-red-400">Something went wrong. Please try again.</p>

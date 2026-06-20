@@ -45,7 +45,7 @@ export default function AdminReviewsPage() {
     <div>
       <h1 className="text-2xl font-bold">Reviews Management</h1>
       <p className="text-muted-foreground mt-2">Approve or reject customer reviews before they appear on the site.</p>
-      
+
       <div className="mt-6 space-y-3">
         {items.map((item) => (
           <div key={item.id || item.name} className={`rounded-xl border ${item.is_approved ? 'border-border bg-card' : 'border-yellow-500/50 bg-yellow-500/5'} p-4`}>
@@ -56,7 +56,7 @@ export default function AdminReviewsPage() {
                   {item.is_approved ? (
                     <span className="text-[10px] font-bold uppercase tracking-wider text-green-500 bg-green-500/10 px-2 py-0.5 rounded-full">Approved</span>
                   ) : (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-yellow-500 bg-yellow-500/10 px-2 py-0.5 rounded-full">Pending</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#FACC15]-500 bg-yellow-500/10 px-2 py-0.5 rounded-full">Pending</span>
                   )}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">{item.review}</p>
