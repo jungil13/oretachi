@@ -116,7 +116,7 @@ export function ReviewForm() {
     }
 
     const supabase = createClient();
-    await supabase.from("reviews").insert({ name, rating, review, is_approved: false });
+    await supabase.from("reviews").insert({ name, rating, review, is_approved: false } as any);
     
     try {
       await fetch("/api/send-email", {
