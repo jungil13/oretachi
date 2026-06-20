@@ -36,7 +36,7 @@ export default function AdminReviewsPage() {
   const approve = async (id: string) => {
     if (isSupabaseConfigured()) {
       const supabase = createClient();
-      await supabase.from("reviews").update({ is_approved: true }).eq("id", id);
+      await supabase.from("reviews").update({ is_approved: true } as any).eq("id", id);
       load();
     }
   };
