@@ -5,120 +5,73 @@ export const MENU_CATEGORIES = [
   "RAMEN",
   "KIDS MENU",
   "TOPPINGS",
-  "DRINKS",
+  "COFFEE",
+  "AKA SIGNATURE DRINK",
+  "MATCHA",
+  "NON COFFEE",
+  "TEA",
 ] as const;
 
 export const GALLERY_CATEGORIES = ["Food", "Restaurant Interior", "Customers", "Events"] as const;
 
 export const SEED_MENU_ITEMS: Omit<MenuItem, "id" | "created_at">[] = [
-  {
-    name: "Osaka Signature Curry",
-    description: "Our legendary house blend with 12 secret spices, slow-cooked for 48 hours.",
-    price: 450,
-    image_url: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80",
-    category: "Signature Curry",
-    spice_level: 2,
-    featured: true,
-  },
-  {
-    name: "Premium Katsu Curry",
-    description: "Crispy panko pork cutlet served over fragrant Japanese rice with rich curry.",
-    price: 520,
-    image_url: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80",
-    category: "Katsu Curry",
-    spice_level: 1,
-    featured: true,
-  },
-  {
-    name: "Beef Hayashi Curry",
-    description: "Tender beef simmered in a demi-glace curry sauce with mushrooms and onions.",
-    price: 580,
-    image_url: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",
-    category: "Beef Curry",
-    spice_level: 2,
-    featured: true,
-  },
-  {
-    name: "Chicken Nanban Curry",
-    description: "Southern-style fried chicken with tartar sauce over our signature curry.",
-    price: 480,
-    image_url: "https://images.unsplash.com/photo-1588166524941-3bf61a837559?w=800&q=80",
-    category: "Chicken Curry",
-    spice_level: 2,
-    featured: false,
-  },
-  {
-    name: "Seafood Medley Curry",
-    description: "Fresh prawns, scallops, and fish in a creamy coconut-infused curry.",
-    price: 650,
-    image_url: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",
-    category: "Seafood Curry",
-    spice_level: 1,
-    featured: false,
-  },
-  {
-    name: "Vegetable Katsu Curry",
-    description: "Seasonal vegetables in crispy panko over rice with mild golden curry.",
-    price: 420,
-    image_url: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80",
-    category: "Katsu Curry",
-    spice_level: 0,
-    featured: false,
-  },
-  {
-    name: "Spicy Beef Keema Curry",
-    description: "Minced beef with peas and carrots in a bold, aromatic curry roux.",
-    price: 490,
-    image_url: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",
-    category: "Beef Curry",
-    spice_level: 3,
-    featured: false,
-  },
-  {
-    name: "Curry Rice Bowl",
-    description: "Classic Japanese curry over steamed rice with pickled ginger on the side.",
-    price: 380,
-    image_url: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80",
-    category: "Rice Bowls",
-    spice_level: 1,
-    featured: false,
-  },
-  {
-    name: "Cheese Katsu Curry",
-    description: "Melted cheese over crispy katsu with our signature curry sauce.",
-    price: 550,
-    image_url: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80",
-    category: "Katsu Curry",
-    spice_level: 1,
-    featured: true,
-  },
-  {
-    name: "Gyoza (6 pcs)",
-    description: "Pan-fried pork dumplings with tangy dipping sauce.",
-    price: 180,
-    image_url: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&q=80",
-    category: "Appetizers",
-    spice_level: 0,
-    featured: false,
-  },
-  {
-    name: "Matcha Ice Cream",
-    description: "Premium Uji matcha soft serve with sweet red bean.",
-    price: 150,
-    image_url: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80",
-    category: "Desserts",
-    spice_level: 0,
-    featured: false,
-  },
-  {
-    name: "Japanese Iced Coffee",
-    description: "Slow-drip Kyoto-style coffee served over ice.",
-    price: 120,
-    image_url: "https://images.unsplash.com/photo-1461023058943-f07a80be3440?w=800&q=80",
-    category: "Drinks",
-    spice_level: 0,
-    featured: false,
-  },
+  // CURRY RICE
+  { name: "PORK CUTLET CURRY", description: "ポークカツカレー", price: 300, image_url: "/images/img (11).jpg", category: "CURRY RICE", spice_level: 1, featured: true },
+  { name: "PLAIN CURRY", description: "プレーンカレー", price: 300, image_url: "/images/img (1).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "FRIED SHRIMP CURRY", description: "エビフライカレー", price: 300, image_url: "/images/img (2).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "SWEET AND SPICY BEEF CURRY", description: "甘辛いビーフカレー", price: 300, image_url: "/images/img (3).jpg", category: "CURRY RICE", spice_level: 2, featured: false },
+  { name: "CHICKEN CUTLET CURRY", description: "チキンカツカレー", price: 300, image_url: "/images/img (4).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "STEWED CHICKEN CURRY", description: "鶏肉の煮込みカレー", price: 300, image_url: "/images/img (5).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "KYOTO GREEN ONION CURRY", description: "京都風青ネギカレー", price: 300, image_url: "/images/img (6).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "BRAISED BEEF TENDON CURRY", description: "牛すじの煮込みカレー", price: 300, image_url: "/images/img (7).jpg", category: "CURRY RICE", spice_level: 2, featured: false },
+  { name: "EGGPLANT CURRY", description: "ナスカレー", price: 300, image_url: "/images/img (8).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "GRILLED CHEESE CURRY", description: "グリルドチーズ カレー", price: 300, image_url: "/images/img (9).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+  { name: "SAUSAGE CURRY", description: "ソーセージカレー", price: 300, image_url: "/images/img (10).jpg", category: "CURRY RICE", spice_level: 1, featured: false },
+
+  // RAMEN
+  { name: "Shrimp Miso Curry Ramen", description: "シュリモ味噌カレーラーメン", price: 300, image_url: "/images/img (12).jpg", category: "RAMEN", spice_level: 1, featured: false },
+  { name: "Chicken Cutlet Ramen", description: "チキンカツ、半熟卵 ネギ、桜エビラーメン (Soft-boiled Egg, Green Onion, Sakura Shrimp)", price: 300, image_url: "/images/img (14).jpg", category: "RAMEN", spice_level: 1, featured: false },
+  { name: "Pork Cutlet Ramen", description: "豚カツ、半熟卵 ネギ、桜エビラーメン (Soft-boiled Egg, Green Onion, Sakura Shrimp)", price: 300, image_url: "/images/img (13).jpg", category: "RAMEN", spice_level: 1, featured: false },
+
+  // KIDS MENU
+  { name: "KIDS SET 1", description: "Rice 150g, Chicken karaage 110g, Fries 70g, Curry sauce", price: 300, image_url: "/images/img (19).jpg", category: "KIDS MENU", spice_level: 0, featured: false },
+  { name: "KIDS SET 2", description: "Rice 150g, Minchi-katsu topped with curry sauce 110g, Fries 70g, Curry sauce", price: 300, image_url: "/images/img (20).jpg", category: "KIDS MENU", spice_level: 0, featured: false },
+  { name: "KIDS SET 3", description: "Rice 150g, Arabiki sausage 2pcs, Fries 70g, Curry sauce", price: 300, image_url: "/images/img (19).jpg", category: "KIDS MENU", spice_level: 0, featured: false },
+
+  // TOPPINGS
+  { name: "FRIED SHRIMP (Topping)", description: "エビフライ", price: 100, image_url: "/images/img (2).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "PORK CUTLET (Topping)", description: "豚カツ", price: 100, image_url: "/images/img (11).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "CHICKEN CUTLET (Topping)", description: "チキンカツ", price: 100, image_url: "/images/img (4).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "SAUSAGE (Topping)", description: "ソーセージ", price: 100, image_url: "/images/img (10).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "EGGPLANT CURRY (Topping)", description: "ナスカレー", price: 100, image_url: "/images/img (8).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "GRILLED CHEESE (Topping)", description: "グリルドチーズ", price: 100, image_url: "/images/img (9).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  { name: "SOFT-BOILED EGG (Topping)", description: "半熟卵", price: 100, image_url: "/images/img (15).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+
+  // DRINKS (Coffee)
+  { name: "Brewed Coffee", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Americano", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Latte", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Spanish Latte", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Flat white", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+
+  // DRINKS (Signature)
+  { name: "Osaka Cream Cloud", description: "AKA SIGNATURE DRINK", price: 100, image_url: "/images/img (18).jpg", category: "DRINKS", spice_level: 0, featured: true },
+
+  // DRINKS (Matcha)
+  { name: "Matcha latte", description: "MATCHA", price: 100, image_url: "/images/img (20).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Seasalt foam matcha", description: "MATCHA", price: 100, image_url: "/images/img (20).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Earl grey matcha", description: "MATCHA", price: 100, image_url: "/images/img (20).jpg", category: "DRINKS", spice_level: 0, featured: false },
+
+  // DRINKS (Non Coffee)
+  { name: "Iced/hot chocolate", description: "NON COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },
+
+  // DRINKS (Tea)
+  { name: "Chamomile Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Earl grey Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Peach Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Lemon & Ginger Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Pure Green Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
+  { name: "Peppermint Tea", description: "TEA (Twinnings)", price: 100, image_url: "/images/img (16).jpg", category: "DRINKS", spice_level: 0, featured: false },
 ];
 
 export const SEED_GALLERY: Omit<GalleryItem, "id" | "created_at">[] = [

@@ -60,15 +60,15 @@ export function HeroSection() {
           playsInline
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="h-full w-full object-cover opacity-60"
+          className="h-full w-full object-cover opacity-80"
         >
           <source src="/videos/oretachi.mp4" type="video/mp4" />
         </motion.video>
 
         {/* Luxury Dark Overlay */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/30" />
         {/* Golden Accent Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
         {/* Curry Golden Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,196,0,0.05),transparent_60%)]" />
       </motion.div>
