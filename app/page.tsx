@@ -51,6 +51,11 @@ export default async function HomePage() {
         <ChefShowcase />
 
         <section className="py-16 md:py-24 relative overflow-hidden">
+          {/* Background Japanese Pattern Overlay */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
           <div className="mx-auto max-w-7xl px-4 md:px-6 relative z-10">
             <FadeUp className="mb-12 text-center flex flex-col items-center">
               <div className="flex items-center gap-4 mb-4">
@@ -84,6 +89,11 @@ export default async function HomePage() {
         </section>
 
         <section className="py-16 md:py-24 relative">
+          {/* Background Japanese Pattern Overlay */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 relative z-10">
             <FadeUp className="mb-12 text-center">
               <h2 className="font-display text-3xl font-bold md:text-4xl text-white">FAQ</h2>

@@ -66,6 +66,11 @@ export function NewsletterSection() {
 
   return (
     <section className="py-16 md:py-24 border-t border-white/5 relative z-10 bg-black">
+      {/* Background Japanese Pattern Overlay */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
       <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
         <FadeUp>
           <Mail className="mx-auto mb-6 text-[#FACC15]" size={40} strokeWidth={1} />

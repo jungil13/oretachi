@@ -23,6 +23,11 @@ export function FeaturedCarousel({ items }: { items: MenuItem[] }) {
 
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
+      {/* Background Japanese Pattern Overlay */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
       <div className="page-container relative z-10">
         <FadeUp className="mb-12 text-center flex flex-col items-center">
           <div className="flex items-center gap-4 mb-4">

@@ -28,6 +28,11 @@ const ROLE_ORDER: Record<string, number> = {
 export function StatsSection() {
   return (
     <section className="bg-black py-16 md:py-24 border-t border-white/5 relative z-10">
+      {/* Background Japanese Pattern Overlay */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
       <div className="page-container">
         <FadeUp className="text-center flex flex-col items-center">
           <div className="flex items-center gap-4 mb-4">
@@ -109,6 +114,11 @@ export function ChefShowcase() {
 
   return (
     <section className="py-16 md:py-24 overflow-hidden relative z-10 bg-black">
+     {/* Background Japanese Pattern Overlay */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
       <div className="page-container relative">
         <FadeUp className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex flex-col items-center md:items-start">
