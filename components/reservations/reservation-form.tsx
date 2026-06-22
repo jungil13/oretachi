@@ -215,10 +215,10 @@ export function ReservationForm() {
 
   return (
     <>
-      <Card className="w-full">
+      <Card className="w-full glass">
         <CardContent className="p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold border-b pb-2">1. Booking Details</h3>
                 <div>
@@ -232,14 +232,15 @@ export function ReservationForm() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">Email <span className="text-green-500 text-xs">(We'll send you updates)</span>
+                  </Label>
                   <Input
                     id="email"
                     type="email"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
                     required
-                    className="mt-1"
+                    className="mt-1 w-full"
                   />
                 </div>
                 <div>
@@ -250,7 +251,7 @@ export function ReservationForm() {
                     value={form.phone}
                     onChange={(e) => update("phone", e.target.value)}
                     required
-                    className="mt-1"
+                    className="mt-1 w-full"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -278,7 +279,7 @@ export function ReservationForm() {
                       value={form.date}
                       onChange={(e) => update("date", e.target.value)}
                       required
-                      className="mt-1"
+                      className="mt-1 w-full"
                     />
                   </div>
                 </div>
@@ -289,7 +290,7 @@ export function ReservationForm() {
                     value={form.time}
                     onChange={(e) => update("time", e.target.value)}
                     required
-                    className="mt-1"
+                    className="mt-1 w-full"
                   >
                     <option value="">Select a time</option>
                     {TIME_SLOTS.map((slot) => (
@@ -305,7 +306,7 @@ export function ReservationForm() {
                     id="special_request"
                     value={form.special_request}
                     onChange={(e) => update("special_request", e.target.value)}
-                    className="mt-1"
+                    className="mt-1 w-full"
                     placeholder="e.g. Dietary restrictions, high chair needed"
                   />
                 </div>
@@ -320,14 +321,14 @@ export function ReservationForm() {
                 <p className="text-xs text-muted-foreground">
                   Pre-order your favorite curries now so they are ready shortly after you are seated.
                 </p>
-                <div className="max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
+                <div className="max-h-[200px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
                   {menuItems.map((item) => {
                     const inCart = cart[item.id];
                     return (
-                      <div key={item.id} className="flex items-center justify-between py-2 px-1">
+                      <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between py-2 px-1">
                         <div className="overflow-hidden pr-2">
-                          <p className="text-sm font-semibold truncate">{item.name}</p>
-                          <p className="text-xs text-muted-foreground">{item.price} PHP</p>
+                          <p className="text-sm font-semibold truncate whitespace-nowrap">{item.name}</p>
+                          <p className="text-xs text-muted-foreground whitespace-nowrap">{item.price} PHP</p>
                         </div>
                         {inCart ? (
                           <div className="flex items-center gap-2 shrink-0">
@@ -388,7 +389,7 @@ export function ReservationForm() {
             </div>
 
             <div className="pt-4 border-t">
-              <Button type="submit" size="lg" className="w-full" disabled={status === "loading"}>
+              <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={status === "loading"}>
                 {status === "loading" ? "Booking..." : "Reserve Table"}
               </Button>
             </div>
@@ -412,9 +413,7 @@ export function ReservationForm() {
               className="w-full max-w-md rounded-2xl bg-card p-8 text-center shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="stamp-effect mx-auto mb-6 inline-block text-2xl bg-curry-yellow/20 text-curry-yellow px-4 py-1.5 rounded-full ring-1 ring-curry-yellow/30">
-                予約完了
-              </div>
+
               <h3 className="text-xl font-bold">Reservation Confirmed!</h3>
               <p className="mt-2 text-muted-foreground">
                 Thank you, {form.name}. We&apos;ve received your reservation for{" "}

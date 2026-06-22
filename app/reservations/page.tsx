@@ -16,23 +16,24 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Book a Table – Best Japanese Curry Restaurant in Cebu | Oretachino Curry Ya",
-    description: "Reserve your spot at Oretachino Curry Ya Cebu for an authentic Osaka curry experience.",
+    description:
+      "Reserve your spot at Oretachino Curry Ya Cebu for an authentic Osaka curry experience.",
   },
 };
 
 export default function ReservationsPage() {
   return (
     <div className="page-shell">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+      <div className="mx-auto max-w-2xl sm:max-w-3xl md:max-w-4xl px-4 sm:px-6">
         <PageHeader
           eyebrow="Book a Table"
           title="Reservations"
           description="Reserve your spot and experience authentic Osaka curry in Cebu."
         />
-        <FadeUp delay={0.2}>
-          <div className="mb-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+        <FadeUp delay={0.2} className="mt-8 space-y-6">
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <CalendarDays size={16} className="text-soft-gold" />
-            <span>Walk-ins welcome · Groups of 8+ please book ahead</span>
+            <span>Walk‑ins welcome · Groups of 8+ please book ahead</span>
           </div>
           <ReservationForm />
         </FadeUp>

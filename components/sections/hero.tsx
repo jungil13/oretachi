@@ -193,7 +193,7 @@ export function HeroSection() {
           )}
 
           {/* Main Headline */}
-          <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight text-white mb-6 leading-[1.1] drop-shadow-2xl">
+          <h1 className="font-display text-4xl sm:text-7xl md:text-8xl font-medium tracking-tight text-white mb-6 leading-[1.1] drop-shadow-2xl">
             Flavors Inspired by<br />the Seasons
           </h1>
 
