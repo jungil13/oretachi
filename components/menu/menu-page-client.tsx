@@ -18,7 +18,7 @@ interface MenuItem {
   created_at?: string;
 }
 
-const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS"];
+const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
 
 const getNormalizedCategory = (category: string): string => {
   const cat = (category || "").toUpperCase();
@@ -26,6 +26,7 @@ const getNormalizedCategory = (category: string): string => {
   if (cat === "RAMEN") return "RAMEN";
   if (cat === "KIDS MENU") return "KIDS MENU";
   if (cat === "TOPPINGS") return "TOPPINGS";
+  if (cat === "PASTRY") return "PASTRY";
   if (
     cat === "DRINKS" ||
     cat === "COFFEE" ||
@@ -124,6 +125,7 @@ export function MenuPageClient({ items }: { items?: any[] }) {
       "KIDS MENU": [],
       "TOPPINGS": [],
       "DRINKS": [],
+      "PASTRY": [],
     };
 
     // Populate category groups
@@ -197,7 +199,7 @@ export function MenuPageClient({ items }: { items?: any[] }) {
   // Determine which categories contain matching items to display
   const categoriesToRender = useMemo(() => {
     if (selectedCategory === "All") {
-      return ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS"].filter(
+      return ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"].filter(
         (cat) => {
           if (cat === "DRINKS") {
             return processedDrinks.subcategories.length > 0 || processedDrinks.teaBox !== null;

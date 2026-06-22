@@ -9,6 +9,7 @@ export const MENU_CATEGORIES = [
   "AKA SIGNATURE DRINK",
   "MATCHA",
   "NON COFFEE",
+  "PASTRY",
   "TEA",
 ] as const;
 
