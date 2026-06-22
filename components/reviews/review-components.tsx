@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -181,9 +181,16 @@ export function ReviewForm() {
             <button
               type="submit"
               disabled={status === "loading"}
-              className="w-full h-12 mt-4 bg-[#FACC15] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+              className="w-full h-12 mt-4 bg-[#FACC15] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50 flex items-center justify-center"
             >
-              {status === "loading" ? "Submitting..." : "Submit Review"}
+              {status === "loading" ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit Review"
+              )}
             </button>
           </form>
         )}

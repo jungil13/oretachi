@@ -7,7 +7,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import { MapPin, Loader2 } from "lucide-react";
 import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 
 export function ContactForm() {
@@ -132,7 +132,14 @@ export function ContactForm() {
                 />
               </div>
               <Button type="submit" size="lg" disabled={status === "loading"}>
-                {status === "loading" ? "Sending..." : "Send Message"}
+                {status === "loading" ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
               </Button>
             </form>
           )}

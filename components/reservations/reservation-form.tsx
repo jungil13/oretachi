@@ -7,7 +7,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label, Select } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { UtensilsCrossed, Plus, Minus, ShoppingBag } from "lucide-react";
+import { UtensilsCrossed, Plus, Minus, ShoppingBag, Loader2 } from "lucide-react";
 import type { MenuItem } from "@/types/database";
 
 const TIME_SLOTS = [
@@ -211,27 +211,35 @@ export function ReservationForm() {
 
   return (
     <>
-      <Card className="w-full glass">
-        {/* FIX 1: tighter base padding on mobile */}
-        <CardContent className="p-4 sm:p-6 md:p-8">
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-            {/* FIX 2: smaller gap between stacked sections on mobile */}
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-              <div className="space-y-3 sm:space-y-4">
-                {/* FIX 3: slightly smaller heading on mobile to save vertical space */}
+      {/* Force all inputs/selects/textareas inside this form to respect container width */}
+      <style>{`
+        .reservation-form input,
+        .reservation-form select,
+        .reservation-form textarea {
+          box-sizing: border-box !important;
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+      `}</style>
+      <Card className="w-full max-w-full overflow-hidden glass">
+        <CardContent className="p-3 sm:p-6 md:p-8 box-border">
+          <form onSubmit={handleSubmit} className="reservation-form space-y-4 sm:space-y-6 w-full">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 w-full">
+              <div className="space-y-3 sm:space-y-4 min-w-0 w-full">
                 <h3 className="text-base sm:text-lg font-semibold border-b pb-2">1. Booking Details</h3>
-                <div>
+                <div className="w-full">
                   <Label htmlFor="name">Name</Label>
                   <Input
                     id="name"
                     value={form.name}
                     onChange={(e) => update("name", e.target.value)}
                     required
-                    className="mt-1"
+                    className="mt-1 w-full max-w-full box-border"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="email">Email <span className="text-green-500 text-xs">(We'll send you updates)</span>
+                <div className="w-full">
+                  <Label htmlFor="email">
+                    Email <span className="text-green-500 text-xs">(We'll send you updates)</span>
                   </Label>
                   <Input
                     id="email"
@@ -239,10 +247,10 @@ export function ReservationForm() {
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
                     required
-                    className="mt-1 w-full"
+                    className="mt-1 w-full max-w-full box-border"
                   />
                 </div>
-                <div>
+                <div className="w-full">
                   <Label htmlFor="phone">Phone</Label>
                   <Input
                     id="phone"
@@ -250,18 +258,17 @@ export function ReservationForm() {
                     value={form.phone}
                     onChange={(e) => update("phone", e.target.value)}
                     required
-                    className="mt-1 w-full"
+                    className="mt-1 w-full max-w-full box-border"
                   />
                 </div>
-                {/* Guests + Date — grid-cols-2 is fine at 375px with short labels */}
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  <div>
+                <div className="grid grid-cols-2 gap-3 w-full">
+                  <div className="min-w-0">
                     <Label htmlFor="guests">Guests</Label>
                     <Select
                       id="guests"
                       value={form.guests}
                       onChange={(e) => update("guests", e.target.value)}
-                      className="mt-1"
+                      className="mt-1 w-full max-w-full box-border"
                     >
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                         <option key={n} value={String(n)}>
@@ -270,7 +277,7 @@ export function ReservationForm() {
                       ))}
                     </Select>
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <Label htmlFor="date">Date</Label>
                     <Input
                       id="date"
@@ -279,18 +286,18 @@ export function ReservationForm() {
                       value={form.date}
                       onChange={(e) => update("date", e.target.value)}
                       required
-                      className="mt-1 w-full"
+                      className="mt-1 w-full max-w-full box-border"
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-full">
                   <Label htmlFor="time">Time</Label>
                   <Select
                     id="time"
                     value={form.time}
                     onChange={(e) => update("time", e.target.value)}
                     required
-                    className="mt-1 w-full"
+                    className="mt-1 w-full max-w-full box-border"
                   >
                     <option value="">Select a time</option>
                     {TIME_SLOTS.map((slot) => (
@@ -300,21 +307,20 @@ export function ReservationForm() {
                     ))}
                   </Select>
                 </div>
-                <div>
+                <div className="w-full">
                   <Label htmlFor="special_request">Special Requests (Optional)</Label>
                   <Textarea
                     id="special_request"
                     value={form.special_request}
                     onChange={(e) => update("special_request", e.target.value)}
-                    className="mt-1 w-full"
+                    className="mt-1 w-full max-w-full box-border"
                     placeholder="e.g. Dietary restrictions, high chair needed"
                   />
                 </div>
               </div>
 
               {/* Pre-order menu items */}
-              <div className="space-y-3 sm:space-y-4">
-                {/* FIX 3 (cont): smaller heading on mobile */}
+              <div className="space-y-3 sm:space-y-4 min-w-0 w-full">
                 <h3 className="text-base sm:text-lg font-semibold border-b pb-2 flex items-center gap-2">
                   <UtensilsCrossed size={18} className="text-soft-gold" />
                   2. Pre-order Menu (Optional)
@@ -322,8 +328,8 @@ export function ReservationForm() {
                 <p className="text-xs text-muted-foreground">
                   Pre-order your favorite curries now so they are ready shortly after you are seated.
                 </p>
-                {/* FIX 4: cap scroll area at 200px on mobile so submit button stays visible */}
-                <div className="max-h-[200px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
+                {/* cap scroll area at 240px on mobile so submit button stays visible */}
+                <div className="max-h-[240px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
                   {menuItems.map((item) => {
                     const inCart = cart[item.id];
                     return (
@@ -373,7 +379,6 @@ export function ReservationForm() {
                       <ShoppingBag size={14} />
                       Order Summary
                     </p>
-                    {/* FIX 5: shorter scroll area on mobile */}
                     <div className="max-h-[80px] sm:max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2">
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex justify-between">
@@ -392,8 +397,15 @@ export function ReservationForm() {
             </div>
 
             <div className="pt-3 sm:pt-4 border-t">
-              <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={status === "loading"}>
-                {status === "loading" ? "Booking..." : "Reserve Table"}
+              <Button type="submit" size="lg" className="w-full" disabled={status === "loading"}>
+                {status === "loading" ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Booking...
+                  </>
+                ) : (
+                  "Reserve Table"
+                )}
               </Button>
             </div>
           </form>
