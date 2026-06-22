@@ -40,7 +40,6 @@ export function ReservationForm() {
       if (data && data.length > 0) {
         setMenuItems(data as MenuItem[]);
       } else {
-        // Fallback to seed items if database is empty/not configured
         const { SEED_MENU_ITEMS } = await import("@/lib/data/seed");
         setMenuItems(SEED_MENU_ITEMS.map((item, idx) => ({
           ...item,
@@ -116,9 +115,7 @@ export function ReservationForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               to: form.email,
-
               subject: "Table Reservation Request Received - Oretachi no Curry-ya",
-
               text: `
             Dear ${form.name},
             
@@ -147,7 +144,6 @@ export function ReservationForm() {
             Warm regards,
             Oretachi no Curry-ya Team
             `,
-
               ownerText: `
             🔔 NEW RESERVATION RECEIVED
             
@@ -216,11 +212,14 @@ export function ReservationForm() {
   return (
     <>
       <Card className="w-full glass">
-        <CardContent className="p-6 sm:p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold border-b pb-2">1. Booking Details</h3>
+        {/* FIX 1: tighter base padding on mobile */}
+        <CardContent className="p-4 sm:p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            {/* FIX 2: smaller gap between stacked sections on mobile */}
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+              <div className="space-y-3 sm:space-y-4">
+                {/* FIX 3: slightly smaller heading on mobile to save vertical space */}
+                <h3 className="text-base sm:text-lg font-semibold border-b pb-2">1. Booking Details</h3>
                 <div>
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -254,7 +253,8 @@ export function ReservationForm() {
                     className="mt-1 w-full"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                {/* Guests + Date — grid-cols-2 is fine at 375px with short labels */}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label htmlFor="guests">Guests</Label>
                     <Select
@@ -313,14 +313,16 @@ export function ReservationForm() {
               </div>
 
               {/* Pre-order menu items */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold border-b pb-2 flex items-center gap-2">
+              <div className="space-y-3 sm:space-y-4">
+                {/* FIX 3 (cont): smaller heading on mobile */}
+                <h3 className="text-base sm:text-lg font-semibold border-b pb-2 flex items-center gap-2">
                   <UtensilsCrossed size={18} className="text-soft-gold" />
                   2. Pre-order Menu (Optional)
                 </h3>
                 <p className="text-xs text-muted-foreground">
                   Pre-order your favorite curries now so they are ready shortly after you are seated.
                 </p>
+                {/* FIX 4: cap scroll area at 200px on mobile so submit button stays visible */}
                 <div className="max-h-[200px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
                   {menuItems.map((item) => {
                     const inCart = cart[item.id];
@@ -366,12 +368,13 @@ export function ReservationForm() {
 
                 {/* Preorder Summary */}
                 {cartItems.length > 0 && (
-                  <div className="rounded-xl border border-curry-yellow/30 bg-curry-yellow/5 p-4 space-y-2">
+                  <div className="rounded-xl border border-curry-yellow/30 bg-curry-yellow/5 p-3 sm:p-4 space-y-2">
                     <p className="text-xs font-semibold uppercase tracking-wider text-soft-gold flex items-center gap-1.5">
                       <ShoppingBag size={14} />
                       Order Summary
                     </p>
-                    <div className="max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2">
+                    {/* FIX 5: shorter scroll area on mobile */}
+                    <div className="max-h-[80px] sm:max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2">
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex justify-between">
                           <span>{item.name} x{item.quantity}</span>
@@ -388,7 +391,7 @@ export function ReservationForm() {
               </div>
             </div>
 
-            <div className="pt-4 border-t">
+            <div className="pt-3 sm:pt-4 border-t">
               <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={status === "loading"}>
                 {status === "loading" ? "Booking..." : "Reserve Table"}
               </Button>
@@ -403,26 +406,28 @@ export function ReservationForm() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-deep-black/60 p-4"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-deep-black/60 p-3 sm:p-4"
             onClick={() => setShowModal(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="w-full max-w-md rounded-2xl bg-card p-8 text-center shadow-2xl"
+              className="w-full max-w-md rounded-2xl bg-card p-5 sm:p-8 text-center shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-
-              <h3 className="text-xl font-bold">Reservation Confirmed!</h3>
-              <p className="mt-2 text-muted-foreground">
+              <div className="stamp-effect mx-auto mb-4 sm:mb-6 inline-block text-xl sm:text-2xl bg-curry-yellow/20 text-curry-yellow px-4 py-1.5 rounded-full ring-1 ring-curry-yellow/30">
+                予約完了
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold">Reservation Confirmed!</h3>
+              <p className="mt-2 text-sm sm:text-base text-muted-foreground">
                 Thank you, {form.name}. We&apos;ve received your reservation for{" "}
                 {form.guests} guests on {form.date} at {form.time}.
               </p>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
                 A confirmation email has been logged to your inbox.
               </p>
-              <Button className="mt-6" onClick={() => setShowModal(false)}>
+              <Button className="mt-4 sm:mt-6" onClick={() => setShowModal(false)}>
                 Done
               </Button>
             </motion.div>
