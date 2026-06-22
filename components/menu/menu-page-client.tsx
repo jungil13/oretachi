@@ -18,7 +18,7 @@ interface MenuItem {
   created_at?: string;
 }
 
-const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
+const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY", "COLD DRINKS", "BEER"];
 
 const getNormalizedCategory = (category: string): string => {
   const cat = (category || "").toUpperCase();
@@ -27,6 +27,8 @@ const getNormalizedCategory = (category: string): string => {
   if (cat === "KIDS MENU") return "KIDS MENU";
   if (cat === "TOPPINGS") return "TOPPINGS";
   if (cat === "PASTRY") return "PASTRY";
+  if (cat === "COLD DRINKS") return "COLD DRINKS";
+  if (cat === "BEER") return "BEER";
   if (
     cat === "DRINKS" ||
     cat === "COFFEE" ||

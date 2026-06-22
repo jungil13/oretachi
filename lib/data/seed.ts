@@ -11,6 +11,8 @@ export const MENU_CATEGORIES = [
   "NON COFFEE",
   "PASTRY",
   "TEA",
+  "COLD DRINKS",
+  "BEER",
 ] as const;
 
 export const GALLERY_CATEGORIES = ["Food", "Restaurant Interior", "Customers", "Events"] as const;
