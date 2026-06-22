@@ -300,7 +300,7 @@ export function MenuPageClient({ items }: { items?: any[] }) {
 
         {/* Categories rendering */}
         {hasAnyMatches ? (
-          <StaggerContainer className="space-y-16 max-w-5xl mx-auto">
+          <StaggerContainer key={`${selectedCategory}-${categoriesToRender.join(",")}`} className="space-y-16 max-w-5xl mx-auto">
             {categoriesToRender.map((catName, index) => {
               const isLast = index === categoriesToRender.length - 1;
               const catItems = groupedItems[catName] || [];
