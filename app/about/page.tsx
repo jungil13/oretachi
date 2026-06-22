@@ -33,12 +33,10 @@ export default function AboutPage() {
       <div className="page-container max-w-6xl">
 
         {/* Header */}
-        <PageHeader
-          eyebrow="Our Story"
+        <PageHeader className="mb-5 p-2"
+          eyebrow="Oretachi No Curry Ya"
           title="About Us"
-          description="Abejo Foods OPC is a newly created company focused on building food, dining, and café brands that deliver quality food, excellent service, value for money, and Instagram-worthy interiors. We are powered by a dedicated team committed to delivering exceptional dining experiences."
         />
-
         {/* Stats */}
         <section className="mb-20">
           <div className="grid gap-6 md:grid-cols-3">

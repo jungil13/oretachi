@@ -118,7 +118,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center mt-12"
         >
           {isClient && (
             <>
@@ -193,9 +193,7 @@ export function HeroSection() {
           )}
 
           {/* Main Headline */}
-          <h1 className="font-display text-4xl sm:text-7xl md:text-8xl font-medium tracking-tight text-white mb-6 leading-[1.1] drop-shadow-2xl">
-            Flavors Inspired by<br />the Seasons
-          </h1>
+          <img src="/taste.png" alt="Oretachi No Curry Ya" className="mb-2" />
 
           {/* Subtitle */}
           <p className="max-w-2xl text-sm sm:text-base md:text-lg font-light tracking-wide text-white/80 mb-10">

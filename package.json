@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.83",
+    "@ai-sdk/react": "^3.0.210",
     "@hcaptcha/react-hcaptcha": "^2.0.2",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
+    "ai": "^6.0.208",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",

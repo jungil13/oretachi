@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Armelie';
+  src: url('/fonts/Armelie-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #0a0a0a;
   --foreground: #ffffff;
@@ -44,6 +52,7 @@
   --font-sans: var(--font-poppins);
   --font-display: var(--font-poppins);
   --font-family-display: var(--font-poppins), sans-serif;
+  --font-armelie: Armelie, cursive;
 }
 
 * {

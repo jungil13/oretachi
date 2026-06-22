@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteShell } from "@/components/layout/site-shell";
 import { GlobalBackground } from "@/components/global-background";
+
 import "./globals.css";
 
 
@@ -87,6 +88,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SiteShell>{children}</SiteShell>
         </ThemeProvider>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

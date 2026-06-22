@@ -16,7 +16,7 @@ export function LoadingScreen() {
     const timer = setTimeout(() => {
       sessionStorage.setItem(SPLASH_KEY, "1");
       setVisible(false);
-    }, 1600);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, []);

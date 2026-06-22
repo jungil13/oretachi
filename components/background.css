@@ -38,9 +38,4 @@
   100% { transform: translate(0,    0)    scale(1); }
 }
 
-.orb-1 { animation: float-a 28s ease-in-out infinite; }
-.orb-2 { animation: float-b 34s ease-in-out infinite 4s; }
-.orb-3 { animation: float-c 40s ease-in-out infinite 2s; }
-.orb-4 { animation: float-d 32s ease-in-out infinite 6s; }
-.orb-5 { animation: float-a 38s ease-in-out infinite 1s; }
-.orb-6 { animation: float-b 26s ease-in-out infinite 8s; }
+/* Animations removed for performance */
