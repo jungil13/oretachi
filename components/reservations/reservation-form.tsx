@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -32,21 +32,71 @@ export function ReservationForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [showModal, setShowModal] = useState(false);
 
+  const scrollTimers = useRef<Record<string, NodeJS.Timeout>>({});
+  const [scrollingDivs, setScrollingDivs] = useState<Record<string, boolean>>({});
+
+  const handleScroll = (key: string) => {
+    setScrollingDivs((prev) => ({ ...prev, [key]: true }));
+    if (scrollTimers.current[key]) {
+      clearTimeout(scrollTimers.current[key]);
+    }
+    scrollTimers.current[key] = setTimeout(() => {
+      setScrollingDivs((prev) => ({ ...prev, [key]: false }));
+    }, 1000);
+  };
+
+  // Cleanup scroll timers on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(scrollTimers.current).forEach(clearTimeout);
+    };
+  }, []);
+
   // Load menu items for pre-ordering
   useEffect(() => {
     const fetchMenu = async () => {
       const supabase = createClient();
-      const { data } = await supabase.from("menu_items").select("*").order("name");
+      const { data } = await supabase.from("menu_items").select("*");
+      let itemsList: MenuItem[] = [];
       if (data && data.length > 0) {
-        setMenuItems(data as MenuItem[]);
+        itemsList = data as MenuItem[];
       } else {
         const { SEED_MENU_ITEMS } = await import("@/lib/data/seed");
-        setMenuItems(SEED_MENU_ITEMS.map((item, idx) => ({
+        itemsList = SEED_MENU_ITEMS.map((item, idx) => ({
           ...item,
           id: `fallback-${idx}`,
           created_at: "",
-        }) as MenuItem));
+        }) as MenuItem);
       }
+
+      // Sort items based on the category sequence from menu page
+      const categoryOrder = ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
+      itemsList.sort((a, b) => {
+        const catA = (a.category || "").toUpperCase();
+        const catB = (b.category || "").toUpperCase();
+        const indexA = categoryOrder.indexOf(catA);
+        const indexB = categoryOrder.indexOf(catB);
+
+        if (indexA !== -1 && indexB !== -1) {
+          if (indexA !== indexB) {
+            return indexA - indexB;
+          }
+        } else if (indexA !== -1) {
+          return -1;
+        } else if (indexB !== -1) {
+          return 1;
+        } else {
+          const catCompare = catA.localeCompare(catB);
+          if (catCompare !== 0) return catCompare;
+        }
+
+        // Inside the same category, sort by featured first, then name alphabetically
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      setMenuItems(itemsList);
     };
     fetchMenu();
   }, []);
@@ -328,14 +378,21 @@ export function ReservationForm() {
                 <p className="text-xs text-muted-foreground">
                   Pre-order your favorite curries now so they are ready shortly after you are seated.
                 </p>
-                {/* cap scroll area at 240px on mobile so submit button stays visible */}
-                <div className="max-h-[240px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2">
+                <div 
+                  onScroll={() => handleScroll("preorder")}
+                  className={`max-h-[240px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2 scrollbar-scroll-only ${
+                    !scrollingDivs["preorder"] ? "scroll-inactive" : ""
+                  }`}
+                >
                   {menuItems.map((item) => {
                     const inCart = cart[item.id];
                     return (
                       <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between py-2 px-1">
                         <div className="overflow-hidden pr-2">
                           <p className="text-sm font-semibold truncate whitespace-nowrap">{item.name}</p>
+                          <span className="text-[9px] font-bold text-[#FACC15]/80 tracking-wider uppercase block mt-0.5">
+                            {item.category}
+                          </span>
                           {/* <p className="text-xs text-muted-foreground whitespace-nowrap">{item.price} PHP</p> */}
                         </div>
                         {inCart ? (
@@ -379,7 +436,12 @@ export function ReservationForm() {
                       <ShoppingBag size={14} />
                       Order Summary
                     </p>
-                    <div className="max-h-[80px] sm:max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2">
+                     <div 
+                      onScroll={() => handleScroll("summary")}
+                      className={`max-h-[80px] sm:max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2 scrollbar-scroll-only ${
+                        !scrollingDivs["summary"] ? "scroll-inactive" : ""
+                      }`}
+                    >
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex justify-between">
                           <span>{item.name} x{item.quantity}</span>
