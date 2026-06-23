@@ -18,7 +18,7 @@ interface MenuItem {
   created_at?: string;
 }
 
-const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY", "COLD DRINKS", "BEER"];
+const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
 
 const getNormalizedCategory = (category: string): string => {
   const cat = (category || "").toUpperCase();
@@ -27,8 +27,6 @@ const getNormalizedCategory = (category: string): string => {
   if (cat === "KIDS MENU") return "KIDS MENU";
   if (cat === "TOPPINGS") return "TOPPINGS";
   if (cat === "PASTRY") return "PASTRY";
-  if (cat === "COLD DRINKS") return "COLD DRINKS";
-  if (cat === "BEER") return "BEER";
   if (
     cat === "DRINKS" ||
     cat === "COFFEE" ||
@@ -36,6 +34,8 @@ const getNormalizedCategory = (category: string): string => {
     cat === "NON COFFEE" ||
     cat === "TEA" ||
     cat === "AKA SIGNATURE DRINK" ||
+    cat === "COLD DRINKS" ||
+    cat === "BEER" ||
     cat.includes("DRINK") ||
     cat.includes("COFFEE") ||
     cat.includes("TEA") ||
@@ -142,61 +142,88 @@ export function MenuPageClient({ items }: { items?: any[] }) {
 
   // Process Drinks category sub-groupings and Tea Box
   const processedDrinks = useMemo(() => {
-    const drinksList = groupedItems["DRINKS"] || [];
+  const drinksList = groupedItems["DRINKS"] || [];
 
-    const coffeeItems: MenuItem[] = [];
-    const signatureItems: MenuItem[] = [];
-    const matchaItems: MenuItem[] = [];
-    const nonCoffeeItems: MenuItem[] = [];
-    const teaItems: MenuItem[] = [];
+  const coffeeItems: MenuItem[] = [];
+  const signatureItems: MenuItem[] = [];
+  const matchaItems: MenuItem[] = [];
+  const nonCoffeeItems: MenuItem[] = [];
+  const teaItems: MenuItem[] = [];
+  const coldDrinksItems: MenuItem[] = [];
+  const beerItems: MenuItem[] = [];
 
-    drinksList.forEach((item) => {
-      const nameUpper = item.name.toUpperCase();
-      const descUpper = item.description.toUpperCase();
-      const catUpper = item.category.toUpperCase();
+  // Use the raw items list to preserve original category before normalization
+  const rawList = items && items.length > 0 ? items : SEED_MENU_ITEMS;
 
-      const isTea = nameUpper.includes("TEA") || descUpper.includes("TEA") || catUpper.includes("TEA");
+  drinksList.forEach((item) => {
+    const nameUpper = item.name.toUpperCase();
+    const descUpper = item.description.toUpperCase();
 
-      if (isTea) {
-        teaItems.push(item);
+    // Look up original category from raw data using item id
+    const rawItem = rawList.find((r: any) => (r.id === item.id) || (r.name === item.name));
+    const originalCat = ((rawItem?.category) || "").toUpperCase();
+
+    const isTea =
+      nameUpper.includes("TEA") ||
+      descUpper.includes("TEA") ||
+      originalCat.includes("TEA");
+
+    if (isTea) {
+      teaItems.push(item);
+    } else if (originalCat === "BEER" || originalCat.includes("BEER")) {
+      beerItems.push(item);
+    } else if (originalCat === "COLD DRINKS" || originalCat.includes("COLD DRINK")) {
+      coldDrinksItems.push(item);
+    } else {
+      const textToSearch = `${nameUpper} ${descUpper} ${originalCat}`;
+      if (textToSearch.includes("MATCHA")) {
+        matchaItems.push(item);
+      } else if (
+        textToSearch.includes("AKA") ||
+        textToSearch.includes("SIGNATURE") ||
+        textToSearch.includes("CLOUD")
+      ) {
+        signatureItems.push(item);
+      } else if (
+        textToSearch.includes("CHOCOLATE") ||
+        textToSearch.includes("NON COFFEE") ||
+        textToSearch.includes("NON-COFFEE")
+      ) {
+        nonCoffeeItems.push(item);
       } else {
-        const textToSearch = `${nameUpper} ${descUpper} ${catUpper}`;
-        if (textToSearch.includes("MATCHA")) {
-          matchaItems.push(item);
-        } else if (textToSearch.includes("AKA") || textToSearch.includes("SIGNATURE") || textToSearch.includes("CLOUD")) {
-          signatureItems.push(item);
-        } else if (textToSearch.includes("CHOCOLATE") || textToSearch.includes("NON COFFEE") || textToSearch.includes("NON-COFFEE")) {
-          nonCoffeeItems.push(item);
-        } else {
-          coffeeItems.push(item);
-        }
+        coffeeItems.push(item);
       }
-    });
-
-    let teaBox = null;
-    if (teaItems.length > 0) {
-      const teaPrice = teaItems[0].price;
-      const teaImageUrl = teaItems[0].image_url || "/images/img (16).jpg";
-      const teaNames = teaItems.map(item => item.name.replace(" Tea", "").replace(" TEA", ""));
-      teaBox = {
-        title: "TEA",
-        subtitle: "(Tea bags) Twinings brand",
-        price: teaPrice,
-        image_url: teaImageUrl,
-        items: teaNames,
-      };
     }
+  });
 
-    return {
-      subcategories: [
-        { title: "COFFEE", items: coffeeItems },
-        { title: "AKA SIGNATURE DRINK", items: signatureItems },
-        { title: "MATCHA", items: matchaItems },
-        { title: "NON COFFEE", items: nonCoffeeItems },
-      ].filter(sc => sc.items.length > 0),
-      teaBox
+  let teaBox = null;
+  if (teaItems.length > 0) {
+    const teaPrice = teaItems[0].price;
+    const teaImageUrl = teaItems[0].image_url || "/images/img (16).jpg";
+    const teaNames = teaItems.map((item) =>
+      item.name.replace(" Tea", "").replace(" TEA", "")
+    );
+    teaBox = {
+      title: "TEA",
+      subtitle: "(Tea bags) Twinings brand",
+      price: teaPrice,
+      image_url: teaImageUrl,
+      items: teaNames,
     };
-  }, [groupedItems]);
+  }
+
+  return {
+    subcategories: [
+      { title: "COFFEE", items: coffeeItems },
+      { title: "AKA SIGNATURE DRINK", items: signatureItems },
+      { title: "MATCHA", items: matchaItems },
+      { title: "NON COFFEE", items: nonCoffeeItems },
+      { title: "COLD DRINKS", items: coldDrinksItems },
+      { title: "BEER", items: beerItems },
+    ].filter((sc) => sc.items.length > 0),
+    teaBox,
+  };
+}, [groupedItems, items]);
 
   // Determine which categories contain matching items to display
   const categoriesToRender = useMemo(() => {
