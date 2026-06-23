@@ -336,7 +336,7 @@ export function ReservationForm() {
                       <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between py-2 px-1">
                         <div className="overflow-hidden pr-2">
                           <p className="text-sm font-semibold truncate whitespace-nowrap">{item.name}</p>
-                          <p className="text-xs text-muted-foreground whitespace-nowrap">{item.price} PHP</p>
+                          {/* <p className="text-xs text-muted-foreground whitespace-nowrap">{item.price} PHP</p> */}
                         </div>
                         {inCart ? (
                           <div className="flex items-center gap-2 shrink-0">
@@ -383,7 +383,7 @@ export function ReservationForm() {
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex justify-between">
                           <span>{item.name} x{item.quantity}</span>
-                          <span className="font-semibold">{item.price * item.quantity} PHP</span>
+                          <span className="font-semibold">{/* {item.price * item.quantity} */} PHP</span>
                         </div>
                       ))}
                     </div>
