@@ -58,7 +58,7 @@ export function MenuCard({ item }: { item: MenuItem }) {
               <p className="mt-1 text-xs text-muted-foreground">{item.category}</p>
             </div>
             <span className="shrink-0 font-bold text-soft-gold">
-              {formatPrice(item.price)}
+              {/* {formatPrice(item.price)} */}
             </span>
           </div>
           <motion.p

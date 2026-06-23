@@ -452,7 +452,7 @@ function MenuCard({ item }: { item: MenuItem }) {
               {item.name}
             </h3>
             <span className="text-base sm:text-md font-extrabold text-[#FACC15] shrink-0 font-sans">
-              {item.price}
+              {/* {item.price} */}
             </span>
           </div>
 
@@ -524,7 +524,7 @@ function TeaCard({ teaBox }: { teaBox: any }) {
               {teaBox.title}
             </h3>
             <span className="text-lg font-extrabold text-[#FACC15] shrink-0 font-sans">
-              {teaBox.price}
+              {/*{teaBox.price}*/}
             </span>
           </div>
 
