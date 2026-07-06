@@ -157,6 +157,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
               src={value}
               alt="Uploaded image"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
             <button

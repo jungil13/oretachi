@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getFeaturedMenuItems, getReviews } from "@/lib/queries";
+import { getSiteSettings } from "@/lib/settings";
 import { HeroSection } from "@/components/sections/hero";
+import { CountdownSection } from "@/components/sections/countdown";
 import { FeaturedCarousel } from "@/components/sections/featured-carousel";
 import { StatsSection, ChefShowcase } from "@/components/sections/loyalty-chefs";
 import { FAQSection } from "@/components/sections/faq";
@@ -40,10 +42,19 @@ export default async function HomePage() {
     getFeaturedMenuItems(),
     getReviews(),
   ]);
+  const settings = getSiteSettings();
 
   return (
     <>
+      {settings.announce_opening && (
+        <div className="bg-curry-yellow text-deep-black py-3 px-6 text-center shadow-lg relative z-50">
+          <p className="font-display font-bold text-sm md:text-base uppercase tracking-[0.2em]">
+            Grand Opening! Welcome to Oretachino Curry Ya
+          </p>
+        </div>
+      )}
       <HeroSection />
+      <CountdownSection />
 
       <div className="bg-black text-white">
         <FeaturedCarousel items={featured} />

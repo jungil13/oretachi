@@ -6,13 +6,18 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { GALLERY_CATEGORIES } from "@/lib/data/seed";
-import { ImageUpload } from "@/components/ui/image-upload";
+import { MultiImageUpload } from "@/components/ui/multi-image-upload";
 import type { GalleryItem } from "@/types/database";
 
 export default function AdminGalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
-  const [form, setForm] = useState({ image_url: "", category: "Food", title: "" });
+  const [form, setForm] = useState<{ image_urls: string[]; category: string; title: string }>({ 
+    image_urls: [], 
+    category: "Food", 
+    title: "" 
+  });
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const load = async () => {
     const supabase = createClient();
@@ -42,11 +47,26 @@ export default function AdminGalleryPage() {
   }, []);
 
   const add = async () => {
-    if (!form.image_url || !form.title) return;
-    const supabase = createClient();
-    await supabase.from("gallery").insert(form);
-    setForm({ image_url: "", category: "Food", title: "" });
-    load();
+    if (form.image_urls.length === 0 || !form.title) return;
+    setIsSubmitting(true);
+    
+    try {
+      const supabase = createClient();
+      
+      const insertData = form.image_urls.map(url => ({
+        image_url: url,
+        category: form.category,
+        title: form.image_urls.length > 1 ? `${form.title} - ${url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('/') + 6)}` : form.title
+      }));
+
+      await supabase.from("gallery").insert(insertData);
+      setForm({ image_urls: [], category: "Food", title: "" });
+      load();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const remove = async (id: string) => {
@@ -68,7 +88,7 @@ export default function AdminGalleryPage() {
       <div className="mt-6 rounded-2xl border border-border bg-card p-6">
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <Label>Title</Label>
+            <Label>Title (Base)</Label>
             <Input
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
@@ -89,15 +109,17 @@ export default function AdminGalleryPage() {
             </Select>
           </div>
           <div className="md:col-span-2">
-            <Label>Showcase Image</Label>
-            <ImageUpload
-              value={form.image_url}
-              onChange={(url) => setForm({ ...form, image_url: url })}
+            <Label>Showcase Images</Label>
+            <MultiImageUpload
+              value={form.image_urls}
+              onChange={(urls) => setForm({ ...form, image_urls: urls })}
               className="mt-1"
             />
           </div>
         </div>
-        <Button className="mt-4" onClick={add}>Add Showcase Item</Button>
+        <Button className="mt-4" onClick={add} disabled={isSubmitting || form.image_urls.length === 0 || !form.title}>
+          {isSubmitting ? "Adding..." : `Add ${form.image_urls.length > 1 ? form.image_urls.length + ' Items' : 'Item'}`}
+        </Button>
       </div>
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

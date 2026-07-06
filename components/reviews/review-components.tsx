@@ -135,14 +135,59 @@ export function ReviewForm() {
   };
 
   return (
-    <Card className="bg-[#0a0a0a] border-white/10 text-white">
-      <CardContent className="p-6">
-        <h3 className="mb-6 text-xl font-display font-semibold text-white">Share Your Experience</h3>
+    <Card className="bg-[#0a0a0a] border-white/10 text-white overflow-hidden relative">
+      {/* Subtle Japanese Pattern Overlay */}
+      <div 
+        className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
+        aria-hidden="true"
+      ></div>
+      
+      <CardContent className="p-6 relative z-10">
+        <div className="text-center mb-8">
+          <h3 className="text-xl font-display font-semibold text-white mb-2">Share Your Experience</h3>
+          <p className="text-sm text-white/60">We value your feedback to help us serve you better.</p>
+        </div>
+
+        {/* QR Code Section */}
+        <div className="mb-8 p-6 rounded-xl border border-[#FACC15]/20 bg-white/5 flex flex-col items-center justify-center text-center">
+          <div className="bg-white p-2 rounded-lg mb-4 inline-block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__R5MVxlUMzRXTkdDVVBDRlJMNloxT0IxMEsxSFJMTS4u" 
+              alt="Customer Feedback QR Code" 
+              className="w-32 h-32"
+            />
+          </div>
+          <h4 className="font-semibold text-[#FACC15] mb-1">Scan to Feedback</h4>
+          <p className="text-xs text-white/70 mb-3">Scan this QR code with your phone camera.</p>
+          
+          <div className="flex items-center gap-4 w-full">
+            <div className="h-px bg-white/10 flex-1"></div>
+            <span className="text-xs uppercase tracking-widest text-white/40">OR</span>
+            <div className="h-px bg-white/10 flex-1"></div>
+          </div>
+          
+          <a 
+            href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__R5MVxlUMzRXTkdDVVBDRlJMNloxT0IxMEsxSFJMTS4u"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 text-sm font-medium text-white hover:text-[#FACC15] underline underline-offset-4 transition-colors"
+          >
+            Click here to add your feedback
+          </a>
+        </div>
+
+        <div className="flex items-center gap-4 mb-6">
+          <div className="h-px bg-white/10 flex-1"></div>
+          <span className="text-xs uppercase tracking-widest text-white/40">OR LEAVE A REVIEW HERE</span>
+          <div className="h-px bg-white/10 flex-1"></div>
+        </div>
+
         {status === "success" ? (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="py-8 text-center"
+            className="py-8 text-center bg-white/5 rounded-xl border border-white/10"
           >
             <div className="stamp-effect mx-auto mb-4 inline-block text-lg border-[#FACC15] text-[#FACC15]">
               ありがとう
@@ -151,7 +196,7 @@ export function ReviewForm() {
             <p className="text-white/60 text-sm mt-2 font-light">Your review is pending approval and will appear shortly.</p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <Label htmlFor="review-name" className="text-white/70">Your Name</Label>
               <Input
@@ -159,12 +204,12 @@ export function ReviewForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none transition-colors hover:border-white/30"
               />
             </div>
             <div>
               <Label className="text-white/70">Rating</Label>
-              <div className="mt-1.5">
+              <div className="mt-2 bg-white/5 p-3 rounded-none border border-white/10 inline-block">
                 <StarRating rating={rating} onRate={setRating} interactive />
               </div>
             </div>
@@ -175,13 +220,13 @@ export function ReviewForm() {
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 required
-                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none min-h-[100px]"
+                className="mt-1.5 bg-white/5 border-white/10 text-white focus-visible:ring-[#FACC15] rounded-none min-h-[100px] transition-colors hover:border-white/30"
               />
             </div>
             <button
               type="submit"
               disabled={status === "loading"}
-              className="w-full h-12 mt-4 bg-[#FACC15] text-black font-semibold tracking-[0.2em] uppercase text-xs hover:bg-white hover:text-black transition-colors disabled:opacity-50 flex items-center justify-center"
+              className="w-full h-12 mt-2 bg-transparent border border-[#FACC15] text-[#FACC15] font-semibold tracking-[0.2em] uppercase text-xs hover:bg-[#FACC15] hover:text-black transition-all disabled:opacity-50 flex items-center justify-center group"
             >
               {status === "loading" ? (
                 <>
@@ -189,7 +234,7 @@ export function ReviewForm() {
                   Submitting...
                 </>
               ) : (
-                "Submit Review"
+                <span className="relative z-10 group-hover:scale-105 transition-transform duration-300">Submit Review</span>
               )}
             </button>
           </form>
