@@ -1,167 +1,108 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { FadeUp } from "@/components/animations/motion";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { CurrySteam } from "@/components/animations/curry-steam";
 
-// Automatically use today's date
-const today = new Date();
+export function HeroSection() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-const OPENING_TIME = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate(),
-  8, // 8:00 AM
-  0,
-  0,
-  0
-).getTime();
-
-const CLOSING_TIME = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate(),
-  21, // 9:00 PM
-  0,
-  0,
-  0
-).getTime();
-
-export function CountdownSection() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-
-    const updateCountdown = () => {
-      const now = Date.now();
-      let target = OPENING_TIME;
-
-      // If store is open, count down until closing
-      if (now >= OPENING_TIME && now < CLOSING_TIME) {
-        target = CLOSING_TIME;
-      }
-
-      const difference = target - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor(
-            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          ),
-          minutes: Math.floor(
-            (difference % (1000 * 60 * 60)) / (1000 * 60)
-          ),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000),
-        });
-      } else {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        });
-      }
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
-  if (!isClient) return null;
-
-  const now = Date.now();
-  const isOpeningSoon = now < OPENING_TIME;
-  const isOpen = now >= OPENING_TIME && now < CLOSING_TIME;
-  const isClosed = now >= CLOSING_TIME;
-
-  const openingBanner = (
-    <motion.section
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="bg-curry-yellow text-deep-black py-4 px-6 text-center shadow-lg"
-    >
-      <p className="font-display font-bold text-lg md:text-xl uppercase tracking-[0.2em]">
-        🍛 We Are Now Open! Welcome to Oretachino Curry Ya
-      </p>
-    </motion.section>
-  );
-
-  const closedBanner = (
-    <section className="bg-gray-900 text-white py-4 px-6 text-center">
-      <p className="font-medium">
-        🌙 We are closed for the day. See you tomorrow!
-      </p>
-    </section>
-  );
-
   return (
-    <section className="bg-deep-black text-pure-white border-y border-curry-yellow/30 relative overflow-hidden py-8 md:py-12">
-      <div
-        className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#FACC15_1px,transparent_1px)] [background-size:16px_16px]"
-        aria-hidden="true"
-      />
+    <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-black">
+      <motion.div style={{ y }} className="absolute inset-0 overflow-hidden">
+        <motion.video
+          autoPlay
+          muted
+          loop
+          playsInline
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="h-full w-full object-cover opacity-80"
+        >
+          <source src="/videos/oretachi.mp4" type="video/mp4" />
+        </motion.video>
 
-      {isOpen && openingBanner}
-      {isClosed && closedBanner}
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,196,0,0.05),transparent_60%)]" />
+      </motion.div>
 
-      <div className="mx-auto max-w-7xl px-4 relative z-10">
-        <FadeUp className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-          <div className="text-center md:text-left flex-1">
-            <h2 className="text-sm md:text-base font-semibold tracking-[0.3em] text-curry-yellow uppercase mb-2">
-              {isOpeningSoon
-                ? "Opening Today!"
-                : isOpen
-                ? "Now Open"
-                : "Closed"}
-            </h2>
+      {isClient && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-1 w-1 rounded-full bg-curry-yellow/30"
+              initial={{ x: `${Math.random() * 100}%`, y: "100%" }}
+              animate={{ y: "-20%", opacity: [0, 1, 0] }}
+              transition={{
+                duration: Math.random() * 8 + 8,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-            <p className="font-display text-2xl md:text-4xl font-bold">
-              {today.toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </p>
+      <CurrySteam />
 
-            <p className="text-muted-foreground mt-2 text-sm md:text-base">
-              Store Hours: 8:00 AM – 9:00 PM
-            </p>
-          </div>
-
-          {!isOpen && !isClosed && (
-            <div className="flex gap-4 md:gap-6 justify-center flex-1">
-              {[
-                { label: "Days", value: timeLeft.days },
-                { label: "Hours", value: timeLeft.hours },
-                { label: "Mins", value: timeLeft.minutes },
-                { label: "Secs", value: timeLeft.seconds },
-              ].map((item) => (
-                <div key={item.label} className="flex flex-col items-center">
-                  <div className="w-16 h-16 md:w-20 md:h-20 bg-muted/20 border border-curry-yellow/50 rounded-lg flex items-center justify-center backdrop-blur-sm shadow-[0_0_15px_rgba(250,204,21,0.1)]">
-                    <span className="text-2xl md:text-3xl font-bold font-display text-curry-yellow">
-                      {item.value.toString().padStart(2, "0")}
-                    </span>
-                  </div>
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground mt-2">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </FadeUp>
+      {/* Side Decorative Elements */}
+      <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 border border-white/20 rotate-45 hover:border-curry-yellow transition-colors cursor-pointer z-20">
+        <ChevronLeft className="-rotate-45 text-white/50 hover:text-white transition-colors" size={24} />
       </div>
+      <div className="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 border border-white/20 rotate-45 hover:border-curry-yellow transition-colors cursor-pointer z-20">
+        <ChevronRight className="-rotate-45 text-white/50 hover:text-white transition-colors" size={24} />
+      </div>
+
+      <div className="absolute right-10 bottom-32 hidden xl:flex flex-col items-center gap-2 z-20">
+        <div className="w-[1px] h-24 bg-white/20 mb-4" />
+        <Link href="/reservations" className="group flex flex-col items-center p-4 border border-[#FACC15] bg-[#FACC15]/10 backdrop-blur-sm hover:bg-[#FACC15] transition-all">
+          <CalendarDays size={24} className="text-[#FACC15] group-hover:text-black mb-2" />
+          <span className="text-[10px] font-bold tracking-widest text-[#FACC15] group-hover:text-black uppercase text-center w-16">Book a Table</span>
+        </Link>
+      </div>
+
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center mt-12"
+        >
+          {/* Main Headline */}
+          <img src="/taste.png" alt="Oretachi No Curry Ya" className="mb-2" />
+
+          {/* Subtitle */}
+          <p className="max-w-2xl text-sm sm:text-base md:text-lg font-light tracking-wide text-white/80 mb-10">
+            Experience authentic Japanese curry crafted with traditional recipes,
+            premium ingredients, and the warmth of Osaka hospitality.
+          </p>
+
+          {/* CTA Button */}
+          <Link href="/menu">
+            <button className="group relative overflow-hidden border border-[#FACC15] bg-transparent px-8 py-4 transition-all hover:bg-[#FACC15]">
+              <span className="relative z-10 text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#FACC15] transition-colors group-hover:text-black uppercase">
+                View Our Menu
+              </span>
+            </button>
+          </Link>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
