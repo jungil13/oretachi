@@ -32,14 +32,14 @@ export default async function UpdatesPage() {
           <StaggerContainer className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
             {posts.map((post) => (
               <StaggerItem key={post.id} className="break-inside-avoid">
-                <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-curry-yellow/50">
-                  <div className="flex items-center justify-between border-b border-gray-200 p-4">
+                <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-card transition-all hover:border-curry-yellow/50">
+                  <div className="flex items-center justify-between border-b border-border p-4">
                     <div>
-                      {post.title && <h3 className="font-medium text-sm text-black">{post.title}</h3>}
-                      <p className="mt-1 text-xs uppercase tracking-wider text-black/60">{post.platform}</p>
+                      {post.title && <h3 className="font-medium text-sm text-white">{post.title}</h3>}
+                      <p className="mt-1 text-xs uppercase tracking-wider text-white/60">{post.platform}</p>
                     </div>
                   </div>
-                  <div className="flex justify-center bg-white p-4">
+                  <div className="flex justify-center bg-card p-4">
                     <SocialEmbed embedCode={post.embed_code} platform={post.platform} />
                   </div>
                 </div>
