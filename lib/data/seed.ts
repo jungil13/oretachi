@@ -1,4 +1,4 @@
-import type { Event, GalleryItem, MenuItem, Review } from "@/types/database";
+import type { Event, GalleryItem, MenuItem, Review, SocialPost } from "@/types/database";
 
 export const MENU_CATEGORIES = [
   "CURRY RICE",
@@ -281,4 +281,12 @@ export const CHEFS = [
     image: "/images/chef-ana.jpg",
     quote: "The best recipes are born where cultures meet.",
   },
+];
+
+export const SEED_SOCIAL_POSTS: Omit<SocialPost, "id" | "created_at">[] = [
+  {
+    platform: "Instagram",
+    embed_code: '<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/placeholder/" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/placeholder/" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> View this post on Instagram </a></div></blockquote> <script async src="//www.instagram.com/embed.js"></script>',
+    title: "Our Signature Curry",
+  }
 ];

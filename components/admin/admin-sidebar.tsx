@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, CalendarDays, UtensilsCrossed, Image,
-  Star, PartyPopper, Mail, LogOut, X, Users
+  Star, PartyPopper, Mail, LogOut, X, Users, Share2
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ const NAV = [
   { href: "/admin/gallery", label: "Gallery", icon: Image },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
   { href: "/admin/events", label: "Events", icon: PartyPopper },
+  { href: "/admin/social-posts", label: "Social Posts", icon: Share2 },
   { href: "/admin/messages", label: "Messages", icon: Mail },
   { href: "/admin/newsletter", label: "Newsletter", icon: Mail },
 ];

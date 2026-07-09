@@ -5,8 +5,9 @@ import {
   SEED_GALLERY,
   SEED_MENU_ITEMS,
   SEED_REVIEWS,
+  SEED_SOCIAL_POSTS,
 } from "@/lib/data/seed";
-import type { Event, GalleryItem, MenuItem, Review, TeamMember } from "@/types/database";
+import type { Event, GalleryItem, MenuItem, Review, SocialPost, TeamMember } from "@/types/database";
 
 function withIds<T extends object>(items: T[]): (T & { id: string; created_at: string })[] {
   return items.map((item, i) => ({
@@ -105,4 +106,17 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 
   if (error || !data) return [];
   return data as TeamMember[];
+}
+
+export async function getSocialPosts(): Promise<SocialPost[]> {
+  if (!isSupabaseConfigured()) return withIds(SEED_SOCIAL_POSTS);
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("social_posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error || !data?.length) return withIds(SEED_SOCIAL_POSTS);
+  return data as SocialPost[];
 }

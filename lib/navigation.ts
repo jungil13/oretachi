@@ -9,6 +9,7 @@ import {
   Star,
   PartyPopper,
   Mail,
+  Rss,
   type LucideIcon,
 } from "lucide-react";
 
@@ -21,7 +22,7 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/about", label: "About", icon: Info },
-
+  { href: "/updates", label: "Updates", icon: Rss },
   { href: "/menu", label: "Menu", icon: UtensilsCrossed },
   { href: "/reservations", label: "Reservations", icon: CalendarDays },
   { href: "/gallery", label: "Gallery", icon: Images },

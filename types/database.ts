@@ -81,3 +81,11 @@ export interface TeamMember {
   image_url: string;
   created_at: string;
 }
+
+export interface SocialPost {
+  id: string;
+  platform: string;
+  embed_code: string;
+  title: string | null;
+  created_at: string;
+}
