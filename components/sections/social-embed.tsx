@@ -68,25 +68,22 @@ export function SocialEmbed({ embedCode, platform }: SocialEmbedProps) {
     if (!needsInstagramEmbed(embedCode, platform)) return;
 
     let cancelled = false;
+    let timer: number | undefined;
 
-    const init = async () => {
-      await loadInstagramScript();
+    loadInstagramScript().then(() => {
       if (cancelled) return;
 
       processInstagramEmbeds();
 
       // Re-process after stagger animations settle
-      const timer = window.setTimeout(() => {
+      timer = window.setTimeout(() => {
         if (!cancelled) processInstagramEmbeds();
       }, 1200);
-
-      return () => window.clearTimeout(timer);
-    };
-
-    init();
+    });
 
     return () => {
       cancelled = true;
+      if (timer !== undefined) window.clearTimeout(timer);
     };
   }, [embedCode, platform]);
 
