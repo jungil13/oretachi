@@ -32,7 +32,7 @@ export default async function UpdatesPage() {
           <StaggerContainer className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
             {posts.map((post) => (
               <StaggerItem key={post.id} className="break-inside-avoid">
-                <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-card transition-all hover:border-curry-yellow/50">
+                <div className="group flex flex-col overflow-hidden rounded-2xl bg-card transition-all hover:border-curry-yellow/50">
                   <div className="flex items-center justify-between border-b border-border p-4">
                     <div>
                       {post.title && <h3 className="font-medium text-sm text-white">{post.title}</h3>}

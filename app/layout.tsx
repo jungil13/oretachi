@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteShell } from "@/components/layout/site-shell";
 import { GlobalBackground } from "@/components/global-background";
-import { ChatbaseWidget } from "@/components/chatbase-widget";
+import Script from "next/script";
 
 import "./globals.css";
 
@@ -89,8 +89,10 @@ export default function RootLayout({
         <ThemeProvider>
           <SiteShell>{children}</SiteShell>
         </ThemeProvider>
-        <ChatbaseWidget />
-
+        <Script
+          src="https://code.tidio.co/stba7yicmz5ogxmaugq5qoivybfqeevz.js"
+          strategy="afterInteractive"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
