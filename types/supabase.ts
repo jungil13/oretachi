@@ -239,6 +239,29 @@ export interface Database {
           created_at?: string;
         }>
       >;
+      social_posts: TableDef<
+        {
+          id: string;
+          platform: string;
+          embed_code: string;
+          title: string | null;
+          created_at: string;
+        },
+        {
+          id?: string;
+          platform: string;
+          embed_code: string;
+          title?: string | null;
+          created_at?: string;
+        },
+        Partial<{
+          id?: string;
+          platform: string;
+          embed_code: string;
+          title?: string | null;
+          created_at?: string;
+        }>
+      >;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
