@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getSocialPosts } from "@/lib/queries";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/animations/motion";
 import { PageHeader } from "@/components/layout/page-header";
+import { SocialEmbed } from "@/components/sections/social-embed";
 import { Share2 } from "lucide-react";
 
 export const metadata: Metadata = {
