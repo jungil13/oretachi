@@ -6,6 +6,18 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+// Sanitize file name: replace spaces and special chars, keep extension
+function sanitizeFileName(name: string): string {
+  const ext = name.split(".").pop()?.toLowerCase() || "jpg";
+  const base = name
+    .replace(/\.[^/.]+$/, "") // remove extension
+    .replace(/[^a-zA-Z0-9_-]/g, "-") // replace special chars with dash
+    .replace(/-+/g, "-") // collapse multiple dashes
+    .toLowerCase()
+    .slice(0, 60); // keep it short
+  return `${base}.${ext}`;
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
@@ -18,11 +30,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const fileName = `${Date.now()}-${file.name}`;
+    // Sanitize the filename and prepend timestamp to avoid collisions
+    const safeName = sanitizeFileName(file.name);
+    const fileName = `${Date.now()}-${safeName}`;
 
     const { error } = await supabase.storage
       .from("uploads")
-      .upload(fileName, file);
+      .upload(fileName, file, {
+        contentType: file.type || "image/jpeg", // ← Critical: set MIME type so browsers render as image
+        cacheControl: "3600",
+        upsert: false,
+      });
 
     if (error) throw error;
 
@@ -34,7 +52,7 @@ export async function POST(request: Request) {
       url: data.publicUrl,
     });
   } catch (error: any) {
-    console.error(error);
+    console.error("[Upload API Error]", error);
     return NextResponse.json(
       { error: error.message },
       { status: 500 }
