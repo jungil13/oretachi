@@ -1,26 +1,46 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ZoomIn, Search } from "lucide-react";
 import type { GalleryItem } from "@/types/database";
 
 export function MasonryGallery({ items }: { items: GalleryItem[] }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [visible, setVisible] = useState(6);
 
   const categories = ["All", ...new Set(items.map((i) => i.category))];
-  const filtered =
-    filter === "All" ? items : items.filter((i) => i.category === filter);
+  
+  const filtered = useMemo(() => {
+    return items.filter((item) => {
+      const matchesCategory = filter === "All" || item.category === filter;
+      const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [items, filter, searchQuery]);
 
   useEffect(() => {
     setVisible(6);
-  }, [filter]);
+  }, [filter, searchQuery]);
 
   return (
     <>
+      <div className="mb-6 relative max-w-md mx-auto sm:mx-0">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
+          <input
+            type="text"
+            placeholder="Search photos..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-muted/50 border border-border rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-curry-yellow transition-all"
+          />
+        </div>
+      </div>
+
       <div className="mb-8 flex flex-wrap gap-2">
         {categories.map((cat) => (
           <button
@@ -37,8 +57,8 @@ export function MasonryGallery({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      {/* Uniform grid layout */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Masonry layout (Google Photos style) */}
+      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 space-y-4">
         {filtered.slice(0, visible).map((item, i) => (
           <motion.div
             key={item.id}
@@ -46,18 +66,19 @@ export function MasonryGallery({ items }: { items: GalleryItem[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: (i % 6) * 0.1 }}
-            className="relative w-full overflow-hidden rounded-2xl"
+            className="relative w-full break-inside-avoid overflow-hidden rounded-2xl group"
           >
             <button
               onClick={() => setLightbox(i)}
-              className="group block w-full h-0 pb-[66%] relative"
+              className="block w-full relative"
             >
               <Image
                 src={item.image_url}
                 alt={item.title}
-                fill
+                width={800}
+                height={600}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-deep-black/0 transition-colors group-hover:bg-deep-black/40">
                 <ZoomIn
@@ -65,8 +86,8 @@ export function MasonryGallery({ items }: { items: GalleryItem[] }) {
                   className="text-pure-white opacity-0 transition-opacity group-hover:opacity-100"
                 />
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-deep-black/80 to-transparent p-4">
-                <p className="text-sm font-medium text-pure-white">{item.title}</p>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-deep-black/80 via-deep-black/40 to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
+                <p className="text-sm font-medium text-pure-white truncate">{item.title}</p>
               </div>
             </button>
           </motion.div>
