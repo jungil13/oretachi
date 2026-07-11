@@ -57,8 +57,8 @@ export function MasonryGallery({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      {/* Masonry layout (Google Photos style) */}
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 space-y-4">
+      {/* Uniform Grid Layout */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.slice(0, visible).map((item, i) => (
           <motion.div
             key={item.id}
@@ -66,19 +66,18 @@ export function MasonryGallery({ items }: { items: GalleryItem[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: (i % 6) * 0.1 }}
-            className="relative w-full break-inside-avoid overflow-hidden rounded-2xl group"
+            className="relative w-full overflow-hidden rounded-2xl group"
           >
             <button
               onClick={() => setLightbox(i)}
-              className="block w-full relative"
+              className="block w-full h-0 pb-[75%] relative"
             >
               <Image
                 src={item.image_url}
                 alt={item.title}
-                width={800}
-                height={600}
+                fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-deep-black/0 transition-colors group-hover:bg-deep-black/40">
                 <ZoomIn
