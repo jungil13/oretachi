@@ -54,7 +54,7 @@ export function StatsSection() {
         <StaggerContainer className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((stat) => (
             <StaggerItem key={stat.label}>
-              <div className="group border border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl p-8 text-center transition-all duration-300 hover:border-[#FACC15]/40 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(250,204,21,0.08)]">
+              <div className="group border border-white/10 bg-[#111] rounded-2xl p-8 text-center transition-all duration-300 hover:border-[#FACC15]/40 hover:bg-[#161616] hover:shadow-[0_0_30px_rgba(250,204,21,0.08)]">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FACC15]/10 transition-colors group-hover:bg-[#FACC15]/20">
                   <stat.icon className="text-[#FACC15]" size={28} />
                 </div>
@@ -168,9 +168,10 @@ export function ChefShowcase() {
                       src={member.image_url || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"}
                       alt={member.name}
                       fill
-                      quality={100}
+                      quality={75}
+                      loading="lazy"
                       className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
-                      sizes="(max-width: 640px) 100vw, 50vw"
+                      sizes="(max-width: 640px) 280px, 320px"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
 

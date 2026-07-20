@@ -2,54 +2,48 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
 import { CurrySteam } from "@/components/animations/curry-steam";
 
 export function HeroSection() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-
-  const [isClient, setIsClient] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setMounted(true);
   }, []);
 
   return (
     <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-black">
-      <motion.div style={{ y }} className="absolute inset-0 overflow-hidden">
-        <motion.video
+      {/* Background video — no JS parallax, CSS handles the subtle scale */}
+      <div className="absolute inset-0 overflow-hidden">
+        <video
           autoPlay
           muted
           loop
           playsInline
-          animate={{ scale: [1, 1.08, 1] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="h-full w-full object-cover opacity-80"
+          className="h-full w-full object-cover opacity-80 hero-video-scale"
         >
           <source src="/videos/oretachi.mp4" type="video/mp4" />
-        </motion.video>
+        </video>
 
         {/* Overlays */}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,196,0,0.05),transparent_60%)]" />
-      </motion.div>
+      </div>
 
-      {isClient && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
+      {/* CSS-driven shimmer particles — zero JS overhead */}
+      {mounted && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          {[...Array(6)].map((_, i) => (
+            <div
               key={i}
-              className="absolute h-1 w-1 rounded-full bg-curry-yellow/30"
-              initial={{ x: `${Math.random() * 100}%`, y: "100%" }}
-              animate={{ y: "-20%", opacity: [0, 1, 0] }}
-              transition={{
-                duration: Math.random() * 8 + 8,
-                repeat: Infinity,
-                delay: Math.random() * 5,
+              className="hero-particle"
+              style={{
+                left: `${15 + i * 14}%`,
+                animationDelay: `${i * 1.4}s`,
+                animationDuration: `${10 + i * 2}s`,
               }}
             />
           ))}
@@ -75,15 +69,12 @@ export function HeroSection() {
       </div>
 
       <motion.div
-        style={{ opacity }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col items-center mt-12"
-        >
+        <div className="flex flex-col items-center mt-12">
           {/* Main Headline */}
           <img src="/taste.png" alt="Oretachi No Curry Ya" className="mb-2" />
 
@@ -101,7 +92,7 @@ export function HeroSection() {
               </span>
             </button>
           </Link>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

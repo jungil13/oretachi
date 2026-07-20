@@ -2,7 +2,8 @@ import "./background.css";
 
 /**
  * GlobalBackground – lightweight CSS-driven orbs.
- * Yellow (#FACC15) accent on deep black background.
+ * Uses pre-blurred radial-gradient backgrounds instead of filter:blur()
+ * to avoid expensive GPU compositor layers on every orb.
  */
 export function GlobalBackground() {
   return (
@@ -12,79 +13,66 @@ export function GlobalBackground() {
     >
       {/* Orb 1 – top-left */}
       <div
-        className="bg-orb orb-1 absolute"
+        className="absolute rounded-full"
         style={{
-          width: 340,
-          height: 340,
-          top: "5%",
-          left: "8%",
-          background: "radial-gradient(circle, rgba(250,204,21,0.10) 0%, transparent 70%)",
-          filter: "blur(50px)",
+          width: 500,
+          height: 500,
+          top: "-5%",
+          left: "0%",
+          background:
+            "radial-gradient(circle, rgba(250,204,21,0.10) 0%, rgba(250,204,21,0.03) 40%, transparent 70%)",
         }}
       />
 
       {/* Orb 2 – top-right */}
       <div
-        className="bg-orb orb-2 absolute"
+        className="absolute rounded-full"
         style={{
-          width: 280,
-          height: 280,
-          top: "10%",
-          right: "10%",
-          background: "radial-gradient(circle, rgba(250,204,21,0.07) 0%, transparent 70%)",
-          filter: "blur(45px)",
+          width: 420,
+          height: 420,
+          top: "5%",
+          right: "0%",
+          background:
+            "radial-gradient(circle, rgba(250,204,21,0.07) 0%, rgba(250,204,21,0.02) 40%, transparent 70%)",
         }}
       />
 
       {/* Orb 3 – center */}
       <div
-        className="bg-orb orb-3 absolute"
+        className="absolute rounded-full"
         style={{
-          width: 420,
-          height: 420,
-          top: "40%",
-          left: "42%",
-          background: "radial-gradient(circle, rgba(234,179,8,0.06) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          width: 600,
+          height: 600,
+          top: "35%",
+          left: "35%",
+          background:
+            "radial-gradient(circle, rgba(234,179,8,0.06) 0%, rgba(234,179,8,0.02) 40%, transparent 70%)",
         }}
       />
 
       {/* Orb 4 – bottom-left */}
       <div
-        className="bg-orb orb-4 absolute"
+        className="absolute rounded-full"
         style={{
-          width: 260,
-          height: 260,
-          bottom: "12%",
-          left: "15%",
-          background: "radial-gradient(circle, rgba(250,204,21,0.08) 0%, transparent 70%)",
-          filter: "blur(45px)",
+          width: 380,
+          height: 380,
+          bottom: "0%",
+          left: "5%",
+          background:
+            "radial-gradient(circle, rgba(250,204,21,0.08) 0%, rgba(250,204,21,0.02) 40%, transparent 70%)",
         }}
       />
 
       {/* Orb 5 – bottom-right */}
       <div
-        className="bg-orb orb-5 absolute"
+        className="absolute rounded-full"
         style={{
-          width: 300,
-          height: 300,
-          bottom: "8%",
-          right: "12%",
-          background: "radial-gradient(circle, rgba(250,204,21,0.07) 0%, transparent 70%)",
-          filter: "blur(50px)",
-        }}
-      />
-
-      {/* Orb 6 – mid-left accent */}
-      <div
-        className="bg-orb orb-6 absolute"
-        style={{
-          width: 200,
-          height: 200,
-          top: "55%",
-          left: "5%",
-          background: "radial-gradient(circle, rgba(250,204,21,0.06) 0%, transparent 70%)",
-          filter: "blur(35px)",
+          width: 440,
+          height: 440,
+          bottom: "0%",
+          right: "5%",
+          background:
+            "radial-gradient(circle, rgba(250,204,21,0.07) 0%, rgba(250,204,21,0.02) 40%, transparent 70%)",
         }}
       />
     </div>

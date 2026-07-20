@@ -7,8 +7,8 @@ import { FeaturedCarousel } from "@/components/sections/featured-carousel";
 import { StatsSection, ChefShowcase } from "@/components/sections/loyalty-chefs";
 import { FAQSection } from "@/components/sections/faq";
 import { NewsletterSection } from "@/components/sections/newsletter";
-import { ReviewCard } from "@/components/reviews/review-components";
-import { FadeUp, StaggerContainer, StaggerItem } from "@/components/animations/motion";
+import { ReviewsMarquee } from "@/components/reviews/reviews-marquee";
+import { FadeUp } from "@/components/animations/motion";
 import { FAQ_ITEMS } from "@/lib/data/seed";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -80,13 +80,7 @@ export default async function HomePage() {
                 What Our Guests Say
               </h2>
             </FadeUp>
-            <StaggerContainer className="grid gap-6 md:grid-cols-3">
-              {reviews.slice(0, 3).map((review) => (
-                <StaggerItem key={review.id}>
-                  <ReviewCard review={review} />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <ReviewsMarquee reviews={reviews} />
             <div className="mt-12 text-center">
               <Link href="/reviews">
                 <button className="group relative overflow-hidden border border-[#FACC15] bg-transparent px-8 py-3 transition-all hover:bg-[#FACC15]">
