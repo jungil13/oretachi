@@ -76,8 +76,10 @@ export function HeroSection() {
       >
         <div className="flex flex-col items-center mt-12">
           {/* Main Headline */}
+          <div className="w-full md:w-2/3"> 
+            <p className="text-[16px] sm:text-[20px] md:text-[30px] font-medium tracking-[0.2em]">ORETACHI NO CURRY-YA</p>
+          </div>
           <img src="/taste.png" alt="Oretachi No Curry Ya" className="mb-2" />
-
           {/* Subtitle */}
           <p className="max-w-2xl text-sm sm:text-base md:text-lg font-light tracking-wide text-white/80 mb-10">
             Experience authentic Japanese curry crafted with traditional recipes,
