@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 export default function LocationPage() {
     const mapsUrl = CONTACT_INFO.mapUrl || `https://www.google.com/maps?q=${CONTACT_INFO.coordinates.lat},${CONTACT_INFO.coordinates.lng}`;
-    const embedUrl = `https://maps.google.com/maps?q=${CONTACT_INFO.coordinates.lat},${CONTACT_INFO.coordinates.lng}&z=15&output=embed`;
 
     return (
         <div className="page-shell">
@@ -27,14 +26,14 @@ export default function LocationPage() {
                     <FadeUp>
                         <div className="overflow-hidden rounded-3xl border border-border">
                             <iframe
-                                src={embedUrl}
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4701.69205190535!2d123.97687387759588!3d10.326477732943593!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9975c93ff704b%3A0xef875f0c3a2edeb3!2sOretachi%20no%20Curry-ya!5e0!3m2!1sen!2sph!4v1784709762968!5m2!1sen!2sph"
                                 width="100%"
-                                height="360"
-                                className="min-h-[280px] w-full sm:min-h-[360px]"
+                                height="450"
+                                className="min-h-[320px] w-full sm:min-h-[450px]"
                                 style={{ border: 0 }}
                                 allowFullScreen
                                 loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
+                                referrerPolicy="strict-origin-when-cross-origin"
                                 title="Oretachi no Curry-ya Location"
                             />
                         </div>

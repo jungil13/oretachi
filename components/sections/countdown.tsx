@@ -156,7 +156,7 @@ export function CountdownSection() {
                 </p>
 
                 <p className="font-semibold text-lg">
-                  8:00 AM – 9:00 PM
+                  10:00 AM – 09:00 PM
                 </p>
 
               </div>
