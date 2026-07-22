@@ -101,7 +101,7 @@ export function CountdownSection() {
         >
           <div className="max-w-7xl mx-auto px-4 text-center">
             <p className="font-bold uppercase tracking-[0.25em] text-xs sm:text-sm md:text-lg">
-              🍛 We Are Now Open! Welcome to Oretachino Curry Ya
+              We Are Now Open! Welcome to Oretachino Curry Ya
             </p>
           </div>
         </motion.section>
@@ -111,7 +111,7 @@ export function CountdownSection() {
         <section className="bg-gray-900 text-white py-3 sm:py-4">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <p className="text-sm md:text-base">
-              🌙 We are now closed. See you tomorrow!
+              We are now closed. See you tomorrow!
             </p>
           </div>
         </section>

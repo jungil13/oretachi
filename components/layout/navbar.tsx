@@ -53,7 +53,7 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-2">
             <Clock size={12} className="text-curry-yellow" />
-            <span>Daily: 11:00 am to 10:00 pm</span>
+            <span>Daily: 10:00 AM to 09:00 PM</span>
           </div>
         </div>
         <div className="flex items-center gap-6">
