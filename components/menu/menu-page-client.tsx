@@ -2,8 +2,9 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
-import { Search, Flame, Calendar } from "lucide-react";
+import { Search, Flame, Calendar, Image as ImageIcon, X } from "lucide-react";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/animations/motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { SEED_MENU_ITEMS } from "@/lib/data/seed";
 
 interface MenuItem {
@@ -46,10 +47,11 @@ const getNormalizedCategory = (category: string): string => {
   return category;
 };
 
-export function MenuPageClient({ items }: { items?: any[] }) {
+export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/digital-menu-1.png", "/images/digital-menu-2.png"] }: { items?: any[], initialDigitalMenuImages?: string[] }) {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Popular");
+  const [isDigitalMenuOpen, setIsDigitalMenuOpen] = useState(false);
 
   // Normalize items to consistent structure
   const normalizedItems = useMemo<MenuItem[]>(() => {
@@ -273,6 +275,15 @@ export function MenuPageClient({ items }: { items?: any[] }) {
             We hope our drinks gives you a spark of energy and our food brings you comfort. 
             whatever today holds, may you feel ready for it.&rdquo;
           </p>
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setIsDigitalMenuOpen(true)}
+              className="flex items-center gap-2 bg-[#FACC15] hover:bg-[#eab308] text-black px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:scale-105"
+            >
+              <ImageIcon size={18} />
+              Click to see our digital menu
+            </button>
+          </div>
         </FadeUp>
 
         {/* Filter Controls Row */}
@@ -419,6 +430,55 @@ export function MenuPageClient({ items }: { items?: any[] }) {
           </FadeUp>
         )}
       </div>
+
+      {/* Digital Menu Modal */}
+      <AnimatePresence>
+        {isDigitalMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md"
+            onClick={() => setIsDigitalMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-zinc-950 rounded-2xl border border-zinc-800 shadow-2xl custom-scrollbar"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setIsDigitalMenuOpen(false)}
+                className="sticky top-4 left-[calc(100%-3rem)] z-10 p-2 bg-black/50 hover:bg-white hover:text-black rounded-full text-white backdrop-blur-sm transition-all"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="p-4 sm:p-8 flex flex-col gap-8 items-center">
+                <div className="text-center mb-4">
+                  <h2 className="text-3xl font-black text-white uppercase tracking-widest font-sans">Digital Menu</h2>
+                  <div className="w-12 h-1 bg-[#FACC15] mx-auto mt-4"></div>
+                </div>
+                
+                {initialDigitalMenuImages.map((src, index) => (
+                  <div key={index} className="w-full relative">
+                    <img 
+                      src={src} 
+                      alt={`Digital Menu Page ${index + 1}`} 
+                      className="w-full h-auto rounded-lg shadow-xl"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/images/img (1).jpg"; // Fallback
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

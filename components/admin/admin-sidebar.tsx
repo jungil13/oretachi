@@ -13,6 +13,7 @@ const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/reservations", label: "Reservations", icon: CalendarDays },
   { href: "/admin/menu", label: "Menu", icon: UtensilsCrossed },
+  { href: "/admin/digital-menu", label: "Digital Menu", icon: Image },
   { href: "/admin/team", label: "Team", icon: Users },
   { href: "/admin/gallery", label: "Gallery", icon: Image },
   { href: "/admin/reviews", label: "Reviews", icon: Star },

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getMenuItems } from "@/lib/queries";
+import { getMenuItems, getGalleryItems } from "@/lib/queries";
 import { MenuPageClient } from "@/components/menu/menu-page-client";
 
 export const metadata: Metadata = {
@@ -21,5 +21,15 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
   const items = await getMenuItems();
-  return <MenuPageClient items={items} />;
+  const gallery = await getGalleryItems();
+  const digitalMenuImages = gallery
+    .filter((g) => g.category === "DIGITAL_MENU")
+    .map((g) => g.image_url);
+
+  return (
+    <MenuPageClient 
+      items={items} 
+      initialDigitalMenuImages={digitalMenuImages.length > 0 ? digitalMenuImages : undefined} 
+    />
+  );
 }
