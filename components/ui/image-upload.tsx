@@ -141,7 +141,7 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
 
   return (
     <div className={className}>
-      <div className="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30 p-6 text-center transition hover:bg-muted/50">
+      <div className="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30 p-6 text-center transition hover:bg-muted/50 max-w-sm w-full">
         <input
           type="file"
           accept="image/*"
@@ -152,12 +152,12 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
         />
 
         {value ? (
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl border">
+          <div className="relative aspect-video w-full max-w-sm overflow-hidden rounded-xl border mx-auto">
             <Image
               src={value}
               alt="Uploaded image"
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, 384px"
               className="object-cover"
             />
             <button
