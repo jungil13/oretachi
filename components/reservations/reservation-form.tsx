@@ -376,57 +376,81 @@ export function ReservationForm() {
                   2. Pre-order Menu (Optional)
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  Pre-order your favorite curries now so they are ready shortly after you are seated.
+                  Pre-order your favorite dishes now so they are ready shortly after you are seated.
                 </p>
-                <div 
+                <div
                   onScroll={() => handleScroll("preorder")}
-                  className={`max-h-[240px] sm:max-h-[360px] overflow-y-auto border rounded-xl divide-y bg-muted/10 p-2 scrollbar-scroll-only ${
+                  className={`max-h-[320px] sm:max-h-[400px] overflow-y-auto border rounded-xl bg-muted/10 scrollbar-scroll-only ${
                     !scrollingDivs["preorder"] ? "scroll-inactive" : ""
                   }`}
                 >
-                  {menuItems.map((item) => {
-                    const inCart = cart[item.id];
-                    return (
-                      <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between py-2 px-1">
-                        <div className="overflow-hidden pr-2">
-                          <p className="text-sm font-semibold truncate whitespace-nowrap">{item.name}</p>
-                          <span className="text-[9px] font-bold text-[#FACC15]/80 tracking-wider uppercase block mt-0.5">
-                            {item.category}
-                          </span>
-                          {/* <p className="text-xs text-muted-foreground whitespace-nowrap">{item.price} PHP</p> */}
+                  {/* Group by category */}
+                  {(() => {
+                    const categoryOrder = ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "COFFEE", "AKA SIGNATURE DRINK", "MATCHA", "NON COFFEE", "PASTRY", "TEA", "COLD DRINKS", "BEER"];
+                    const grouped: Record<string, MenuItem[]> = {};
+                    menuItems.forEach((item) => {
+                      const cat = (item.category || "OTHER").toUpperCase();
+                      if (!grouped[cat]) grouped[cat] = [];
+                      grouped[cat].push(item);
+                    });
+                    const sortedCats = Object.keys(grouped).sort((a, b) => {
+                      const ia = categoryOrder.indexOf(a);
+                      const ib = categoryOrder.indexOf(b);
+                      if (ia === -1 && ib === -1) return a.localeCompare(b);
+                      if (ia === -1) return 1;
+                      if (ib === -1) return -1;
+                      return ia - ib;
+                    });
+                    return sortedCats.map((cat) => (
+                      <div key={cat}>
+                        <div className="sticky top-0 z-10 bg-muted/80 backdrop-blur-sm px-3 py-1.5 border-b">
+                          <span className="text-[10px] font-extrabold tracking-widest text-[#FACC15] uppercase">{cat}</span>
                         </div>
-                        {inCart ? (
-                          <div className="flex items-center gap-2 shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => updateCartQuantity(item.id, -1)}
-                              className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-muted"
-                            >
-                              <Minus size={14} />
-                            </button>
-                            <span className="text-sm font-semibold min-w-[20px] text-center">
-                              {inCart.quantity}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => updateCartQuantity(item.id, 1)}
-                              className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-muted"
-                            >
-                              <Plus size={14} />
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => addToCart(item)}
-                            className="rounded-lg border bg-card px-2 py-1 text-xs font-medium transition hover:bg-muted shrink-0"
-                          >
-                            Add
-                          </button>
-                        )}
+                        <div className="divide-y">
+                          {grouped[cat].map((item) => {
+                            const inCart = cart[item.id];
+                            return (
+                              <div key={item.id} className="flex items-center justify-between py-2.5 px-3 hover:bg-muted/20 transition-colors">
+                                <div className="flex-1 min-w-0 pr-3">
+                                  <p className="text-sm font-semibold truncate">{item.name}</p>
+                                  <p className="text-xs text-[#FACC15] font-bold mt-0.5">₱{item.price}</p>
+                                </div>
+                                {inCart ? (
+                                  <div className="flex items-center gap-2 shrink-0">
+                                    <button
+                                      type="button"
+                                      onClick={() => updateCartQuantity(item.id, -1)}
+                                      className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-destructive/20 hover:border-destructive"
+                                    >
+                                      <Minus size={13} />
+                                    </button>
+                                    <span className="text-sm font-bold min-w-[22px] text-center tabular-nums">
+                                      {inCart.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => updateCartQuantity(item.id, 1)}
+                                      className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-green-500/20 hover:border-green-500"
+                                    >
+                                      <Plus size={13} />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onClick={() => addToCart(item)}
+                                    className="rounded-lg border border-[#FACC15]/40 bg-[#FACC15]/10 px-3 py-1 text-xs font-semibold text-[#FACC15] transition hover:bg-[#FACC15] hover:text-black shrink-0"
+                                  >
+                                    + Add
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    );
-                  })}
+                    ));
+                  })()}
                 </div>
 
                 {/* Preorder Summary */}
@@ -434,25 +458,26 @@ export function ReservationForm() {
                   <div className="rounded-xl border border-curry-yellow/30 bg-curry-yellow/5 p-3 sm:p-4 space-y-2">
                     <p className="text-xs font-semibold uppercase tracking-wider text-soft-gold flex items-center gap-1.5">
                       <ShoppingBag size={14} />
-                      Order Summary
+                      Order Summary ({cartItems.reduce((s, i) => s + i.quantity, 0)} items)
                     </p>
-                     <div 
+                    <div
                       onScroll={() => handleScroll("summary")}
-                      className={`max-h-[80px] sm:max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2 scrollbar-scroll-only ${
+                      className={`max-h-[120px] overflow-y-auto space-y-1 text-xs border-b pb-2 scrollbar-scroll-only ${
                         !scrollingDivs["summary"] ? "scroll-inactive" : ""
                       }`}
                     >
                       {cartItems.map((item) => (
-                        <div key={item.id} className="flex justify-between">
-                          <span>{item.name} x{item.quantity}</span>
-                          {/* <span className="font-semibold">{item.price * item.quantity} PHP</span> */}
+                        <div key={item.id} className="flex justify-between gap-2">
+                          <span className="truncate">{item.name} × {item.quantity}</span>
+                          <span className="font-semibold shrink-0 text-[#FACC15]">₱{(item.price * item.quantity).toLocaleString()}</span>
                         </div>
                       ))}
                     </div>
                     <div className="flex justify-between text-sm font-bold pt-1">
-                      {/* <span>Total Pre-order:</span>
-                      <span>{cartTotal} PHP</span> */}
+                      <span>Estimated Total:</span>
+                      <span className="text-[#FACC15]">₱{cartTotal.toLocaleString()}</span>
                     </div>
+                    <p className="text-[10px] text-muted-foreground">* Final bill may vary. Prices are for reference only.</p>
                   </div>
                 )}
               </div>

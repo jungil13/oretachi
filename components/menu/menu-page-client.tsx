@@ -14,6 +14,7 @@ interface MenuItem {
   price: number;
   image_url: string;
   category: string;
+  originalCategory?: string;
   spice_level: number;
   featured: boolean;
   created_at?: string;
@@ -84,6 +85,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
         price,
         image_url: imageUrl,
         category,
+        originalCategory: item.category,
         spice_level: spiceLevel,
         featured,
         description,
@@ -511,9 +513,17 @@ function MenuCard({ item }: { item: MenuItem }) {
             <h3 className="text-base sm:text-md font-bold text-white tracking-wide leading-snug group-hover:text-[#FACC15] transition-colors duration-300 font-sans">
               {item.name}
             </h3>
-            <span className="text-base sm:text-md font-extrabold text-[#FACC15] shrink-0 font-sans">
-              {/*item.price*/}
-            </span>
+            {item.originalCategory === "COFFEE" && item.name.toLowerCase() !== "espresso" ? (
+              <div className="flex flex-col items-end gap-1 text-[10px] sm:text-xs text-[#FACC15] font-bold font-sans shrink-0">
+                <div className="flex justify-between gap-3 w-full min-w-[80px]"><span className="text-neutral-400">HOT (8oz)</span> <span>₱{item.price}</span></div>
+                <div className="flex justify-between gap-3 w-full min-w-[80px]"><span className="text-neutral-400">HOT (12oz)</span> <span>₱{item.price + 20}</span></div>
+                <div className="flex justify-between gap-3 w-full min-w-[80px]"><span className="text-neutral-400">ICED (12oz)</span> <span>₱{item.price + 30}</span></div>
+              </div>
+            ) : (
+              <span className="text-base sm:text-md font-extrabold text-[#FACC15] shrink-0 font-sans mt-0.5">
+                ₱{item.price}
+              </span>
+            )}
           </div>
 
           {/* Category Pill Tag */}
@@ -584,7 +594,7 @@ function TeaCard({ teaBox }: { teaBox: any }) {
               {teaBox.title}
             </h3>
             <span className="text-lg font-extrabold text-[#FACC15] shrink-0 font-sans">
-              {/* {teaBox.price} */}
+              ₱{teaBox.price}
             </span>
           </div>
 
