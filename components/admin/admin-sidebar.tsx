@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useReservationNotifications } from "@/hooks/use-reservation-notifications";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
@@ -26,10 +26,21 @@ const NAV = [
   { href: "/admin/newsletter", label: "Newsletter", icon: Mail },
 ];
 
-export function AdminSidebar({ onClose }: { onClose?: () => void }) {
+import type { ReservationNotification } from "@/hooks/use-reservation-notifications";
+
+export function AdminSidebar({
+  onClose,
+  pendingCount = 0,
+  newAlerts = [],
+  dismissAlert = () => {},
+}: {
+  onClose?: () => void;
+  pendingCount?: number;
+  newAlerts?: ReservationNotification[];
+  dismissAlert?: (id: string) => void;
+}) {
   const pathname = usePathname();
   const router = useRouter();
-  const { pendingCount, newAlerts, dismissAlert } = useReservationNotifications();
   const [bellOpen, setBellOpen] = useState(false);
 
   const handleLogout = async () => {
