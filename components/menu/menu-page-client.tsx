@@ -20,14 +20,14 @@ interface MenuItem {
   created_at?: string;
 }
 
-const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
+const CATEGORIES = ["All", "CURRY RICE", "RAMEN", "KIDS MENU", "SIDE ORDERS", "DRINKS", "PASTRY"];
 
 const getNormalizedCategory = (category: string): string => {
   const cat = (category || "").toUpperCase();
   if (cat === "CURRY RICE") return "CURRY RICE";
   if (cat === "RAMEN") return "RAMEN";
   if (cat === "KIDS MENU") return "KIDS MENU";
-  if (cat === "TOPPINGS") return "TOPPINGS";
+  if (cat === "SIDE ORDERS") return "SIDE ORDERS";
   if (cat === "PASTRY") return "PASTRY";
   if (
     cat === "DRINKS" ||
@@ -64,7 +64,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
       
       // Category-specific price fallbacks
       let fallbackPrice = 300;
-      if (category === "TOPPINGS" || category === "DRINKS") {
+      if (category === "SIDE ORDERS" || category === "DRINKS") {
         fallbackPrice = 100;
       }
       const price = item.price === 0 || item.price === undefined ? fallbackPrice : item.price;
@@ -129,7 +129,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
       "CURRY RICE": [],
       "RAMEN": [],
       "KIDS MENU": [],
-      "TOPPINGS": [],
+      "SIDE ORDERS": [],
       "DRINKS": [],
       "PASTRY": [],
     };
@@ -209,7 +209,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
     );
     teaBox = {
       title: "TEA",
-      subtitle: "(Tea bags) Twinings brand",
+      subtitle: "(Please ask for our available selection)",
       price: teaPrice,
       image_url: teaImageUrl,
       items: teaNames,
@@ -232,7 +232,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
   // Determine which categories contain matching items to display
   const categoriesToRender = useMemo(() => {
     if (selectedCategory === "All") {
-      return ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"].filter(
+      return ["CURRY RICE", "RAMEN", "KIDS MENU", "SIDE ORDERS", "DRINKS", "PASTRY"].filter(
         (cat) => {
           if (cat === "DRINKS") {
             return processedDrinks.subcategories.length > 0 || processedDrinks.teaBox !== null;
@@ -360,7 +360,7 @@ export function MenuPageClient({ items, initialDigitalMenuImages = ["/images/dig
                           {catName === "CURRY RICE" && "• カレーライス"}
                           {catName === "RAMEN" && "• ラーメン"}
                           {catName === "KIDS MENU" && "• キッズメニュー"}
-                          {catName === "TOPPINGS" && "• トッピング"}
+                          {catName === "SIDE ORDERS" && "• トッピング"}
                           {catName === "DRINKS" && "• ドリンク"}
                         </span>
                       </h2>

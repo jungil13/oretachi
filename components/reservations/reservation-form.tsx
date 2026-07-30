@@ -7,13 +7,32 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label, Select } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { UtensilsCrossed, Plus, Minus, ShoppingBag, Loader2 } from "lucide-react";
+import {
+  UtensilsCrossed,
+  Plus,
+  Minus,
+  ShoppingBag,
+  Loader2,
+} from "lucide-react";
 import type { MenuItem } from "@/types/database";
 
 const TIME_SLOTS = [
-  "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM",
-  "2:00 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM",
-  "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "1:00 PM",
+  "1:30 PM",
+  "2:00 PM",
+  "5:00 PM",
+  "5:30 PM",
+  "6:00 PM",
+  "6:30 PM",
+  "7:00 PM",
+  "7:30 PM",
+  "8:00 PM",
+  "8:30 PM",
+  "9:00 PM",
 ];
 
 export function ReservationForm() {
@@ -28,12 +47,16 @@ export function ReservationForm() {
   });
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [cart, setCart] = useState<Record<string, { name: string; price: number; quantity: number }>>({});
+  const [cart, setCart] = useState<
+    Record<string, { name: string; price: number; quantity: number }>
+  >({});
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [showModal, setShowModal] = useState(false);
 
   const scrollTimers = useRef<Record<string, NodeJS.Timeout>>({});
-  const [scrollingDivs, setScrollingDivs] = useState<Record<string, boolean>>({});
+  const [scrollingDivs, setScrollingDivs] = useState<Record<string, boolean>>(
+    {},
+  );
 
   const handleScroll = (key: string) => {
     setScrollingDivs((prev) => ({ ...prev, [key]: true }));
@@ -62,15 +85,25 @@ export function ReservationForm() {
         itemsList = data as MenuItem[];
       } else {
         const { SEED_MENU_ITEMS } = await import("@/lib/data/seed");
-        itemsList = SEED_MENU_ITEMS.map((item, idx) => ({
-          ...item,
-          id: `fallback-${idx}`,
-          created_at: "",
-        }) as MenuItem);
+        itemsList = SEED_MENU_ITEMS.map(
+          (item, idx) =>
+            ({
+              ...item,
+              id: `fallback-${idx}`,
+              created_at: "",
+            }) as MenuItem,
+        );
       }
 
       // Sort items based on the category sequence from menu page
-      const categoryOrder = ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "DRINKS", "PASTRY"];
+      const categoryOrder = [
+        "CURRY RICE",
+        "RAMEN",
+        "KIDS MENU",
+        "SIDE ORDERS",
+        "DRINKS",
+        "PASTRY",
+      ];
       itemsList.sort((a, b) => {
         const catA = (a.category || "").toUpperCase();
         const catB = (b.category || "").toUpperCase();
@@ -142,7 +175,10 @@ export function ReservationForm() {
     ...details,
   }));
 
-  const cartTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const cartTotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
   const minDate = new Date().toISOString().split("T")[0];
 
@@ -165,7 +201,8 @@ export function ReservationForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               to: form.email,
-              subject: "Table Reservation Request Received - Oretachi no Curry-ya",
+              subject:
+                "Table Reservation Request Received - Oretachi no Curry-ya",
               text: `
             Dear ${form.name},
             
@@ -179,11 +216,10 @@ export function ReservationForm() {
             
             Pre-ordered Items:
             ${cartItems
-                  .map(
-                    (c) =>
-                      `- ${c.name} x${c.quantity} (₱${c.price * c.quantity})`
-                  )
-                  .join("\n")}
+              .map(
+                (c) => `- ${c.name} x${c.quantity} (₱${c.price * c.quantity})`,
+              )
+              .join("\n")}
             
             Total: ₱${cartTotal}
             
@@ -210,11 +246,10 @@ export function ReservationForm() {
             
             Pre-Ordered Items:
             ${cartItems
-                  .map(
-                    (c) =>
-                      `- ${c.name} x${c.quantity} = ₱${c.price * c.quantity}`
-                  )
-                  .join("\n")}
+              .map(
+                (c) => `- ${c.name} x${c.quantity} = ₱${c.price * c.quantity}`,
+              )
+              .join("\n")}
             
             Total Preorder: ₱${cartTotal}
             `,
@@ -244,12 +279,16 @@ export function ReservationForm() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             to: form.email,
-            subject: "Table Reservation Request Received - Oretachi no Curry-ya",
+            subject:
+              "Table Reservation Request Received - Oretachi no Curry-ya",
             text: `Dear ${form.name},\n\nThank you for requesting a table at Oretachi no Curry-ya!\n\nWe have received your reservation request for ${form.guests} guests on ${form.date} at ${form.time}.\n\nPre-ordered items:\n${cartItems.map((c) => `- ${c.name} x${c.quantity} (${c.price * c.quantity} PHP)`).join("\n")}\nTotal: ${cartTotal} PHP\n\nStatus: PENDING (We will review and confirm your booking soon via email)\n\nWarm regards,\nOretachi no Curry-ya Team`,
           }),
         });
       } catch (emailErr) {
-        console.error("Failed to send reservation confirmation email:", emailErr);
+        console.error(
+          "Failed to send reservation confirmation email:",
+          emailErr,
+        );
       }
       setStatus("success");
       setShowModal(true);
@@ -273,10 +312,15 @@ export function ReservationForm() {
       `}</style>
       <Card className="w-full max-w-full overflow-hidden glass">
         <CardContent className="p-3 sm:p-6 md:p-8 box-border">
-          <form onSubmit={handleSubmit} className="reservation-form space-y-4 sm:space-y-6 w-full">
+          <form
+            onSubmit={handleSubmit}
+            className="reservation-form space-y-4 sm:space-y-6 w-full"
+          >
             <div className="grid gap-4 sm:gap-6 md:grid-cols-2 w-full">
               <div className="space-y-3 sm:space-y-4 min-w-0 w-full">
-                <h3 className="text-base sm:text-lg font-semibold border-b pb-2">1. Booking Details</h3>
+                <h3 className="text-base sm:text-lg font-semibold border-b pb-2">
+                  1. Booking Details
+                </h3>
                 <div className="w-full">
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -289,7 +333,10 @@ export function ReservationForm() {
                 </div>
                 <div className="w-full">
                   <Label htmlFor="email">
-                    Email <span className="text-green-500 text-xs">(We'll send you updates)</span>
+                    Email{" "}
+                    <span className="text-green-500 text-xs">
+                      (We'll send you updates)
+                    </span>
                   </Label>
                   <Input
                     id="email"
@@ -358,7 +405,9 @@ export function ReservationForm() {
                   </Select>
                 </div>
                 <div className="w-full">
-                  <Label htmlFor="special_request">Special Requests (Optional)</Label>
+                  <Label htmlFor="special_request">
+                    Special Requests (Optional)
+                  </Label>
                   <Textarea
                     id="special_request"
                     value={form.special_request}
@@ -376,7 +425,8 @@ export function ReservationForm() {
                   2. Pre-order Menu (Optional)
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  Pre-order your favorite dishes now so they are ready shortly after you are seated.
+                  Pre-order your favorite dishes now so they are ready shortly
+                  after you are seated.
                 </p>
                 <div
                   onScroll={() => handleScroll("preorder")}
@@ -386,7 +436,20 @@ export function ReservationForm() {
                 >
                   {/* Group by category */}
                   {(() => {
-                    const categoryOrder = ["CURRY RICE", "RAMEN", "KIDS MENU", "TOPPINGS", "COFFEE", "AKA SIGNATURE DRINK", "MATCHA", "NON COFFEE", "PASTRY", "TEA", "COLD DRINKS", "BEER"];
+                    const categoryOrder = [
+                      "CURRY RICE",
+                      "RAMEN",
+                      "KIDS MENU",
+                      "SIDE ORDERS",
+                      "COFFEE",
+                      "AKA SIGNATURE DRINK",
+                      "MATCHA",
+                      "NON COFFEE",
+                      "PASTRY",
+                      "TEA",
+                      "COLD DRINKS",
+                      "BEER",
+                    ];
                     const grouped: Record<string, MenuItem[]> = {};
                     menuItems.forEach((item) => {
                       const cat = (item.category || "OTHER").toUpperCase();
@@ -404,22 +467,33 @@ export function ReservationForm() {
                     return sortedCats.map((cat) => (
                       <div key={cat}>
                         <div className="sticky top-0 z-10 bg-muted/80 backdrop-blur-sm px-3 py-1.5 border-b">
-                          <span className="text-[10px] font-extrabold tracking-widest text-[#FACC15] uppercase">{cat}</span>
+                          <span className="text-[10px] font-extrabold tracking-widest text-[#FACC15] uppercase">
+                            {cat}
+                          </span>
                         </div>
                         <div className="divide-y">
                           {grouped[cat].map((item) => {
                             const inCart = cart[item.id];
                             return (
-                              <div key={item.id} className="flex items-center justify-between py-2.5 px-3 hover:bg-muted/20 transition-colors">
+                              <div
+                                key={item.id}
+                                className="flex items-center justify-between py-2.5 px-3 hover:bg-muted/20 transition-colors"
+                              >
                                 <div className="flex-1 min-w-0 pr-3">
-                                  <p className="text-sm font-semibold truncate">{item.name}</p>
-                                  <p className="text-xs text-[#FACC15] font-bold mt-0.5">₱{item.price}</p>
+                                  <p className="text-sm font-semibold truncate">
+                                    {item.name}
+                                  </p>
+                                  <p className="text-xs text-[#FACC15] font-bold mt-0.5">
+                                    ₱{item.price}
+                                  </p>
                                 </div>
                                 {inCart ? (
                                   <div className="flex items-center gap-2 shrink-0">
                                     <button
                                       type="button"
-                                      onClick={() => updateCartQuantity(item.id, -1)}
+                                      onClick={() =>
+                                        updateCartQuantity(item.id, -1)
+                                      }
                                       className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-destructive/20 hover:border-destructive"
                                     >
                                       <Minus size={13} />
@@ -429,7 +503,9 @@ export function ReservationForm() {
                                     </span>
                                     <button
                                       type="button"
-                                      onClick={() => updateCartQuantity(item.id, 1)}
+                                      onClick={() =>
+                                        updateCartQuantity(item.id, 1)
+                                      }
                                       className="rounded-lg border bg-card p-1 text-foreground transition hover:bg-green-500/20 hover:border-green-500"
                                     >
                                       <Plus size={13} />
@@ -458,7 +534,8 @@ export function ReservationForm() {
                   <div className="rounded-xl border border-curry-yellow/30 bg-curry-yellow/5 p-3 sm:p-4 space-y-2">
                     <p className="text-xs font-semibold uppercase tracking-wider text-soft-gold flex items-center gap-1.5">
                       <ShoppingBag size={14} />
-                      Order Summary ({cartItems.reduce((s, i) => s + i.quantity, 0)} items)
+                      Order Summary (
+                      {cartItems.reduce((s, i) => s + i.quantity, 0)} items)
                     </p>
                     <div
                       onScroll={() => handleScroll("summary")}
@@ -467,24 +544,40 @@ export function ReservationForm() {
                       }`}
                     >
                       {cartItems.map((item) => (
-                        <div key={item.id} className="flex justify-between gap-2">
-                          <span className="truncate">{item.name} × {item.quantity}</span>
-                          <span className="font-semibold shrink-0 text-[#FACC15]">₱{(item.price * item.quantity).toLocaleString()}</span>
+                        <div
+                          key={item.id}
+                          className="flex justify-between gap-2"
+                        >
+                          <span className="truncate">
+                            {item.name} × {item.quantity}
+                          </span>
+                          <span className="font-semibold shrink-0 text-[#FACC15]">
+                            ₱{(item.price * item.quantity).toLocaleString()}
+                          </span>
                         </div>
                       ))}
                     </div>
                     <div className="flex justify-between text-sm font-bold pt-1">
                       <span>Estimated Total:</span>
-                      <span className="text-[#FACC15]">₱{cartTotal.toLocaleString()}</span>
+                      <span className="text-[#FACC15]">
+                        ₱{cartTotal.toLocaleString()}
+                      </span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground">* Final bill may vary. Prices are for reference only.</p>
+                    <p className="text-[10px] text-muted-foreground">
+                      * Final bill may vary. Prices are for reference only.
+                    </p>
                   </div>
                 )}
               </div>
             </div>
 
             <div className="pt-3 sm:pt-4 border-t">
-              <Button type="submit" size="lg" className="w-full" disabled={status === "loading"}>
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full"
+                disabled={status === "loading"}
+              >
                 {status === "loading" ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -518,7 +611,9 @@ export function ReservationForm() {
               <div className="stamp-effect mx-auto mb-4 sm:mb-6 inline-block text-xl sm:text-2xl bg-curry-yellow/20 text-curry-yellow px-4 py-1.5 rounded-full ring-1 ring-curry-yellow/30">
                 予約完了
               </div>
-              <h3 className="text-lg sm:text-xl font-bold">Reservation Confirmed!</h3>
+              <h3 className="text-lg sm:text-xl font-bold">
+                Reservation Confirmed!
+              </h3>
               <p className="mt-2 text-sm sm:text-base text-muted-foreground">
                 Thank you, {form.name}. We&apos;ve received your reservation for{" "}
                 {form.guests} guests on {form.date} at {form.time}.
@@ -526,7 +621,10 @@ export function ReservationForm() {
               <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
                 A confirmation email has been logged to your inbox.
               </p>
-              <Button className="mt-4 sm:mt-6" onClick={() => setShowModal(false)}>
+              <Button
+                className="mt-4 sm:mt-6"
+                onClick={() => setShowModal(false)}
+              >
                 Done
               </Button>
             </motion.div>

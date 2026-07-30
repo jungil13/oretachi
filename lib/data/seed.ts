@@ -4,7 +4,7 @@ export const MENU_CATEGORIES = [
   "CURRY RICE",
   "RAMEN",
   "KIDS MENU",
-  "TOPPINGS",
+  "SIDE ORDERS",
   "COFFEE",
   "AKA SIGNATURE DRINK",
   "MATCHA",
@@ -41,14 +41,14 @@ export const SEED_MENU_ITEMS: Omit<MenuItem, "id" | "created_at">[] = [
   { name: "KIDS SET 2", description: "Rice 150g, Minchi-katsu topped with curry sauce 110g, Fries 70g, Curry sauce", price: 300, image_url: "/images/img (20).jpg", category: "KIDS MENU", spice_level: 0, featured: false },
   { name: "KIDS SET 3", description: "Rice 150g, Arabiki sausage 2pcs, Fries 70g, Curry sauce", price: 300, image_url: "/images/img (19).jpg", category: "KIDS MENU", spice_level: 0, featured: false },
 
-  // TOPPINGS
-  { name: "FRIED SHRIMP (Topping)", description: "エビフライ", price: 100, image_url: "/images/img (2).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "PORK CUTLET (Topping)", description: "豚カツ", price: 100, image_url: "/images/img (11).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "CHICKEN CUTLET (Topping)", description: "チキンカツ", price: 100, image_url: "/images/img (4).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "SAUSAGE (Topping)", description: "ソーセージ", price: 100, image_url: "/images/img (10).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "EGGPLANT CURRY (Topping)", description: "ナスカレー", price: 100, image_url: "/images/img (8).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "GRILLED CHEESE (Topping)", description: "グリルドチーズ", price: 100, image_url: "/images/img (9).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
-  { name: "SOFT-BOILED EGG (Topping)", description: "半熟卵", price: 100, image_url: "/images/img (15).jpg", category: "TOPPINGS", spice_level: 0, featured: false },
+  // SIDE ORDERS
+  { name: "FRIED SHRIMP (Topping)", description: "エビフライ", price: 100, image_url: "/images/img (2).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "PORK CUTLET (Topping)", description: "豚カツ", price: 100, image_url: "/images/img (11).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "CHICKEN CUTLET (Topping)", description: "チキンカツ", price: 100, image_url: "/images/img (4).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "SAUSAGE (Topping)", description: "ソーセージ", price: 100, image_url: "/images/img (10).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "EGGPLANT CURRY (Topping)", description: "ナスカレー", price: 100, image_url: "/images/img (8).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "GRILLED CHEESE (Topping)", description: "グリルドチーズ", price: 100, image_url: "/images/img (9).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
+  { name: "SOFT-BOILED EGG (Topping)", description: "半熟卵", price: 100, image_url: "/images/img (15).jpg", category: "SIDE ORDERS", spice_level: 0, featured: false },
 
   // DRINKS (Coffee)
   { name: "Brewed Coffee", description: "COFFEE", price: 100, image_url: "/images/img (17).jpg", category: "DRINKS", spice_level: 0, featured: false },

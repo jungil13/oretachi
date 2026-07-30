@@ -25,14 +25,14 @@ INSERT INTO menu_items (name, description, price, image_url, category, spice_lev
 ('KIDS SET 2', 'Rice 150g, Minchi-katsu topped with curry sauce 110g, Fries 70g, Curry sauce', 0, 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80', 'KIDS MENU', 0, false),
 ('KIDS SET 3', 'Rice 150g, Arabiki sausage 2pcs, Fries 70g, Curry sauce', 0, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'KIDS MENU', 0, false),
 
--- TOPPINGS
-('FRIED SHRIMP (Topping)', 'エビフライ', 100, 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80', 'TOPPINGS', 0, false),
-('PORK CUTLET (Topping)', '豚カツ', 100, 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80', 'TOPPINGS', 0, false),
-('CHICKEN CUTLET (Topping)', 'チキンカツ', 100, 'https://images.unsplash.com/photo-1588166524941-3bf61a837559?w=800&q=80', 'TOPPINGS', 0, false),
-('SAUSAGE (Topping)', 'ソーセージ', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'TOPPINGS', 0, false),
-('EGGPLANT CURRY (Topping)', 'ナスカレー', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'TOPPINGS', 0, false),
-('GRILLED CHEESE (Topping)', 'グリルドチーズ', 100, 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80', 'TOPPINGS', 0, false),
-('SOFT-BOILED EGG (Topping)', '半熟卵', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'TOPPINGS', 0, false),
+-- SIDE ORDERS
+('FRIED SHRIMP (Topping)', 'エビフライ', 100, 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80', 'SIDE ORDERS', 0, false),
+('PORK CUTLET (Topping)', '豚カツ', 100, 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80', 'SIDE ORDERS', 0, false),
+('CHICKEN CUTLET (Topping)', 'チキンカツ', 100, 'https://images.unsplash.com/photo-1588166524941-3bf61a837559?w=800&q=80', 'SIDE ORDERS', 0, false),
+('SAUSAGE (Topping)', 'ソーセージ', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'SIDE ORDERS', 0, false),
+('EGGPLANT CURRY (Topping)', 'ナスカレー', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'SIDE ORDERS', 0, false),
+('GRILLED CHEESE (Topping)', 'グリルドチーズ', 100, 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80', 'SIDE ORDERS', 0, false),
+('SOFT-BOILED EGG (Topping)', '半熟卵', 100, 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&q=80', 'SIDE ORDERS', 0, false),
 
 -- DRINKS (Coffee)
 ('Brewed Coffee', 'COFFEE', 100, 'https://images.unsplash.com/photo-1461023058943-f07a80be3440?w=800&q=80', 'DRINKS', 0, false),
